@@ -1,0 +1,154 @@
+[
+    {
+        "subsessionId": 32761842,
+        "laps": 75,
+        "totalLaps": 75,
+        "led": 0,
+        "dnf": false,
+        "irating": 1347
+    },
+    {
+        "subsessionId": 32743418,
+        "laps": 71,
+        "totalLaps": 75,
+        "led": 0,
+        "dnf": false,
+        "irating": 1269
+    },
+    {
+        "subsessionId": 32724408,
+        "laps": 75,
+        "totalLaps": 75,
+        "led": 0,
+        "dnf": false,
+        "irating": 1317
+    },
+    {
+        "subsessionId": 32685674,
+        "laps": 51,
+        "totalLaps": 75,
+        "led": 35,
+        "dnf": true,
+        "irating": 1259
+    },
+    {
+        "subsessionId": 32645188,
+        "laps": 1,
+        "totalLaps": 75,
+        "led": 0,
+        "dnf": true,
+        "irating": 1255
+    },
+    {
+        "subsessionId": 32642980,
+        "laps": 12,
+        "totalLaps": 60,
+        "led": 0,
+        "dnf": true,
+        "irating": 1323
+    },
+    {
+        "subsessionId": 32606560,
+        "laps": 60,
+        "totalLaps": 60,
+        "led": 0,
+        "dnf": false,
+        "irating": 1383
+    },
+    {
+        "subsessionId": 32600986,
+        "laps": 60,
+        "totalLaps": 60,
+        "led": 0,
+        "dnf": false,
+        "irating": 1358
+    },
+    {
+        "subsessionId": 32584668,
+        "laps": 56,
+        "totalLaps": 60,
+        "led": 0,
+        "dnf": true,
+        "irating": 1284
+    },
+    {
+        "subsessionId": 32532273,
+        "laps": 57,
+        "totalLaps": 60,
+        "led": 0,
+        "dnf": true,
+        "irating": 1273
+    },
+    {
+        "subsessionId": 32474005,
+        "laps": 119,
+        "totalLaps": 120,
+        "led": 0,
+        "dnf": false,
+        "irating": 1255
+    },
+    {
+        "subsessionId": 32464788,
+        "laps": 66,
+        "totalLaps": 120,
+        "led": 0,
+        "dnf": true,
+        "irating": 1187
+    },
+    {
+        "subsessionId": 32431505,
+        "laps": 55,
+        "totalLaps": 120,
+        "led": 0,
+        "dnf": true,
+        "irating": 1195
+    },
+    {
+        "subsessionId": 32351940,
+        "laps": 75,
+        "totalLaps": 75,
+        "led": 0,
+        "dnf": false,
+        "irating": 1180
+    },
+    {
+        "subsessionId": 32332843,
+        "laps": 4,
+        "totalLaps": 75,
+        "led": 0,
+        "dnf": true,
+        "irating": 1125
+    },
+    {
+        "subsessionId": 32247778,
+        "laps": 75,
+        "totalLaps": 75,
+        "led": 0,
+        "dnf": false,
+        "irating": 1180
+    },
+    {
+        "subsessionId": 32206083,
+        "laps": 24,
+        "totalLaps": 25,
+        "led": 0,
+        "dnf": false,
+        "irating": 1119
+    },
+    {
+        "subsessionId": 32149987,
+        "laps": 1,
+        "totalLaps": 25,
+        "led": 0,
+        "dnf": true,
+        "irating": 1086
+    },
+    {
+        "subsessionId": 32023829,
+        "laps": 90,
+        "totalLaps": 90,
+        "led": 4,
+        "dnf": false,
+        "irating": 1171
+    }
+]

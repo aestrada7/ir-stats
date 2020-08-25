@@ -1,0 +1,34 @@
+[
+    {
+        "subsessionId": 24819132,
+        "laps": 71,
+        "totalLaps": 75,
+        "led": 0,
+        "dnf": false,
+        "irating": 1085
+    },
+    {
+        "subsessionId": 24787623,
+        "laps": 60,
+        "totalLaps": 75,
+        "led": 0,
+        "dnf": false,
+        "irating": 1065
+    },
+    {
+        "subsessionId": 24640068,
+        "laps": 60,
+        "totalLaps": 60,
+        "led": 0,
+        "dnf": false,
+        "irating": 1058
+    },
+    {
+        "subsessionId": 24630567,
+        "laps": 55,
+        "totalLaps": 60,
+        "led": 2,
+        "dnf": true,
+        "irating": 1000
+    }
+]

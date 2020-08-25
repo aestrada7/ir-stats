@@ -1,0 +1,18 @@
+{
+  "name": "ir-stats",
+  "version": "0.7.0",
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "next": "^9.5.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "victory": "^35.0.8"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "aestrada7",
+  "license": "ISC"
+}

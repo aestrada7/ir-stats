@@ -1,0 +1,122 @@
+[
+    {
+        "id": 53,
+        "name": "Atlanta Motor Speedway",
+        "shortName": "Atlanta",
+        "location": "Hampton, GA",
+        "length": 1.5
+    },
+    {
+        "id": 357,
+        "name": "Texas Motor Speedway",
+        "shortName": "Texas",
+        "location": "Fort Worth, TX",
+        "length": 1.5
+    },
+    {
+        "id": 276,
+        "name": "Michigan International Speedway",
+        "shortName": "Michigan",
+        "location": "Brooklyn, MI",
+        "length": 2.0
+    },
+    {
+        "id": 31,
+        "name": "Richmond Raceway",
+        "shortName": "Richmond",
+        "location": "Richmond, VA",
+        "length": 0.75
+    },
+    {
+        "id": 104,
+        "name": "Phoenix Raceway (2008)",
+        "shortName": "Phoenix (2008)",
+        "location": "Glendale, AZ",
+        "length": 1.00
+    },
+    {
+        "id": 192,
+        "name": "Daytona International Speedway - Road Course",
+        "shortName": "Daytona Road",
+        "location": "Daytona, FL",
+        "length": 3.81
+    },
+    {
+        "id": 214,
+        "name": "Kansas Speedway",
+        "shortName": "Kansas",
+        "location": "Kansas City, KS",
+        "length": 1.5
+    },
+    {
+        "id": 169,
+        "name": "Iowa Speedway",
+        "shortName": "Iowa",
+        "location": "Newton, IA",
+        "length": 0.875
+    },
+    {
+        "id": 178,
+        "name": "Indianapolis Motor Speedway",
+        "shortName": "Indianapolis",
+        "location": "Indianapolis, IN",
+        "length": 2.5
+    },
+    {
+        "id": 188,
+        "name": "Kentucky Speedway (2011)",
+        "shortName": "Kentucky (2011)",
+        "location": "Sparta, KY",
+        "length": 1.5
+    },
+    {
+        "id": 371,
+        "legacyIds": [188],
+        "name": "Kentucky Speedway",
+        "shortName": "Kentucky",
+        "location": "Sparta, KY",
+        "length": 1.5
+    },
+    {
+        "id": 94,
+        "name": "The Milwaukee Mile",
+        "shortName": "Milwaukee",
+        "location": "Milwaukee, WI",
+        "length": 1.00
+    },
+    {
+        "id": 40,
+        "name": "Charlotte Motor Speedway",
+        "shortName": "Charlotte",
+        "location": "Concorde, NC",
+        "length": 1.5
+    },
+    {
+        "id": 225,
+        "name": "Auto Club Speedway",
+        "shortName": "Fontana",
+        "location": "Fontana, CA",
+        "length": 2.5
+    },
+    {
+        "id": 103,
+        "name": "Las Vegas Motor Speedway",
+        "shortName": "Las Vegas",
+        "location": "Las Vegas, NV",
+        "length": 1.5
+    },
+    {
+        "id": 277,
+        "name": "Pocono Raceway",
+        "shortName": "Pocono",
+        "location": "Long Pond, PA",
+        "length": 2.5
+    },
+    {
+        "id": 123,
+        "name": "Chicagoland Speedway",
+        "shortName": "Chicagoland",
+        "location": "Joliet, IL",
+        "length": 1.5
+    }
+]

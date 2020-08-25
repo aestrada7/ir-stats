@@ -1,0 +1,50 @@
+[
+    {
+        "subsessionId": 14008342,
+        "laps": 12,
+        "totalLaps": 42,
+        "led": 0,
+        "dnf": true,
+        "irating": 1026
+    },
+    {
+        "subsessionId": 13964652,
+        "laps": 50,
+        "totalLaps": 50,
+        "led": 0,
+        "dnf": false,
+        "irating": 1087
+    },
+    {
+        "subsessionId": 13964035,
+        "laps": 29,
+        "totalLaps": 50,
+        "led": 0,
+        "dnf": true,
+        "irating": 1006
+    },
+    {
+        "subsessionId": 13957365,
+        "laps": 2,
+        "totalLaps": 50,
+        "led": 0,
+        "dnf": true,
+        "irating": 1019
+    },
+    {
+        "subsessionId": 13956747,
+        "laps": 3,
+        "totalLaps": 50,
+        "led": 0,
+        "dnf": true,
+        "irating": 1104
+    },
+    {
+        "subsessionId": 13942333,
+        "laps": 38,
+        "totalLaps": 50,
+        "led": 0,
+        "dnf": true,
+        "irating": 1208
+    }
+]

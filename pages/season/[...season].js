@@ -5,6 +5,7 @@ import Layout from "../../components/Layout";
 import Table from "../../components/Table";
 import WeekTable from '../../components/WeekTable';
 import IRatingChart from '../../components/IRatingChart';
+import SeasonPoints from '../../components/SeasonPoints';
 
 class Season extends React.Component {
     static async getInitialProps({ query }) {
@@ -22,6 +23,7 @@ class Season extends React.Component {
         return (
             <Layout title={`IR Stats ${year} Season ${season}`} backButton={true}>
                 <WeekTable weekData={weekData}></WeekTable>
+                <SeasonPoints raceData={raceData} trackData={trackData}></SeasonPoints>
                 <Table raceData={raceData} trackData={trackData}></Table>
                 <IRatingChart raceData={raceData}></IRatingChart>
             </Layout>

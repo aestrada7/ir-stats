@@ -118,5 +118,12 @@
         "shortName": "Chicagoland",
         "location": "Joliet, IL",
         "length": 1.5
+    },
+    {
+        "id": 237,
+        "name": "World Wide Technology Raceway",
+        "shortName": "Gateway",
+        "location": "Madison, IL",
+        "length": 1.25
     }
 ]

@@ -553,6 +553,6 @@ body {
     background: linear-gradient(var(--white), var(--background-light-grey));
 }
 
-.is-used {
+.points-container .season-points .is-used {
     color: var(--accent-color);
 }

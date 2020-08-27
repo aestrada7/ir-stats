@@ -23,7 +23,7 @@ class Season extends React.Component {
         return (
             <Layout title={`IR Stats ${year} Season ${season}`} backButton={true}>
                 <WeekTable weekData={weekData}></WeekTable>
-                <SeasonPoints raceData={raceData} trackData={trackData}></SeasonPoints>
+                {year != "career" && <SeasonPoints raceData={raceData} trackData={trackData}></SeasonPoints>}
                 <Table raceData={raceData} trackData={trackData}></Table>
                 <IRatingChart raceData={raceData}></IRatingChart>
             </Layout>

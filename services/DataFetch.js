@@ -1,6 +1,6 @@
 import fetch from "isomorphic-fetch";
-
-const SERVER_URL = `http://localhost:3000`;
+import { iracingAuthentication } from "./Authentication";
+import * as Config from "./Config";
 
 /**
  * Retrieves the race data information and sends it back as a readable JSON object.
@@ -11,13 +11,15 @@ const SERVER_URL = `http://localhost:3000`;
  * @returns {object} The JSON object with the race data.
  */
 export const raceDataFetch = async (year, season, week) => {
-    //const SERVICE_URL = "https://members.iracing.com/memberstats/member/GetResults?custid=182407&showraces=1&showquals=0&showtts=0&showops=0&showofficial=1&showunofficial=0&showrookie=1&showclassd=1&showclassc=1&showclassb=1&showclassa=1&showpro=1&showprowc=1&lowerbound=0&upperbound=25&sort=start_time&order=desc&format=json&category%5B%5D=1&seasonyear=2020&seasonquarter=3";
+    //const SERVICE_URL = `https://members.iracing.com/memberstats/member/GetResults?custid=182407&showraces=1&showquals=0&showtts=0&showops=0&showofficial=1&showunofficial=0&showrookie=1&showclassd=1&showclassc=1&showclassb=1&showclassa=1&showpro=1&showprowc=1&lowerbound=0&upperbound=250&sort=start_time&order=desc&format=json&category%5B%5D=1&seasonyear=2020&seasonquarter=3`;
+    //iracingAuthentication('usr', 'pwd');
+
     const car = 'dallara-ir18';
-    const STATS_SERVICE_URL = `${SERVER_URL}/api/${car}/stats-${year}-s${season}.json`;
+    const STATS_SERVICE_URL = `${Config.SERVER_URL}/api/${car}/stats-${year}-s${season}.json`;
     const response = await fetch(STATS_SERVICE_URL);
     const data = await response.json();
 
-    const STATS_ADDENDUM_SERVICE_URL = `${SERVER_URL}/api/${car}/stats-${year}-s${season}-addendum.json`;
+    const STATS_ADDENDUM_SERVICE_URL = `${Config.SERVER_URL}/api/${car}/stats-${year}-s${season}-addendum.json`;
     const responseAdd = await fetch(STATS_ADDENDUM_SERVICE_URL);
     const dataAdd = await responseAdd.json();
 
@@ -37,8 +39,9 @@ export const raceDataFetchAll = async () => {
     const raceData19S3 = await raceDataFetch(2019, 3);
     const raceDataS2 = await raceDataFetch(2020, 2);
     const raceDataS3 = await raceDataFetch(2020, 3);
+    const raceDataS4 = await raceDataFetch(2020, 4);
 
-    return raceDataS3.concat(raceDataS2).concat(raceData19S3).concat(raceData18S4).concat(raceData15S3);
+    return raceDataS4.concat(raceDataS3).concat(raceDataS2).concat(raceData19S3).concat(raceData18S4).concat(raceData15S3);
 }
 
 /**
@@ -47,10 +50,14 @@ export const raceDataFetchAll = async () => {
  * @returns {object} The JSON object with the track data.
  */
 export const trackDataFetch = async () => {
-    const TRACK_SERVICE_URL = `${SERVER_URL}/api/track-data.json`;
+    const TRACK_SERVICE_URL = `${Config.SERVER_URL}/api/track-data.json`;
 
     const trackResponse = await fetch(TRACK_SERVICE_URL);
     return await trackResponse.json();
+}
+
+export const subsessionDataFetch = async (subsessionId) => {
+    const SUBSESSION_SERVICE_URL = `https://members.iracing.com/membersite/member/EventResult.do?subsessionid=${subsessionId}&custid=182407`;
 }
 
 /**
@@ -104,4 +111,63 @@ function appendData(data, newData) {
         });
     }
     return data;
+}
+
+/**
+ * Stores information given a provided key. Uses NeDB.
+ * 
+ * @param {string} year The year that will be used as part of the key.
+ * @param {string} season The season that will be used as part of the key.
+ * @param {string} week The week that will be used as part of the key.
+ * @param {number} car The car that will be used as part of the key.
+ * @param {string} value The value that will be stored.
+ * @returns null
+ */
+export const messageSet = async (year, season, week, car, value) => {
+    const MESSAGE_API_URL = `${Config.SERVER_URL}/api/message/182407/${car}/${year}/${season}/${week}/${escape(value)}`;
+    const messageResponse = await fetch(MESSAGE_API_URL, {method: `PUT`});
+    console.log(await messageResponse.json());
+}
+
+/**
+ * Retrieves information given a provided key. Uses NeDB.
+ * 
+ * @param {string} year The year that will be used as part of the key.
+ * @param {string} season The season that will be used as part of the key.
+ * @param {string} week The week that will be used as part of the key.
+ * @param {number} car The car that will be used as part of the key.
+ * @returns {string} The stored value in the provided key.
+ */
+export const messageGet = async (year, season, week, car) => {
+    const MESSAGE_API_URL = `${Config.SERVER_URL}/api/message/182407/${car}/${year}/${season}/${week}`;
+    const messageResponse = await fetch(MESSAGE_API_URL);
+    const messageObj = await messageResponse.json();
+    return messageObj.message;
+}
+
+/**
+ * Retrieves information given a provided key. Uses localStorage.
+ * 
+ * @param {string} year The year that will be used as part of the key.
+ * @param {string} season The season that will be used as part of the key.
+ * @param {string} week The week that will be used as part of the key.
+ * @param {number} car The car that will be used as part of the key.
+ * @returns {string} The stored value in the provided key.
+ */
+export const messageGetLocal = (year, season, week, car) => {
+    return localStorage.getItem(`ir-stats-${year}-${season}-${week}-${car}`);
+}
+
+/**
+ * Stores information given a provided key. Uses localStorage.
+ * 
+ * @param {string} year The year that will be used as part of the key.
+ * @param {string} season The season that will be used as part of the key.
+ * @param {string} week The week that will be used as part of the key.
+ * @param {number} car The car that will be used as part of the key.
+ * @param {string} value The value that will be stored.
+ * @returns null
+ */
+export const messageSetLocal = async (year, season, week, car, value) => {
+    localStorage.setItem(`ir-stats-${year}-${season}-${week}-${car}`, value);
 }

@@ -36,6 +36,7 @@ class SeasonPoints extends React.Component {
                 {pointsDetail ?
                     <React.Fragment>
                         <div className="season-points">
+                            <button className="season-points-close" onClick={() => this.pointsDetail(false)}></button>
                             {pointsInfo.weeks.map(weekData => (
                                 <div key={weekData.week} className={`week-pts ${weekData.inUse ? 'is-used' : ''}`}>
                                     <div><TrackName id={weekData.trackid} trackData={trackData} value="shortName"></TrackName> - {weekData.weekPoints}</div>

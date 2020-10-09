@@ -1,3 +1,5 @@
+import fetch from "isomorphic-fetch";
+
 /**
  * Decodes an encoded string
  * 
@@ -38,31 +40,4 @@ export const itemExists = (item, arr) => {
         return arr.filter(x => x == item).length > 0;
     }
     return false;
-}
-
-/**
- * Stores information given a provided key. Uses localStorage.
- * 
- * @param {string} year The year that will be used as part of the key.
- * @param {string} season The season that will be used as part of the key.
- * @param {string} week The week that will be used as part of the key.
- * @param {number} car The car that will be used as part of the key.
- * @param {string} value The value that will be stored.
- * @returns null
- */
-export const messageSet = (year, season, week, car, value) => {
-    localStorage.setItem(`ir-stats-${year}-${season}-${week}-${car}`, value);
-}
-
-/**
- * Retrieves information given a provided key. Uses localStorage.
- * 
- * @param {string} year The year that will be used as part of the key.
- * @param {string} season The season that will be used as part of the key.
- * @param {string} week The week that will be used as part of the key.
- * @param {number} car The car that will be used as part of the key.
- * @returns {string} The stored value in the provided key.
- */
-export const messageGet = (year, season, week, car) => {
-    return localStorage.getItem(`ir-stats-${year}-${season}-${week}-${car}`);
 }

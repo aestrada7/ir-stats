@@ -1,5 +1,6 @@
-import { raceDataFetch, trackDataFetch } from "../../services/DataFetch";
+import { raceDataFetch, trackDataFetch, messageGet } from "../../services/DataFetch";
 import { weekDataBuild } from "../../services/WeekDataStats";
+import * as Config from "../../services/Config";
 
 import Layout from '../../components/Layout';
 import Table from '../../components/Table';
@@ -18,16 +19,17 @@ class Week extends React.Component {
         const trackData = await trackDataFetch();
         const weekData = weekDataBuild(raceData);
         const car = raceData[0].carid;
-        return { pageTitle, raceData, trackData, weekData, season, year, week, car };
+        const notes = Config.DATA_PROVIDER === Config.DATABASE_NEDB ? await messageGet(year, season, week, car) : '';
+        return { pageTitle, raceData, trackData, weekData, season, year, week, car, notes };
     }
 
     render() {
-        const { pageTitle, raceData, trackData, weekData, season, year, week, car } = this.props;
+        const { pageTitle, raceData, trackData, weekData, season, year, week, car, notes } = this.props;
         return (
             <Layout title={pageTitle} backButton={true}>
                 <WeekTable weekData={weekData}></WeekTable>
                 <Table raceData={raceData} trackData={trackData}></Table>
-                <Notes season={season} year={year} week={week} car={car}></Notes>
+                <Notes season={season} year={year} week={week} car={car} notes={notes}></Notes>
                 <ImageCarousel season={season} year={year} week={week}></ImageCarousel>
                 <IRatingChart raceData={raceData}></IRatingChart>
             </Layout>

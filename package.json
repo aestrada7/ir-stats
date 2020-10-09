@@ -1,8 +1,10 @@
 {
   "name": "ir-stats",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "dependencies": {
+    "form-data": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "nedb": "^1.8.0",
     "next": "^9.5.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -14,5 +16,6 @@
     "start": "next start"
   },
   "author": "aestrada7",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {}
 }

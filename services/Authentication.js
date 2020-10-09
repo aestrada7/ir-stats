@@ -1,3 +1,6 @@
+import FormData from "form-data";
+import fetch from "isomorphic-fetch";
+
 /**
  * Performs a basic authentication check.
  * 
@@ -33,4 +36,21 @@ function authenticate(user, pass) {
     } else {
         return false;
     }
+}
+
+
+export const iracingAuthentication = async (username, password) => {
+    const IRACING_LOGIN_URL = `https://members.iracing.com/membersite/Login`;
+    let formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    const login = await fetch(IRACING_LOGIN_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData
+    });
+    console.log(login);
 }

@@ -125,5 +125,19 @@
         "shortName": "Gateway",
         "location": "Madison, IL",
         "length": 1.25
+    },
+    {
+        "id": 131,
+        "name": "New Hampshire Motor Speedway",
+        "shortName": "Loudon",
+        "location": "Loudon, NH",
+        "length": 1.058
+    },
+    {
+        "id": 198,
+        "name": "Twin Ring Motegi",
+        "shortName": "Motegi",
+        "location": "Hiyama, Motegi",
+        "length": 1.549
     }
 ]

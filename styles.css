@@ -556,3 +556,38 @@ body {
 .points-container .season-points .is-used {
     color: var(--accent-color);
 }
+
+.points-container .season-points-close {
+    position: absolute;
+    top: -23px;
+    right: -1px;
+    width: 28px;
+    height: 28px;
+    background-color: var(--white);
+    border: 1px solid var(--accent-color);
+    cursor: pointer;
+    z-index: 999;
+}
+
+.points-container .season-points-close:hover:before,
+.points-container .season-points-close:hover:after {
+    background-color: var(--black);
+}
+
+.points-container .season-points-close:before,
+.points-container .season-points-close:after {
+    position: absolute;
+    top: 0;
+    height: 24px;
+    width: 2px;
+    content: ' ';
+    background-color: var(--accent-color);
+}
+
+.points-container .season-points-close:before {
+    transform: rotate(45deg);
+}
+
+.points-container .season-points-close:after {
+    transform: rotate(-45deg);
+}

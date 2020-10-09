@@ -15,6 +15,7 @@ export const calculateSeasonPoints = (raceData) => {
     };
 
     //to-do: how to determine if a season is leap or not ?...
+    //to-do-update! use subsessionDataFetch and grab the `maxweeks` property 
 
     const weeksRaced = [...new Set(raceData.map(item => item.race_week_num))];
     pointsObj.weeks.push(...weeksRaced.map(weekItem => calculateWeekPoints(raceData, weekItem)));

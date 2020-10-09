@@ -139,5 +139,12 @@
         "shortName": "Motegi",
         "location": "Hiyama, Motegi",
         "length": 1.549
+    },
+    {
+        "id": 134,
+        "name": "Indianapolis Motor Speedway - Road Course",
+        "shortName": "Indianapolis Road Course",
+        "location": "Indianapolis, IN",
+        "length": 2.605
     }
 ]

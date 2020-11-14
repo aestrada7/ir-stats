@@ -41,6 +41,16 @@ class Index extends React.Component {
                             <span>All Positions Challenge</span>
                         </button>
                     </Link>
+                    <Link href="/compare">
+                        <button className="main-link">
+                            <span>Driver Comparison</span>
+                        </button>
+                    </Link>
+                    <button className="main-link" onClick={() => this.showSyncWindow()}>
+                        <span>Sync Data</span>
+                    </button>
+                </div>
+                <div className="main-menu">
                     <Link href="/season/career">
                         <button className="main-link">
                             <span>Career Stats</span>
@@ -76,9 +86,6 @@ class Index extends React.Component {
                             <span>2015 Season 3</span>
                         </button>
                     </Link>
-                    <button className="main-link" onClick={() => this.showSyncWindow()}>
-                        <span>Sync Data</span>
-                    </button>
                 </div>
                 {displaySyncWindow ?
                     <div className="sync-window">

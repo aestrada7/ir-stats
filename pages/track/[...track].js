@@ -17,17 +17,24 @@ class Track extends React.Component {
         const trackData = await trackDataFetch();
         const track = trackData.filter(x => x.id == trackId)[0].name;
         const legacyTrackIds = !hideLegacy ? trackData.filter(x => x.id == trackId)[0].legacyIds || null : null;
+        let newTrackIds = [];
+        try {
+            newTrackIds.push(trackData.filter(x => x.legacyIds == trackId)[0].id || null);
+        } catch(e) {
+            //do nothing
+        }
+
         const pageTitle = `Results at ${track}`;
 
         const raceDataAll = await raceDataFetchAll();
-        const raceData = raceDataAll.filter(x => x.trackid == trackId || itemExists(x.trackid, legacyTrackIds));
+        const raceData = raceDataAll.filter(x => x.trackid == trackId || itemExists(x.trackid, legacyTrackIds) || itemExists(x.trackid, newTrackIds));
 
         const weekData = weekDataBuild(raceData);
-        return { pageTitle, raceData, trackData, weekData, trackId, legacyTrackIds };
+        return { pageTitle, raceData, trackData, weekData, trackId, legacyTrackIds, newTrackIds };
     }
 
     render() {
-        const { pageTitle, trackData, weekData, raceData, trackId, legacyTrackIds } = this.props;
+        const { pageTitle, trackData, weekData, raceData, trackId, legacyTrackIds, newTrackIds } = this.props;
         return (
             <Layout title={pageTitle} backButton={true}>
                 { legacyTrackIds ? <Link href={`/track/${trackId}/1`}><button className="hide-legacy">Hide Legacy Data</button></Link> : '' }

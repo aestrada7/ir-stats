@@ -171,3 +171,23 @@ export const messageGetLocal = (year, season, week, car) => {
 export const messageSetLocal = async (year, season, week, car, value) => {
     localStorage.setItem(`ir-stats-${year}-${season}-${week}-${car}`, value);
 }
+
+/**
+ * Retrieves driver data information and sends it back as a readable JSON object.
+ * 
+ * @param {string} text A part of the name to search for, or a driver id.
+ * @returns {object} The JSON object with the driver data.
+ */
+export const driverSearch = async (text) => {
+    if(text) {
+        const MAX_ITEMS = 5;
+        const DRIVER_SERVICE_URL = `./api/driver/${text}?limit=${MAX_ITEMS}`;
+
+        const response = await fetch(DRIVER_SERVICE_URL);
+        const data = await response.json();
+
+        return data;
+    } else {
+        return [];
+    }
+}

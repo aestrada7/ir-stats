@@ -8,6 +8,7 @@
     },
     {
         "id": 357,
+        "legacyIds": [121],
         "name": "Texas Motor Speedway",
         "shortName": "Texas",
         "location": "Fort Worth, TX",
@@ -37,7 +38,7 @@
     {
         "id": 192,
         "name": "Daytona International Speedway - Road Course",
-        "shortName": "Daytona Road",
+        "shortName": "Daytona Road Course",
         "location": "Daytona, FL",
         "length": 3.81
     },
@@ -107,6 +108,7 @@
     },
     {
         "id": 277,
+        "legacyIds": [136],
         "name": "Pocono Raceway",
         "shortName": "Pocono",
         "location": "Long Pond, PA",
@@ -146,5 +148,34 @@
         "shortName": "Indianapolis Road Course",
         "location": "Indianapolis, IN",
         "length": 2.605
+    },
+    {
+        "id": 121,
+        "name": "Texas Motor Speedway (2009)",
+        "shortName": "Texas (2009)",
+        "location": "Fort Worth, TX",
+        "length": 1.5
+    },
+    {
+        "id": 235,
+        "legacyIds": [104],
+        "name": "Phoenix Raceway",
+        "shortName": "Phoenix",
+        "location": "Glendale, AZ",
+        "length": 1.00
+    },
+    {
+        "id": 136,
+        "name": "Pocono Raceway (2009)",
+        "shortName": "Pocono (2009)",
+        "location": "Long Pond, PA",
+        "length": 2.5
+    },
+    {
+        "id": 191,
+        "name": "Daytona International Speedway",
+        "shortName": "Daytona",
+        "location": "Daytona, FL",
+        "length": 2.5
     }
 ]

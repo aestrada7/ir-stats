@@ -40,7 +40,7 @@ function authenticate(user, pass) {
 
 
 export const iracingAuthentication = async (username, password) => {
-    const IRACING_LOGIN_URL = `https://members.iracing.com/membersite/Login`;
+    const IRACING_LOGIN_URL = `https://members.iracing.com/membersite/login.jsp`;
     let formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);

@@ -94,6 +94,7 @@ class Index extends React.Component {
                 </div>
                 {displaySyncWindow ?
                     <div className="sync-window">
+                        <div className="sync-overlay"></div>
                         {!isLoggedIn ? 
                             <div className="login-form">
                                 <span>Username:</span>

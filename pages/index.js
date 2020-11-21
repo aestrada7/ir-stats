@@ -1,7 +1,6 @@
 import Link from 'next/link';
-
-import { iracingAuthentication } from '../services/Authentication';
 import Layout from '../components/Layout';
+import { seasonSync } from '../services/DataFetch';
 
 class Index extends React.Component {
     constructor(props) {
@@ -9,9 +8,15 @@ class Index extends React.Component {
 
         this.state = {
             displaySyncWindow: false,
-            isLoggedIn: false,
-            username: '',
-            password: ''
+            fields: {
+                username: '',
+                password: '',
+                custid: '',
+                car: '',
+                year: '',
+                season: '',
+                irsso_v2: ''
+            }
         };
     }
 
@@ -19,20 +24,20 @@ class Index extends React.Component {
         this.setState({ displaySyncWindow: true });
     }
 
-    updateUser(e) {
-        this.setState({ username: e.target.value });
+    updateField(e, field) {
+        let temp = this.state.fields;
+        temp[field] = e.target.value;
+        this.setState({ fields: temp });
     }
 
-    updatePassword(e) {
-        this.setState({ password: e.target.value });
-    }
-
-    attemptLogin() {
-        iracingAuthentication(this.state.username, this.state.password);
+    async performSync() {
+        let { username, password, custid, car, year, season, irsso_v2 } = this.state.fields;
+        let res = await seasonSync(username, password, custid, car, year, season, irsso_v2);
+        console.log(res);
     }
 
     render() {
-        const { displaySyncWindow, isLoggedIn, username, password } = this.state;
+        const { displaySyncWindow, isLoggedIn } = this.state;
         return (
             <Layout title="IR Stats">
                 <div className="main-menu">
@@ -91,9 +96,21 @@ class Index extends React.Component {
                     <div className="sync-window">
                         {!isLoggedIn ? 
                             <div className="login-form">
-                                <input type="text" onChange={e => this.updateUser(e)}></input>
-                                <input type="password" onChange={e => this.updatePassword(e)}></input>
-                                <button className="login" onClick={() => this.attemptLogin()}>Login</button>
+                                <span>Username:</span>
+                                <input type="text" onChange={e => this.updateField(e, 'username')}></input>
+                                <span>Password:</span>
+                                <input type="password" onChange={e => this.updateField(e, 'password')}></input>
+                                <span>Customer Id:</span>
+                                <input type="text" onChange={e => this.updateField(e, 'custid')}></input>
+                                <span>Car Id:</span>
+                                <input type="text" onChange={e => this.updateField(e, 'car')}></input>
+                                <span>Year:</span>
+                                <input type="text" onChange={e => this.updateField(e, 'year')}></input>
+                                <span>Season:</span>
+                                <input type="text" onChange={e => this.updateField(e, 'season')}></input>
+                                <span>irsso_v2 cookie:</span>
+                                <input type="text" onChange={e => this.updateField(e, 'irsso_v2')}></input>
+                                <button className="sync" onClick={() => this.performSync()}>Sync Data</button>
                             </div>
                         : '' }
                     </div>

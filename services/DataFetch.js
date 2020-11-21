@@ -1,3 +1,4 @@
+const axios = require('axios');
 import fetch from "isomorphic-fetch";
 import { iracingAuthentication } from "./Authentication";
 import * as Config from "./Config";
@@ -67,7 +68,7 @@ export const subsessionDataFetch = async (subsessionId) => {
  * @param {number} [week] The number of the week within the season (zero based).
  * @returns {object} A new object with readable properties.
  */
-function transformData(data, week) {
+export const transformData = (data, week) => {
     let newData = [];
     newData = data.d.r.map(x => renameProps(x, data.m));
 
@@ -190,4 +191,39 @@ export const driverSearch = async (text) => {
     } else {
         return [];
     }
+}
+
+/**
+ * Retrieves the race data information and sends it back as a readable JSON object.
+ * 
+ * @param {custid} custid The driver id.
+ * @param {car} car The car id to use.
+ * @param {number} [year] A full year as an integer, use -1 for any year
+ * @param {number} [season] A quarter of the season (number 1,2,3 or 4), use -1 for any season
+ * @param {number} [week] The number of the week within the season (zero based), use -1 for any week
+ * @param {number} [subsessionIds] An array of subsessionIds to filter by.
+ * @returns {object} The JSON object with the race data.
+ */
+export const raceResultsFetch = async (custid, car, year, season, week, subsessionIds) => {
+    const RESULTS_SERVICE_URL = `./api/results`;
+
+    const response = await axios.post(RESULTS_SERVICE_URL, {
+        custid,
+        car,
+        year,
+        season,
+        week,
+        subsessionIds
+    });
+
+    return response.data;
+}
+
+export const seasonSync = async (username, password, custid, car, year, season, irsso_v2) => {
+    const SYNC_SERVICE_URL = `./api/sync?username=${username}&password=${password}&custid=${custid}&car=${car}&year=${year}&season=${season}&irsso_v2=${irsso_v2}`;
+
+    const response = await axios.get(SYNC_SERVICE_URL);
+    console.log(response);
+
+    return response.data;
 }

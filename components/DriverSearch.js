@@ -1,6 +1,7 @@
 import { decode } from "../services/Common";
 import { driverSearch } from "../services/DataFetch";
 import { DebounceInput } from 'react-debounce-input';
+import * as KeyCodes from "../services/KeyCodes";
 
 class DriverSearch extends React.Component {
     constructor(props) {
@@ -8,7 +9,59 @@ class DriverSearch extends React.Component {
 
         this.state = {
             driverSearch: props.driverSearch,
-            autocompleteOptions: []
+            autocompleteOptions: [],
+            focusedItem: -1,
+            selectedItem: {}
+        }
+    }
+
+    handleKeyDown = event => {
+        const { keyCode } = event;
+
+        if(keyCode === KeyCodes.DOWN_ARROW) {
+            this.focusItem(1);
+        }
+
+        if(keyCode === KeyCodes.UP_ARROW) {
+            this.focusItem(-1);
+        }
+
+        if(keyCode === KeyCodes.ENTER) {
+            this.selectFocusedItem();
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener('keydown', this.handleKeyDown);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.handleKeyDown);
+    }
+
+    clearAutocomplete() {
+        this.setState({ autocompleteOptions: [], focusedItem: -1 });
+    }
+
+    focusItem(direction) {
+        let currentItem = this.state.focusedItem;
+        let newValue = 0;
+        if(currentItem + direction < 0) {
+            newValue = this.state.autocompleteOptions.length - 1;
+        } else if(currentItem + direction > this.state.autocompleteOptions.length - 1) {
+            newValue = 0;
+        } else {
+            newValue = currentItem + direction;
+        }
+        this.setState({ focusedItem: newValue });
+    }
+
+    selectFocusedItem() {
+        if(this.state.focusedItem !== -1) {
+            this.setState({ selectedItem: this.state.autocompleteOptions[this.state.focusedItem] });
+            this.setState({ driverSearch: decode(this.state.selectedItem.displayname) });
+            this.clearAutocomplete();
+            this.props.parent.selectDriver(this.state.selectedItem);
         }
     }
 
@@ -18,19 +71,24 @@ class DriverSearch extends React.Component {
     }
 
     render() {
-        const { driverSearch, autocompleteOptions } = this.state;
+        const { driverSearch, autocompleteOptions, focusedItem, selectedItem } = this.state;
 
         return (
-            <div className="">
+            <div className="autocomplete-container">
                 <React.Fragment>
                     <DebounceInput
-                        type="text" className="note-edit"
+                        type="text" className="autocomplete-input"
                         minLength={2} value={driverSearch} debounceTimeout={500}
+                        onBlur={e => this.clearAutocomplete()}
                         onChange={e => this.updateText(e)}>
                     </DebounceInput>
-                    { autocompleteOptions.map(item => (
-                        <div>{decode(item.displayname)}</div>
-                    ))}
+                    { autocompleteOptions.length > 0 ? 
+                        <div className="autocomplete-list-container">
+                            { autocompleteOptions.map((item, idx) => (
+                                <div className={`autocomplete-item ${idx === focusedItem ? 'focused' : ''}`}>{decode(item.displayname)}</div>
+                            ))}
+                        </div>
+                    : '' }
                 </React.Fragment>
             </div>
         );

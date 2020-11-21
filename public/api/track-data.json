@@ -177,5 +177,12 @@
         "shortName": "Daytona",
         "location": "Daytona, FL",
         "length": 2.5
+    },
+    {
+        "id": 20,
+        "name": "Homestead Miami Speedway",
+        "shortName": "Homestead",
+        "location": "Homestead, FL",
+        "length": 1.5
     }
 ]

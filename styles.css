@@ -38,6 +38,7 @@
 
     /* Layout */
     --app-width: 75%;
+    --autocomplete-max-width: 300px;
 }
 
 body {
@@ -193,6 +194,22 @@ body {
 
 .col-2 {
     width: 16.66%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-4 {
+    width: 33.33%;
+}
+
+.col-5 {
+    width: 41.67%;
+}
+
+.col-6 {
+    width: 50%;
 }
 
 /* -- positions -- */
@@ -590,4 +607,36 @@ body {
 
 .points-container .season-points-close:after {
     transform: rotate(-45deg);
+}
+
+/* autocomplete */
+
+.autocomplete-container {
+
+}
+
+.autocomplete-container .autocomplete-input {
+    font-family: var(--main-font);
+    font-size: var(--font-normal);
+    width: var(--autocomplete-max-width);
+}
+
+.autocomplete-container .autocomplete-list-container {
+    border: 1px solid var(--accent-color);
+    max-width: var(--autocomplete-max-width);
+}
+
+.autocomplete-container .autocomplete-item {
+    padding: 5px;
+}
+
+.autocomplete-container .autocomplete-item:nth-child(odd) {
+    background-color: var(--background-light-grey);
+}
+
+.autocomplete-container .autocomplete-item:hover,
+.autocomplete-container .autocomplete-item.focused {
+    cursor: pointer;
+    background-color: var(--accent-color);
+    color: var(--white);
 }

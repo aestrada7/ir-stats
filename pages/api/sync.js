@@ -20,7 +20,7 @@ export default async function messageHandler(req, res) {
             console.log('=========== NEW ATTEMPT =========');
             let loginAttempt = await iracingAuthentication(username, password);
             let cookies = loginAttempt.headers['set-cookie'];
-            //To-do: this is kind of a stopgap, unable to get this through normal requests, we retrieve it manually. It works
+            //To-do: this is kind of a stopgap, unable to get this through normal requests, we retrieve it manually. It works but it sucks
             cookies.push(`irsso_membersv2=${irsso_v2};`);
             let rawData = await getResults(cookies, cust_id, car, year, season);
             let resultsData = getResultsData(rawData, cookies);

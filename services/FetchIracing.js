@@ -51,7 +51,7 @@ export const processSubsession = async(subsessionid, cookies) => {
         withCredentials: true
     });
 
-    const rawSessionData = res.data.rows.filter(row => row.simsesname === 'RACE');
+    const rawSessionData = res.data.rows.filter(row => (row.simsesname === 'RACE' || row.simsestypename === 'Race'));
     const raceResults = new Datastore({ filename: 'data/raceResults.db', autoload: true });
     const drivers = new Datastore({ filename: 'data/drivers.db', autoload: true });
 
@@ -64,7 +64,8 @@ export const processSubsession = async(subsessionid, cookies) => {
         season_year: res.data.season_year,
         race_week_num: res.data.race_week_num,
         trackid: res.data.trackid,
-        maxweeks: res.data.maxweeks
+        maxweeks: res.data.maxweeks,
+        seriesid: res.data.seriesid
     };
 
     for(const row in rawSessionData) {
@@ -91,7 +92,7 @@ export const processSubsessionResult = async(raceResults, row, subsession, drive
         carid: row.carid,
         led: row.lapslead,
         dnf: row.reasonout != 'Running',
-        champpoints: row.aggchamppoints,
+        champpoints: row.aggchamppoints || row.champpoints,
         irating: row.newirating,
         displayname: row.displayname,
         sessionstarttime: row.sessionstarttime,
@@ -102,7 +103,8 @@ export const processSubsessionResult = async(raceResults, row, subsession, drive
         race_week_num: subsession.race_week_num,
         trackid: subsession.trackid,
         start_time: subsession.start_time,
-        maxweeks: subsession.maxweeks
+        maxweeks: subsession.maxweeks,
+        seriesid: subsession.seriesid
     };
 
     const driverData = {

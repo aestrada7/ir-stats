@@ -45,7 +45,7 @@ class Table extends React.Component {
                     <React.Fragment key={raceItem.subsessionid}>
                         <div className="table-row flex">
                             <TableItem columns="2">
-                                <WeekLink date={raceItem.start_date} week={raceItem.race_week_num}
+                                <WeekLink date={raceItem.sessionstarttime} week={raceItem.race_week_num} epochTime={true}
                                           season={raceItem.season_quarter} year={raceItem.season_year}></WeekLink>
                             </TableItem>
                             <TableItem columns="2">

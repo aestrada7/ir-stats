@@ -15,10 +15,10 @@ class Compare extends React.Component {
 
     async selectDriver(selectedDriver) {
         this.setState({ selectedDriver });
-        let comparisonDriverData = await raceResultsFetch(selectedDriver.custid, 99);
+        let comparisonDriverData = await raceResultsFetch(selectedDriver.custid, [99, 57]);
         let comparisonDriverSubsessions = [];
         comparisonDriverData.map(result => comparisonDriverSubsessions.push(result.subsessionid));
-        let myCurrentDriverData = await raceResultsFetch(182407, 99, -1, -1, -1, comparisonDriverSubsessions);
+        let myCurrentDriverData = await raceResultsFetch(182407, [99, 57], null, null, null, comparisonDriverSubsessions);
 
         let compareData = {
             selectedDriverData: comparisonDriverData.sort((a, b) => (a.subsessionid > b.subsessionid) ? 1 : -1),

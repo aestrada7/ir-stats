@@ -12,20 +12,8 @@ import * as Config from "./Config";
  * @returns {object} The JSON object with the race data.
  */
 export const raceDataFetch = async (year, season, week) => {
-    //const SERVICE_URL = `https://members.iracing.com/memberstats/member/GetResults?custid=182407&showraces=1&showquals=0&showtts=0&showops=0&showofficial=1&showunofficial=0&showrookie=1&showclassd=1&showclassc=1&showclassb=1&showclassa=1&showpro=1&showprowc=1&lowerbound=0&upperbound=250&sort=start_time&order=desc&format=json&category%5B%5D=1&seasonyear=2020&seasonquarter=3`;
-    //iracingAuthentication('usr', 'pwd');
-
-    const car = 'dallara-ir18';
-    const STATS_SERVICE_URL = `${Config.SERVER_URL}/api/${car}/stats-${year}-s${season}.json`;
-    const response = await fetch(STATS_SERVICE_URL);
-    const data = await response.json();
-
-    const STATS_ADDENDUM_SERVICE_URL = `${Config.SERVER_URL}/api/${car}/stats-${year}-s${season}-addendum.json`;
-    const responseAdd = await fetch(STATS_ADDENDUM_SERVICE_URL);
-    const dataAdd = await responseAdd.json();
-
-    let transformedData = transformData(data, week);
-    return appendData(transformedData, dataAdd);
+    // to-do: use seriesid instead of carid, as that will only break stuff
+    return raceResultsFetch(182407, [99, 57], year, season, week);
 }
 
 /**
@@ -34,15 +22,7 @@ export const raceDataFetch = async (year, season, week) => {
  * @returns {object} The JSON object with the race data.
  */
 export const raceDataFetchAll = async () => {
-    //to do: improve this, this sucks
-    const raceData15S3 = await raceDataFetch(2015, 3);
-    const raceData18S4 = await raceDataFetch(2018, 4);
-    const raceData19S3 = await raceDataFetch(2019, 3);
-    const raceDataS2 = await raceDataFetch(2020, 2);
-    const raceDataS3 = await raceDataFetch(2020, 3);
-    const raceDataS4 = await raceDataFetch(2020, 4);
-
-    return raceDataS4.concat(raceDataS3).concat(raceDataS2).concat(raceData19S3).concat(raceData18S4).concat(raceData15S3);
+    return raceResultsFetch(182407, [99, 57]);
 }
 
 /**
@@ -55,10 +35,6 @@ export const trackDataFetch = async () => {
 
     const trackResponse = await fetch(TRACK_SERVICE_URL);
     return await trackResponse.json();
-}
-
-export const subsessionDataFetch = async (subsessionId) => {
-    const SUBSESSION_SERVICE_URL = `https://members.iracing.com/membersite/member/EventResult.do?subsessionid=${subsessionId}&custid=182407`;
 }
 
 /**
@@ -95,6 +71,7 @@ function renameProps(item, dictionary) {
 }
 
 /**
+ * DEPRECATED
  * Appends missing data to the iracing's API object (done manually unfortunately - hopefully this will change in the future)
  * 
  * @param {object} data The original transformed data from iracing's API
@@ -205,7 +182,7 @@ export const driverSearch = async (text) => {
  * @returns {object} The JSON object with the race data.
  */
 export const raceResultsFetch = async (custid, car, year, season, week, subsessionIds) => {
-    const RESULTS_SERVICE_URL = `./api/results`;
+    const RESULTS_SERVICE_URL = `http://localhost:3000/api/results`;
 
     const response = await axios.post(RESULTS_SERVICE_URL, {
         custid,

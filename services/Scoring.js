@@ -1,5 +1,6 @@
 const SEASON_LEAP_WEEKS = 9;
 const SEASON_WEEKS = 8;
+const SEASON_MAX_WEEKS = 12;
 const RACE_PERCENT = 0.25;
 
 /**
@@ -14,14 +15,14 @@ export const calculateSeasonPoints = (raceData) => {
         weeks: []
     };
 
-    //to-do: how to determine if a season is leap or not ?...
-    //to-do-update! use subsessionDataFetch and grab the `maxweeks` property 
+    //determines if a season is leap or not
+    const maxWeeks = raceData[0].maxweeks === SEASON_MAX_WEEKS ? SEASON_WEEKS : SEASON_LEAP_WEEKS;
 
     const weeksRaced = [...new Set(raceData.map(item => item.race_week_num))];
     pointsObj.weeks.push(...weeksRaced.map(weekItem => calculateWeekPoints(raceData, weekItem)));
 
     pointsObj.weeks = pointsObj.weeks.sort((a, b) => b.weekPoints - a.weekPoints);
-    pointsObj.weeks.map((item, idx) => idx < SEASON_LEAP_WEEKS ? item.inUse = true : '');
+    pointsObj.weeks.map((item, idx) => idx < maxWeeks ? item.inUse = true : '');
     pointsObj.weeks = pointsObj.weeks.sort((a, b) => b.week - a.week);
     pointsObj.totalPoints = pointsObj.weeks.filter(x => x.inUse).reduce((acc, tot) => acc + tot.weekPoints, 0);
 

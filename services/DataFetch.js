@@ -1,6 +1,5 @@
 const axios = require('axios');
 import fetch from "isomorphic-fetch";
-import { iracingAuthentication } from "./Authentication";
 import * as Config from "./Config";
 
 /**
@@ -173,8 +172,8 @@ export const driverSearch = async (text) => {
 /**
  * Retrieves the race data information and sends it back as a readable JSON object.
  * 
- * @param {custid} custid The driver id.
- * @param {car} car The car id to use.
+ * @param {number} custid The driver id.
+ * @param {Array[number]} car The car ids to use.
  * @param {number} [year] A full year as an integer, use -1 for any year
  * @param {number} [season] A quarter of the season (number 1,2,3 or 4), use -1 for any season
  * @param {number} [week] The number of the week within the season (zero based), use -1 for any week
@@ -196,11 +195,35 @@ export const raceResultsFetch = async (custid, car, year, season, week, subsessi
     return response.data;
 }
 
+/**
+ * Wrapper for the Synchronization API, which attempts to grab information from iracing's servers to store it in ir-stats
+ * database. This is done per season.
+ * 
+ * @param {string} username Username (email) of an iracing account.
+ * @param {string} password Password of said account.
+ * @param {number} custid The customer ID which we'll be using to filter results.
+ * @param {number} car The car id that will be used.
+ * @param {number} year The year of the season that will be retrieved.
+ * @param {number} season The season quarter that will be retrieved.
+ * @param {string} irsso_v2 A stop-gap that likely will be removed in the future, this is the value of the irsso cookie set by
+ *                          iracing's login. Use this instead of username/password combination, provided it's copied from a valid request
+ * @returns {object} The JSON response provided by the Synchronization API.
+ */
 export const seasonSync = async (username, password, custid, car, year, season, irsso_v2) => {
     const SYNC_SERVICE_URL = `./api/sync?username=${username}&password=${password}&custid=${custid}&car=${car}&year=${year}&season=${season}&irsso_v2=${irsso_v2}`;
-
     const response = await axios.get(SYNC_SERVICE_URL);
-    console.log(response);
+    return response.data;
+}
 
+/**
+ * Retrieves all existing seasons stored in the database.
+ * 
+ * @param {number} custid The customer id to filter by.
+ * @param {number} seriesid The series id to filter by.
+ * @returns {object} The JSON object with all recorded seasons for the filtered combination.
+ */
+export const seasonList = async(custid, seriesid) => {
+    const SEASON_SERVICE_URL = `./api/seasons?custid=${custid}&seriesid=${seriesid}`;
+    const response = await axios.get(SEASON_SERVICE_URL);
     return response.data;
 }

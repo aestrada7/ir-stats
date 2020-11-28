@@ -25,6 +25,14 @@
     --background-p33: #ffcfcf;
     --foreground-p33: #000;
 
+    /* Notification Colors */
+    --background-error: #faa;
+    --foreground-error: #c00;
+    --background-warn: #ffa;
+    --foreground-warn: #000;
+    --background-info: #def;
+    --foreground-info: #07c;
+
     /* Border Related */
     --global-border-radius: 1px;
 
@@ -651,7 +659,7 @@ body {
 }
 
 .sync-overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -676,4 +684,50 @@ body {
     margin-bottom: 10px;
     font-family: var(--main-font);
     font-size: var(--font-normal);
+}
+
+.sync-window button.sync {
+    color: var(--accent-color);
+    background-color: var(--white);
+    border: 1px solid var(--accent-color);
+    font-family: var(--main-font);
+    font-size: var(--font-small);
+    padding: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.sync-window button.sync:hover,
+.sync-window button.sync:active {
+    color: var(--white);
+    background-color: var(--accent-color);
+}
+
+.carousel-close-button.sync-close {
+    top: -30px;
+    right: 10px;
+}
+
+.sync-window .sync-status {
+    width: calc(100% - 10px);
+    padding: 10px;
+    border-radius: var(--global-border-radius);
+}
+
+.sync-window .sync-status.error {
+    color: var(--foreground-error);
+    background-color: var(--background-error);
+    border: 1px solid var(--foreground-error);
+}
+
+.sync-window .sync-status.warn {
+    color: var(--foreground-warn);
+    background-color: var(--background-warn);
+    border: 1px solid var(--foreground-warn);
+}
+
+.sync-window .sync-status.info {
+    color: var(--foreground-info);
+    background-color: var(--background-info);
+    border: 1px solid var(--foreground-info);
 }

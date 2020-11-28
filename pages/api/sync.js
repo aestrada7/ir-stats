@@ -23,13 +23,18 @@ export default async function messageHandler(req, res) {
             //To-do: this is kind of a stopgap, unable to get this through normal requests, we retrieve it manually. It works but it sucks
             cookies.push(`irsso_membersv2=${irsso_v2};`);
             let rawData = await getResults(cookies, cust_id, car, year, season);
+            if(rawData.request.res.responseUrl.indexOf('notauthed.jsp') !== -1) {
+                res.status(200).json({'status': 401, 'message': 'Authentication Error. Make sure the IRSSO cookie is valid.'});
+                break;
+            }
+
             let resultsData = getResultsData(rawData, cookies);
 
             results.update({cust_id, car, year, season}, {cust_id, car, year, season, data: resultsData}, {upsert: true}, function(err, doc) {
                 if(err) {
                     res.status(503).end(err.toString());
                 }
-                res.status(200).json({'status': 200, 'message': 'Stored successfully!'});
+                res.status(200).json({'status': 200, 'message': `Successfully synchronized data from ${year} - Season ${season}.`});
             });
             break;
         default:

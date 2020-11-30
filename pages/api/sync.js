@@ -28,7 +28,7 @@ export default async function messageHandler(req, res) {
                 break;
             }
 
-            let resultsData = getResultsData(rawData, cookies);
+            let resultsData = await getResultsData(rawData, cookies);
 
             results.update({cust_id, car, year, season}, {cust_id, car, year, season, data: resultsData}, {upsert: true}, function(err, doc) {
                 if(err) {

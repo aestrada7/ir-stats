@@ -55,7 +55,7 @@ export const processSubsession = async(subsessionid, cookies) => {
     const raceResults = new Datastore({ filename: 'data/raceResults.db', autoload: true });
     const drivers = new Datastore({ filename: 'data/drivers.db', autoload: true });
 
-    const subsession = {
+    let subsession = {
         subsessionid: res.data.subsessionid,
         start_time: res.data.start_time,
         eventlapscomplete: res.data.eventlapscomplete,
@@ -65,7 +65,8 @@ export const processSubsession = async(subsessionid, cookies) => {
         race_week_num: res.data.race_week_num,
         trackid: res.data.trackid,
         maxweeks: res.data.maxweeks,
-        seriesid: res.data.seriesid
+        seriesid: res.data.seriesid,
+        winnerid: 0
     };
 
     for(const row in rawSessionData) {
@@ -73,14 +74,19 @@ export const processSubsession = async(subsessionid, cookies) => {
     }
     console.log(`Race results processed correctly for subsession ${subsessionid}.`);
 
-    subsessions.insert(subsession, function(err, doc) {
-        if(err) {
-            console.error(`Error writing subsession ${subsessionid} to DB.`);
-            return 503;
-        }
+    let subsessionWinner = await raceResults.asyncFindOne({ subsessionid, finishing_position: 1 });
+    if(subsessionWinner.length !== 0) {
+        subsession.winnerid = subsessionWinner.custid;
+    }
+
+    let subsessionData = await subsessions.asyncInsert(subsession);
+    if(subsessionData) {
         console.log(`Subsession ${subsessionid} successfully written.`);
         return 200;
-    });
+    } else {
+        console.error(`Error writing subsession ${subsessionid} to DB.`);
+        return 503;
+    }
 }
 
 export const processSubsessionResult = async(raceResults, row, subsession, drivers) => {

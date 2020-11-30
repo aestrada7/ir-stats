@@ -11,17 +11,28 @@ class Season extends React.Component {
     static async getInitialProps({ query }) {
         const season = query.season[1];
         const year = query.season[0];
-        const raceData = year != "career" ? await raceDataFetch(year, season) : await raceDataFetchAll();
+
+        let pageTitle = "";
+        let raceData;
+
+        if(year != "career") {
+            pageTitle = `IR Stats ${year} Season ${season}`;
+            raceData = await raceDataFetch(year, season);
+        } else {
+            pageTitle = `Career Stats`;
+            raceData = await raceDataFetchAll();
+        }
+
         const trackData = await trackDataFetch();
         const weekData = weekDataBuild(raceData);
 
-        return { raceData, trackData, weekData, season, year };
+        return { raceData, trackData, weekData, season, year, pageTitle };
     }
 
     render() {
-        const { raceData, trackData, weekData, season, year } = this.props;
+        const { raceData, trackData, weekData, season, year, pageTitle } = this.props;
         return (
-            <Layout title={`IR Stats ${year} Season ${season}`} backButton={true}>
+            <Layout title={pageTitle} backButton={true}>
                 <WeekTable weekData={weekData}></WeekTable>
                 {year != "career" && <SeasonPoints raceData={raceData} trackData={trackData}></SeasonPoints>}
                 <Table raceData={raceData} trackData={trackData}></Table>

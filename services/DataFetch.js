@@ -12,7 +12,9 @@ import * as Config from "./Config";
  */
 export const raceDataFetch = async (year, season, week) => {
     // to-do: use seriesid instead of carid, as that will only break stuff
-    return raceResultsFetch(182407, [99, 57], year, season, week);
+    const winnerData = await subsessionWinnerData();
+    const raceData = await raceResultsFetch(182407, [99, 57], year, season, week);
+    return appendData(raceData, winnerData);
 }
 
 /**
@@ -21,7 +23,9 @@ export const raceDataFetch = async (year, season, week) => {
  * @returns {object} The JSON object with the race data.
  */
 export const raceDataFetchAll = async () => {
-    return raceResultsFetch(182407, [99, 57]);
+    const winnerData = await subsessionWinnerData();
+    const raceData = await raceResultsFetch(182407, [99, 57]);
+    return appendData(raceData, winnerData);
 }
 
 /**
@@ -70,8 +74,7 @@ function renameProps(item, dictionary) {
 }
 
 /**
- * DEPRECATED
- * Appends missing data to the iracing's API object (done manually unfortunately - hopefully this will change in the future)
+ * Appends data to the iracing's API object
  * 
  * @param {object} data The original transformed data from iracing's API
  * @param {object} newData The missing data object.
@@ -79,10 +82,10 @@ function renameProps(item, dictionary) {
  */
 function appendData(data, newData) {
     for(const item in newData) {
-        let subsessionId = newData[item].subsessionId;
+        let subsessionid = newData[item].subsessionid;
 
         data.map(x => {
-            if(subsessionId == x.subsessionid) {
+            if(subsessionid == x.subsessionid) {
                 x = Object.assign(x, newData[item]);
             }
         });
@@ -181,7 +184,7 @@ export const driverSearch = async (text) => {
  * @returns {object} The JSON object with the race data.
  */
 export const raceResultsFetch = async (custid, car, year, season, week, subsessionIds) => {
-    const RESULTS_SERVICE_URL = `http://localhost:3000/api/results`;
+    const RESULTS_SERVICE_URL = `${Config.SERVER_URL}/api/results`;
 
     const response = await axios.post(RESULTS_SERVICE_URL, {
         custid,
@@ -225,5 +228,16 @@ export const seasonSync = async (username, password, custid, car, year, season, 
 export const seasonList = async(custid, seriesid) => {
     const SEASON_SERVICE_URL = `./api/seasons?custid=${custid}&seriesid=${seriesid}`;
     const response = await axios.get(SEASON_SERVICE_URL);
+    return response.data;
+}
+
+/**
+ * Retrieves all subsession data
+ * 
+ * @returns {object} A JSON object with all the data.
+ */
+export const subsessionWinnerData = async() => {
+    const SUBSESSION_SERVICE_URL = `${Config.SERVER_URL}/api/subsession`;
+    const response = await axios.get(SUBSESSION_SERVICE_URL);
     return response.data;
 }

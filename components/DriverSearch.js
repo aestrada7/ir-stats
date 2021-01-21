@@ -31,7 +31,13 @@ class DriverSearch extends React.Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if(this.props.id) {
+            this.setState({ autocompleteOptions: await driverSearch(this.props.id) });
+            this.setState({ selectedItem: this.state.autocompleteOptions[0] });
+            this.clearAutocomplete();
+            this.props.parent.selectDriver(this.state.selectedItem);
+        }
         window.addEventListener('keydown', this.handleKeyDown);
     }
 

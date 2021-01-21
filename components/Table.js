@@ -2,7 +2,7 @@ import TrackName from "./TrackName";
 import TableItem from "./TableItem";
 import Driver from "./Driver";
 import WeekLink from "./WeekLink";
-import SubsessionLink from "./SubsessionLink";
+import RaceResultLink from "./RaceResultLink";
 
 class Table extends React.Component {
     constructor(props) {
@@ -53,11 +53,11 @@ class Table extends React.Component {
                                            value="shortName" season={raceItem.season_quarter} year={raceItem.season_year} linkTo="track"></TrackName>
                             </TableItem>
                             <TableItem columns="2">
-                                <Driver name={raceItem.winnerdisplayname} showHelmet={true}
+                                <Driver name={raceItem.winnerdisplayname} showHelmet={true} hasLink={true} id={raceItem.winnerid}
                                         helmetColors={[raceItem.winnerhelmcolor1, raceItem.winnerhelmcolor2]}></Driver>
                             </TableItem>
                             <TableItem columns="1">
-                                <SubsessionLink subsessionid={raceItem.subsessionid} custid={raceItem.custid} val={raceItem.champpoints}></SubsessionLink>                             
+                                <RaceResultLink subsessionid={raceItem.subsessionid} val={raceItem.champpoints}></RaceResultLink>
                             </TableItem>
                             <TableItem columns="1" val={raceItem.laps}></TableItem>
                             <TableItem columns="1" val={raceItem.totalLaps}></TableItem>

@@ -28,22 +28,23 @@ class Compare extends React.Component {
     }
 
     render() {
-        const { trackData } = this.props;
+        const { trackData, id } = this.props;
         const { selectedDriver, compareData } = this.state;
         return (
             <Layout title="Driver Comparison" backButton={true}>
                 <div>Who: {selectedDriver.displayname}</div>
-                <DriverSearch parent={this}></DriverSearch>
+                <DriverSearch parent={this} id={id}></DriverSearch>
                 <DriverCompareTable compareData={compareData} trackData={trackData}></DriverCompareTable>
             </Layout>
         );
     }
 }
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ query }) {
     const trackData = await trackDataFetch();
+    const id = query.id || 0;
 
-    return { props: { trackData }};
+    return { props: { trackData, id }};
 }
 
 export default Compare;

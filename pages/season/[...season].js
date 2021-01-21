@@ -26,11 +26,11 @@ class Season extends React.Component {
         const trackData = await trackDataFetch();
         const weekData = weekDataBuild(raceData);
 
-        return { raceData, trackData, weekData, season, year, pageTitle };
+        return { raceData, trackData, weekData, year, pageTitle };
     }
 
     render() {
-        const { raceData, trackData, weekData, season, year, pageTitle } = this.props;
+        const { raceData, trackData, weekData, year, pageTitle } = this.props;
         return (
             <Layout title={pageTitle} backButton={true}>
                 <WeekTable weekData={weekData}></WeekTable>

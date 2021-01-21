@@ -9,10 +9,16 @@ export default async function messageHandler(req, res) {
         const year = req.query.year || req.body.year;
         const season = req.query.season || req.body.season;
         const week = req.query.week || req.body.week;
-        const subsessionIds = req.query.subsessionIds || req.body.subsessionIds;
+        let subsessionIds = req.query.subsessionIds || req.body.subsessionIds;
+
+        if(typeof subsessionIds === 'string') {
+            subsessionIds = [ parseInt(subsessionIds) ];
+        }
 
         let searchObj = {};
-        searchObj.custid = custid;
+        if(custid) {
+            searchObj.custid = custid;
+        }
         if(carids && carids.length > 0) {
             searchObj.carid = {
                 $in: carids
@@ -36,9 +42,13 @@ export default async function messageHandler(req, res) {
         switch(method) {
             case 'GET':
             case 'POST':
-                results.find(searchObj).sort({ start_time: -1 }).exec(function(err, doc) {
+                results.find(searchObj).sort({ start_time: -1, finishing_position: 1 }).exec(function(err, doc) {
                     if(doc) {
                         res.status(200).json(doc);
+                        return resolve();
+                    } else {
+                        console.log(err);
+                        res.status(200).json({});
                         return resolve();
                     }
                 });

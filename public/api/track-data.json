@@ -184,5 +184,12 @@
         "shortName": "Homestead",
         "location": "Homestead, FL",
         "length": 1.5
+    },
+    {
+        "id": 18,
+        "name": "Road America",
+        "shortName": "Road America",
+        "location": "Elkhart Lake, WI",
+        "length": 4.048
     }
 ]

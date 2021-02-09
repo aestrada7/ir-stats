@@ -2,10 +2,14 @@ import { decode } from "../services/Common";
 
 class TableItem extends React.Component {
     render() {
-        const { val, defaultVal, columns, children, isResult, fieldToSortBy, sortingBy, order, parent } = this.props;
+        const { val, defaultVal, columns, children, isResult, fieldToSortBy, sortingBy, order, parent, className } = this.props;
         return (
-            <div className={`table-item ${isResult ? `res-${val}` : ''} col-${columns}`}>
-                <span>{decode(val) || defaultVal || children}</span>
+            <div className={`table-item ${isResult ? `res-${val}` : ''} col-${columns} ${className ?? ''}`}>
+                {isResult ? 
+                    <div className="res-field"><div>{decode(val) || defaultVal || children}</div></div>
+                    :
+                    <span>{decode(val) || defaultVal || children}</span>
+                }
                 {fieldToSortBy ?
                     <React.Fragment>
                         <button className={`sort-button descending ${sortingBy == fieldToSortBy && order == "ASC" ? 'toggled' : ''}`}

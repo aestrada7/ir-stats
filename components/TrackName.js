@@ -13,7 +13,7 @@ class TrackName extends React.Component {
         } catch(ex) {}
 
         return (
-            <span>
+            <span className="track-name">
                 {linkTo == "track" ?
                     <Link href={'/track/' + trackId}>
                         <a>{trackName}</a>

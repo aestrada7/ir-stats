@@ -31,8 +31,7 @@ class Table extends React.Component {
         return (
             <div className="table">
                 <div className="table-row flex head">
-                    <TableItem columns="2" val="Date / Week"></TableItem>
-                    <TableItem columns="2" val="Track"></TableItem>
+                    <TableItem columns="4" val="Track / Date"></TableItem>
                     <TableItem columns="2" val="Winner"></TableItem>
                     <TableItem columns="1" val="Points" fieldToSortBy="champpoints" parent={this} sortingBy={sortingBy} order={order}></TableItem>
                     <TableItem columns="1" val="Laps"></TableItem>
@@ -44,13 +43,12 @@ class Table extends React.Component {
                 { raceData.map(raceItem => (
                     <React.Fragment key={raceItem.subsessionid}>
                         <div className="table-row flex">
-                            <TableItem columns="2">
-                                <WeekLink date={raceItem.sessionstarttime} week={raceItem.race_week_num} epochTime={true}
-                                          season={raceItem.season_quarter} year={raceItem.season_year}></WeekLink>
-                            </TableItem>
-                            <TableItem columns="2">
+                            <TableItem columns="4" className="composite-field">
                                 <TrackName id={raceItem.trackid} week={raceItem.race_week_num} trackData={trackData}
                                            value="shortName" season={raceItem.season_quarter} year={raceItem.season_year} linkTo="track"></TrackName>
+                                <br />
+                                <WeekLink date={raceItem.sessionstarttime} week={raceItem.race_week_num} epochTime={true}
+                                          season={raceItem.season_quarter} year={raceItem.season_year}></WeekLink>
                             </TableItem>
                             <TableItem columns="2">
                                 <Driver name={raceItem.winnerdisplayname} showHelmet={true} hasLink={true} id={raceItem.winnerid}

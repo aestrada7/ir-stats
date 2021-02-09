@@ -6,7 +6,7 @@ class AllPositionsItem extends React.Component {
         super(props);
 
         this.state = {
-            detail: false
+            detail: true
         };
     }
 

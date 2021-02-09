@@ -6,11 +6,20 @@ import Layout from '../components/Layout';
 import AllPositionsItem from '../components/AllPositionsItem';
 
 class AllChallenge extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            collapsed: false
+        }
+    }
+
     render() {
         const { trackData, allPositionsData } = this.props;
+        const { collapsed } = this.state;
         return (
             <Layout title="All Positions Challenge" backButton={true}>
-                <div className="test">{ allPositionsData.map(positionItem => (
+                <div className="all-positions-table">{ allPositionsData.map(positionItem => (
                     <AllPositionsItem positionItem={positionItem} trackData={trackData}></AllPositionsItem>
                 ))}</div>
             </Layout>

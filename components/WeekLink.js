@@ -8,7 +8,10 @@ class WeekLink extends React.Component {
 
         return (
             <Link href={'/week/' + year + '/' + season + '/' + week}>
-                <a>{epochTime ? formatEpoch(date) : date} / {week + 1}</a>
+                <a>
+                    <span className="date-container">{epochTime ? formatEpoch(date) : date}</span>
+                    <span className="week-indicator">Week {week + 1}</span>
+                </a>
             </Link>
         );
     }

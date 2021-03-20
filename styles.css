@@ -76,6 +76,7 @@ a:hover {
 
 .main-menu {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .main-menu .main-link {

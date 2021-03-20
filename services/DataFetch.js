@@ -219,6 +219,26 @@ export const seasonSync = async (username, password, custid, car, year, season, 
 }
 
 /**
+ * Wrapper for the Synchronization API, which attempts to grab information from iracing's servers to store it in ir-stats
+ * database. This is done per car in a user defined time-window for hosted sessions only.
+ * 
+ * @param {string} username Username (email) of an iracing account.
+ * @param {string} password Password of said account.
+ * @param {number} custid The customer ID which will be used to filter results.
+ * @param {number} car The car id that will be used.
+ * @param {number} date_from The lower bound date in unix time that will be used.
+ * @param {number} date_to The upper bound date in unix time that will be used.
+ * @param {string} irsso_v2 A stop-gap that likely will be removed in the future, this is the value of the irsso cookie set by
+ *                     iracing's login. Use this instead of username/password combination, provided it's copied from a valid request
+ * @returns {object} The JSON response provided by the Synchronization API.
+ */
+export const hostedSync = async (username, password, custid, car, date_from, date_to, irsso_v2) => {
+    const SYNC_SERVICE_URL = `./api/sync?hosted=1&username=${username}&password=${password}&custid=${custid}&car=${car}&date_from=${date_from}&date_to=${date_to}&irsso_v2=${irsso_v2}`;
+    const response = await axios.get(SYNC_SERVICE_URL);
+    return response.data;
+}
+
+/**
  * Retrieves all existing seasons stored in the database.
  * 
  * @param {number} custid The customer id to filter by.
@@ -226,7 +246,7 @@ export const seasonSync = async (username, password, custid, car, year, season, 
  * @returns {object} The JSON object with all recorded seasons for the filtered combination.
  */
 export const seasonList = async(custid, seriesid) => {
-    const SEASON_SERVICE_URL = `./api/seasons?custid=${custid}&seriesid=${seriesid}`;
+    const SEASON_SERVICE_URL = `./api/seasons?custid=${custid}&seriesid=${seriesid}&crc=${Math.random()}`;
     const response = await axios.get(SEASON_SERVICE_URL);
     return response.data;
 }

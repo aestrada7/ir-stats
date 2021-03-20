@@ -41,6 +41,7 @@
 
     /* Fonts */
     --main-font: "Roboto Condensed", "Calibri";
+    --alternate-font: "Helvetica";
     --font-xxsmall: 10px;
     --font-xsmall: 12px;
     --font-small: 14px;
@@ -366,15 +367,28 @@ a:hover {
 .week-data {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
     margin-bottom: 20px;
+    box-shadow: var(--global-box-shadow);
+    border-radius: var(--global-border-radius);
 }
 
 .week-item {
     text-align: center;
-    border-radius: var(--global-border-radius);
     padding: 12px;
-    border: 1px solid var(--accent-color);
-    background: linear-gradient(var(--white), var(--background-light-grey));
+    background: var(--white);
+    position: relative;
+}
+
+.week-item:nth-last-child(n+2):after {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: -4%;
+    height: 100%;
+    width: 1px;
+    background-color: var(--background-light-grey);
+    z-index: 3;
 }
 
 .week-item .week-item-hover {
@@ -384,6 +398,7 @@ a:hover {
     padding: 12px;
     border: 1px solid var(--accent-color);
     background: linear-gradient(var(--white), var(--background-light-grey));
+    z-index: 4;
 }
 
 .week-item .week-item-title {
@@ -393,6 +408,8 @@ a:hover {
 .week-item .week-item-value {
     margin-top: 4px;
     font-size: var(--font-large);
+    font-weight: 700;
+    color: var(--accent-color);
 }
 
 /* -- carousel -- */

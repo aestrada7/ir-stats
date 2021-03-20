@@ -26,6 +26,30 @@ export const getResults = async(cookies, custid, carid, year, season) => {
 };
 
 /**
+ * Retrieves hosted results information from iracing's endpoints.
+ * 
+ * @param {Array} cookies The stored cookies for a session
+ * @param {number} custid The customer id to retrieve data from.
+ * @param {number} carid The car to download data from
+ * @param {number} date_from The unix timestamp for lower limit.
+ * @param {number} date_to The unix timestamp for upper limit.
+ * @returns {Array} The JSON data representation of the endpoint.
+ */
+export const getHostedResults = async(cookies, custid, carid, date_from, date_to) => {
+    const MAX_RACES = 200;
+    const IRACING_HOSTED_DATA_URL = `https://members.iracing.com/memberstats/member/GetPrivateSessionResults?participant_custid=${custid}&carid=${carid}&lowerbound=1&upperbound=${MAX_RACES}&start_time_lowerbound=${date_from}&start_time_upperbound=${date_to}`;
+
+    const data = await axios.get(IRACING_HOSTED_DATA_URL, {
+        headers: {
+            'Cookie': cookies
+        },
+        withCredentials: true
+    });
+
+    return data;
+};
+
+/**
  * Attempts to process a provided subsession into the database. If a subsession already exists, skips it.
  * 
  * @param {number} subsessionid The subsessionid to try to retrieve data from.

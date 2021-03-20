@@ -1,6 +1,6 @@
 {
   "name": "ir-stats",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "dependencies": {
     "axios": "^0.21.0",
     "form-data": "^3.0.0",

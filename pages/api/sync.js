@@ -1,4 +1,4 @@
-import { processSubsession, getResults } from "../../services/FetchIracing";
+import { processSubsession, getResults, getHostedResults } from "../../services/FetchIracing";
 import { transformData } from "../../services/DataFetch";
 
 const axios = require('axios');
@@ -7,13 +7,21 @@ var results = new Datastore({ filename: 'data/results.db', autoload: true });
 
 export default async function messageHandler(req, res) {
     const { method } = req;
+    const hosted = req.query.hosted == 1;
     const cust_id = req.query.custid;
     const car = req.query.car;
-    const year = req.query.year;
-    const season = req.query.season;
+    let year = req.query.year;
+    let season = req.query.season;
     const username = req.query.username;
     const password = req.query.password;
     const irsso_v2 = req.query.irsso_v2;
+    const date_from = req.query.date_from;
+    const date_to = req.query.date_to;
+
+    if(hosted) {
+        season = "X";
+        year = "Hosted";
+    }
 
     switch(method) {
         case 'GET':
@@ -22,20 +30,36 @@ export default async function messageHandler(req, res) {
             let cookies = loginAttempt.headers['set-cookie'];
             //To-do: this is kind of a stopgap, unable to get this through normal requests, we retrieve it manually. It works but it sucks
             cookies.push(`irsso_membersv2=${irsso_v2};`);
-            let rawData = await getResults(cookies, cust_id, car, year, season);
+
+            let rawData;
+            if(!hosted) {
+                rawData = await getResults(cookies, cust_id, car, year, season);
+            } else {
+                rawData = await getHostedResults(cookies, cust_id, car, date_from, date_to);
+            }
+
             if(rawData.request.res.responseUrl.indexOf('notauthed.jsp') !== -1) {
                 res.status(200).json({'status': 401, 'message': 'Authentication Error. Make sure the IRSSO cookie is valid.'});
                 break;
             }
 
-            let resultsData = await getResultsData(rawData, cookies);
+            let resultsData;
+            if(!hosted) {
+                resultsData = await getResultsData(rawData, cookies);
+            } else {
+                resultsData = await getHostedResultsData(rawData, cookies);
+            }
 
-            results.update({cust_id, car, year, season}, {cust_id, car, year, season, data: resultsData}, {upsert: true}, function(err, doc) {
-                if(err) {
-                    res.status(503).end(err.toString());
-                }
-                res.status(200).json({'status': 200, 'message': `Successfully synchronized data from ${year} - Season ${season}.`});
-            });
+            if(resultsData) {
+                results.update({cust_id, car, year, season}, {cust_id, car, year, season, data: resultsData}, {upsert: true}, function(err, doc) {
+                    if(err) {
+                        res.status(503).end(err.toString());
+                    }
+                    res.status(200).json({'status': 200, 'message': `Successfully synchronized data from ${year} - Season ${season}.`});
+                });
+            } else {
+                res.status(200).json({'status': 200, 'message': `No sessions found for ${year} - Season ${season}.`});
+            }
             break;
         default:
             res.setHeader('Allow', ['GET']);
@@ -62,6 +86,10 @@ const iracingAuthentication = async (username, password) => {
 }
 
 const getResultsData = async(data, cookies) => {
+    if(data.data.d.length === 0) {
+        return null;
+    }
+
     let transformedData = transformData(data.data);
     for(let row in transformedData) {
         let subsessionToParse = parseInt(transformedData[row].subsessionid);
@@ -69,4 +97,13 @@ const getResultsData = async(data, cookies) => {
     }
 
     return transformedData;
+}
+
+const getHostedResultsData = async(data, cookies) => {
+    for(let row in data.rows) {
+        let subsessionToParse = parseInt(data.rows[row].subsessionid);
+        await processSubsession(subsessionToParse, cookies);
+    }
+
+    return data.rows;
 }

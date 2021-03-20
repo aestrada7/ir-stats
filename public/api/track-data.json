@@ -87,8 +87,8 @@
     },
     {
         "id": 40,
-        "name": "Charlotte Motor Speedway",
-        "shortName": "Charlotte",
+        "name": "Charlotte Motor Speedway (2008)",
+        "shortName": "Charlotte (2008)",
         "location": "Concorde, NC",
         "length": 1.5
     },
@@ -191,5 +191,20 @@
         "shortName": "Road America",
         "location": "Elkhart Lake, WI",
         "length": 4.048
+    },
+    {
+        "id": 339,
+        "legacyIds": [40],
+        "name": "Charlotte Motor Speedway",
+        "shortName": "Charlotte",
+        "location": "Concorde, NC",
+        "length": 1.5
+    },
+    {
+        "id": 116,
+        "name": "Talladega Superspeedway",
+        "shortName": "Talladega",
+        "location": "Talladega, AL",
+        "length": 2.66
     }
 ]

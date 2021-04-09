@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import SyncWindow from '../components/SyncWindow';
+import TrackSearch from '../components/TrackSearch';
 import { seasonList } from '../services/DataFetch';
 
 class Index extends React.Component {
@@ -37,6 +38,9 @@ class Index extends React.Component {
         const { displaySyncWindow, displaySyncHostedWindow, seasonList } = this.state;
         return (
             <Layout title="IR Stats">
+                <div className="track-search">
+                    <TrackSearch placeholder="Enter track name or id"></TrackSearch>
+                </div>
                 <div className="main-menu">
                     <Link href="/season/career">
                         <button className="main-link">

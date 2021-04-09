@@ -219,6 +219,15 @@ a:hover {
     font-size: var(--font-small);
 }
 
+.table-item.composite-field .season-indicator {
+    font-size: var(--font-xxsmall);
+    color: var(--accent-color);
+    padding: 1px 5px;
+    position: absolute;
+    left: -40px;
+    top: 5px;
+}
+
 .sort-button {
     border: 0;
     background-color: transparent;
@@ -827,4 +836,10 @@ a:hover {
     color: var(--foreground-info);
     background-color: var(--background-info);
     border: 1px solid var(--foreground-info);
+}
+
+.track-search {
+    position: absolute;
+    top: -40px;
+    right: 0;
 }

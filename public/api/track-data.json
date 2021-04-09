@@ -206,5 +206,12 @@
         "shortName": "Talladega",
         "location": "Talladega, AL",
         "length": 2.66
+    },
+    {
+        "id": 108,
+        "name": "Watkins Glen International - Boot",
+        "shortName": "Watkins Glen (Boot)",
+        "location": "Watkins Glen, NY",
+        "length": 3.4
     }
 ]

@@ -173,6 +173,26 @@ export const driverSearch = async (text) => {
 }
 
 /**
+ * Retrieves track information and sends it back as a readable JSON object.
+ * 
+ * @param {string} text A part of the name to search for, or a track id.
+ * @returns {object} The JSON object with the track data.
+ */
+ export const trackSearch = async (text) => {
+    if(text) {
+        const MAX_ITEMS = 5;
+        const TRACK_SERVICE_URL = `./api/track/${text}?limit=${MAX_ITEMS}`;
+
+        const response = await fetch(TRACK_SERVICE_URL);
+        const data = await response.json();
+
+        return data;
+    } else {
+        return [];
+    }
+}
+
+/**
  * Retrieves the race data information and sends it back as a readable JSON object.
  * 
  * @param {number} custid The driver id.

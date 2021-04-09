@@ -26,7 +26,7 @@ class Table extends React.Component {
     }
 
     render() {
-        const { trackData } = this.props;
+        const { trackData, showSeason } = this.props;
         const { raceData, sortingBy, order } = this.state;
         return (
             <div className="table">
@@ -48,7 +48,7 @@ class Table extends React.Component {
                                            value="shortName" season={raceItem.season_quarter} year={raceItem.season_year} linkTo="track"></TrackName>
                                 <br />
                                 <WeekLink date={raceItem.sessionstarttime} week={raceItem.race_week_num} epochTime={true}
-                                          season={raceItem.season_quarter} year={raceItem.season_year}></WeekLink>
+                                          season={raceItem.season_quarter} year={raceItem.season_year} showSeason={showSeason}></WeekLink>
                             </TableItem>
                             <TableItem columns="2">
                                 <Driver name={raceItem.winnerdisplayname} showHelmet={true} hasLink={true} id={raceItem.winnerid}

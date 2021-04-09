@@ -39,7 +39,7 @@ class Track extends React.Component {
             <Layout title={pageTitle} backButton={true}>
                 { legacyTrackIds ? <Link href={`/track/${trackId}/1`}><button className="hide-legacy">Hide Legacy Data</button></Link> : '' }
                 <WeekTable weekData={weekData}></WeekTable>
-                <Table raceData={raceData} trackData={trackData}></Table>
+                <Table raceData={raceData} trackData={trackData} showSeason={true}></Table>
                 <IRatingChart raceData={raceData}></IRatingChart>
             </Layout>
         );

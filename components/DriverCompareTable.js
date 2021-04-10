@@ -11,7 +11,7 @@ class DriverCompareTable extends React.Component {
     }
 
     render() {
-        const { trackData, compareData } = this.props;
+        const { trackData, compareData, showSeason } = this.props;
         return (
             <div className="table">
                 <div className="table-row flex head">
@@ -38,7 +38,7 @@ class DriverCompareTable extends React.Component {
                                            value="shortName" season={raceItem.season_quarter} year={raceItem.season_year} linkTo="track"></TrackName>
                                 <br />
                                 <WeekLink date={raceItem.sessionstarttime} week={raceItem.race_week_num} epochTime={true}
-                                          season={raceItem.season_quarter} year={raceItem.season_year}></WeekLink>
+                                          season={raceItem.season_quarter} year={raceItem.season_year} showSeason={showSeason}></WeekLink>
                             </TableItem>
                             <TableItem columns="2">
                                 <RaceResultLink subsessionid={raceItem.subsessionid} val={raceItem.subsessionid}></RaceResultLink>

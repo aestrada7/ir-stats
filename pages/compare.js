@@ -34,7 +34,7 @@ class Compare extends React.Component {
             <Layout title="Driver Comparison" backButton={true}>
                 <div>Who: {selectedDriver.displayname}</div>
                 <DriverSearch parent={this} id={id}></DriverSearch>
-                <DriverCompareTable compareData={compareData} trackData={trackData}></DriverCompareTable>
+                <DriverCompareTable compareData={compareData} trackData={trackData} showSeason={true}></DriverCompareTable>
             </Layout>
         );
     }

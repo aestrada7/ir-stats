@@ -213,5 +213,12 @@
         "shortName": "Watkins Glen (Boot)",
         "location": "Watkins Glen, NY",
         "length": 3.4
+    },
+    {
+        "id": 384,
+        "name": "iRacing Superspeedway",
+        "shortName": "iRacing Superspeedway",
+        "location": "Chelmsford, MA",
+        "length": 3
     }
 ]

@@ -3,3 +3,4 @@ node_modules/
 .vscode/
 public/images/dallara-ir18
 data/
+.env.local

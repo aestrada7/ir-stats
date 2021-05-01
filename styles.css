@@ -244,7 +244,7 @@ a:hover {
     display: inline-block;
     padding: 3px;
     position: absolute;
-    top: 2px;
+    top: -5px;
 }
 
 .sort-button:hover:after {
@@ -259,7 +259,7 @@ a:hover {
 
 .sort-button.ascending:after {
     transform: rotate(-135deg);
-    top: 7px;
+    top: 0;
 }
 
 .sort-button.descending:after {

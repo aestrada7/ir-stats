@@ -90,6 +90,7 @@ export const processSubsession = async(subsessionid, cookies) => {
         trackid: res.data.trackid,
         maxweeks: res.data.maxweeks,
         seriesid: res.data.seriesid,
+        cautionlaps: res.data.ncautionlaps,
         winnerid: 0
     };
 
@@ -124,6 +125,7 @@ export const processSubsessionResult = async(raceResults, row, subsession, drive
         dnf: row.reasonout != 'Running',
         champpoints: row.aggchamppoints || row.champpoints,
         irating: row.newirating,
+        irating_change: parseInt(row.newirating) - parseInt(row.oldirating),
         displayname: row.displayname,
         sessionstarttime: row.sessionstarttime,
         totalLaps: subsession.eventlapscomplete,
@@ -134,7 +136,10 @@ export const processSubsessionResult = async(raceResults, row, subsession, drive
         trackid: subsession.trackid,
         start_time: subsession.start_time,
         maxweeks: subsession.maxweeks,
-        seriesid: subsession.seriesid
+        seriesid: subsession.seriesid,
+        carname: row.ccName,
+        carnum: row.carnum,
+        interval: row.interval
     };
 
     const driverData = {

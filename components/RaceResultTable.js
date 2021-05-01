@@ -29,7 +29,8 @@ class RaceResultTable extends React.Component {
                 <div className="table-row flex head">
                     <TableItem columns="1" val="Finish" fieldToSortBy="finishing_position" parent={this} sortingBy={sortingBy} order={order}></TableItem>
                     <TableItem columns="1" val="Start" fieldToSortBy="starting_position" parent={this} sortingBy={sortingBy} order={order}></TableItem>
-                    <TableItem columns="4" val="Driver"></TableItem>
+                    <TableItem columns="1" val="Car" fieldToSortBy="carnum" parent={this} sortingBy={sortingBy} order={order}></TableItem>
+                    <TableItem columns="3" val="Driver"></TableItem>
                     <TableItem columns="1" val="Points" fieldToSortBy="champpoints" parent={this} sortingBy={sortingBy} order={order}></TableItem>
                     <TableItem columns="1" val="Laps"></TableItem>
                     <TableItem columns="1" val="Led" fieldToSortBy="led" parent={this} sortingBy={sortingBy} order={order}></TableItem>
@@ -41,7 +42,8 @@ class RaceResultTable extends React.Component {
                         <div className="table-row flex">
                             <TableItem columns="1" val={raceItem.finishing_position} isResult={true}></TableItem>
                             <TableItem columns="1" val={raceItem.starting_position} isResult={true}></TableItem>
-                            <TableItem columns="4">
+                            <TableItem columns="1" val={raceItem.carnum}></TableItem>
+                            <TableItem columns="3">
                                 <Driver name={raceItem.displayname} showHelmet={false} hasLink={true} id={raceItem.custid}></Driver>
                             </TableItem>
                             <TableItem columns="1" val={raceItem.champpoints} defaultVal="0"></TableItem>

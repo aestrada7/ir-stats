@@ -1,3 +1,5 @@
+import React from 'react';
+
 class Helmet extends React.Component {
     render() {
         const { helmetColors } = this.props;

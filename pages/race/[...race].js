@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { raceResultsFetch } from '../../services/DataFetch';
 
 import Layout from '../../components/Layout';

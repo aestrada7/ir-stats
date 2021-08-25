@@ -1,3 +1,5 @@
+import React from 'react';
+
 class SubsessionLink extends React.Component {
     render() {
         const { subsessionid, custid, val } = this.props;

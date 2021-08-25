@@ -1,3 +1,5 @@
+import React from 'react';
+
 class WeekItem extends React.Component {
     constructor(props) {
         super(props);

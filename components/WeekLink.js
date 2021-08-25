@@ -1,5 +1,6 @@
-import Link from 'next/link';
 import React from 'react';
+import Link from 'next/link';
+
 import { formatEpoch } from '../services/Common';
 
 class WeekLink extends React.Component {

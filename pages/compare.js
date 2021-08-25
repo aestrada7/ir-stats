@@ -1,3 +1,4 @@
+import React from 'react';
 import Layout from '../components/Layout';
 import DriverCompareTable from '../components/DriverCompareTable';
 import DriverSearch from '../components/DriverSearch';

@@ -1,6 +1,8 @@
-import { raceDataFetch, trackDataFetch, messageGet } from "../../services/DataFetch";
-import { weekDataBuild } from "../../services/WeekDataStats";
-import * as Config from "../../services/Config";
+import React from 'react';
+
+import { raceDataFetch, trackDataFetch, messageGet } from '../../services/DataFetch';
+import { weekDataBuild } from '../../services/WeekDataStats';
+import * as Config from '../../services/Config';
 
 import Layout from '../../components/Layout';
 import Table from '../../components/Table';

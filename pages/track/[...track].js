@@ -1,8 +1,9 @@
+import React from 'react';
 import Link from 'next/link';
 
-import { raceDataFetchAll, trackDataFetch } from "../../services/DataFetch";
-import { weekDataBuild } from "../../services/WeekDataStats";
-import { itemExists } from "../../services/Common";
+import { raceDataFetchAll, trackDataFetch } from '../../services/DataFetch';
+import { weekDataBuild } from '../../services/WeekDataStats';
+import { itemExists } from '../../services/Common';
 
 import Layout from '../../components/Layout';
 import Table from '../../components/Table';

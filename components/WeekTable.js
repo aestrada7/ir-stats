@@ -1,3 +1,5 @@
+import React from 'react';
+
 import WeekItem from './WeekItem';
 
 class WeekTable extends React.Component {

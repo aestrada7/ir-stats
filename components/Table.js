@@ -1,8 +1,10 @@
-import TrackName from "./TrackName";
-import TableItem from "./TableItem";
-import Driver from "./Driver";
-import WeekLink from "./WeekLink";
-import RaceResultLink from "./RaceResultLink";
+import React from 'react';
+
+import TrackName from './TrackName';
+import TableItem from './TableItem';
+import Driver from './Driver';
+import WeekLink from './WeekLink';
+import RaceResultLink from './RaceResultLink';
 
 class Table extends React.Component {
     constructor(props) {

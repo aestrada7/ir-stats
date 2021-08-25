@@ -1,8 +1,10 @@
-import { decode } from "../services/Common";
-import { DebounceInput } from 'react-debounce-input';
-import { trackSearch } from "../services/DataFetch";
-import * as KeyCodes from "../services/KeyCodes";
+import React from 'react';
 import Router from 'next/router';
+import { DebounceInput } from 'react-debounce-input';
+
+import { decode } from '../services/Common';
+import { trackSearch } from '../services/DataFetch';
+import * as KeyCodes from '../services/KeyCodes';
 
 class TrackSearch extends React.Component {
     constructor(props) {

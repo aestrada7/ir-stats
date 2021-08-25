@@ -1,4 +1,5 @@
-import * as KeyCodes from "../services/KeyCodes";
+import React from 'react';
+import * as KeyCodes from '../services/KeyCodes';
 
 class ImageCarousel extends React.Component {
     constructor(props) {

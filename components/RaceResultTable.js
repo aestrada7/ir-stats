@@ -1,5 +1,7 @@
-import TableItem from "./TableItem";
-import Driver from "./Driver";
+import React from 'react';
+
+import TableItem from './TableItem';
+import Driver from './Driver';
 
 class RaceResultTable extends React.Component {
     constructor(props) {

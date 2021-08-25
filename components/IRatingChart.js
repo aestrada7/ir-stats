@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { VictoryChart, VictoryLine, VictoryTheme, VictoryTooltip, VictoryVoronoiContainer, VictoryScatter, VictoryClipContainer } from 'victory'; 
 
 class IRatingChart extends React.Component {

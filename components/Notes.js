@@ -1,6 +1,8 @@
-import { replaceLineBreaks } from "../services/Common";
-import { messageSet, messageGetLocal, messageSetLocal } from "../services/DataFetch";
-import * as Config from "../services/Config";
+import React from 'react';
+
+import { replaceLineBreaks } from '../services/Common';
+import { messageSet, messageGetLocal, messageSetLocal } from '../services/DataFetch';
+import * as Config from '../services/Config';
 
 class Notes extends React.Component {
     constructor(props) {

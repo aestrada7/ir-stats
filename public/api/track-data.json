@@ -16,6 +16,7 @@
     },
     {
         "id": 276,
+        "legacyIds": [124],
         "name": "Michigan International Speedway",
         "shortName": "Michigan",
         "location": "Brooklyn, MI",
@@ -220,5 +221,26 @@
         "shortName": "iRacing Superspeedway",
         "location": "Chelmsford, MA",
         "length": 3
+    },
+    {
+        "id": 115,
+        "name": "Darlington Raceway",
+        "shortName": "Darlington",
+        "location": "Darlington, SC",
+        "length": 1.366
+    },
+    {
+        "id": 124,
+        "name": "Michigan International Speedway (2009)",
+        "shortName": "Michigan (2009)",
+        "location": "Brooklyn, MI",
+        "length": 2.0
+    },
+    {
+        "id": 362,
+        "name": "Homestead Miami Speedway (Indycar Oval)",
+        "shortName": "Homestead (Indy)",
+        "location": "Homestead, FL",
+        "length": 1.5
     }
 ]

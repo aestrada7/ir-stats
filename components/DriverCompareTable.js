@@ -1,3 +1,5 @@
+import React from 'react';
+
 import TableItem from './TableItem';
 import Driver from './Driver';
 import WeekLink from './WeekLink';

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { seasonSync, hostedSync } from '../services/DataFetch';
 
 class SyncWindow extends React.Component {

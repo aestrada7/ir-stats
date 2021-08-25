@@ -1,4 +1,4 @@
-import fetch from "isomorphic-fetch";
+import fetch from 'isomorphic-fetch';
 
 /**
  * Decodes an encoded string
@@ -79,5 +79,7 @@ export const formatDateTime = (date) => {
  */
 export const formatEpoch = (date) => {
     let currentDate = new Date(date);
-    return `${currentDate.getFullYear()}.${currentDate.getMonth() + 1}.${currentDate.getDate()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
+    let minutes = currentDate.getMinutes();
+    if(minutes < 10) minutes = `0${minutes}`;
+    return `${currentDate.getFullYear()}.${currentDate.getMonth() + 1}.${currentDate.getDate()} ${currentDate.getHours()}:${minutes}`;
 }

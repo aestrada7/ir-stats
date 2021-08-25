@@ -1,8 +1,10 @@
-import { raceDataFetch, trackDataFetch, raceDataFetchAll } from "../../services/DataFetch";
-import { weekDataBuild } from "../../services/WeekDataStats";
+import React from 'react';
 
-import Layout from "../../components/Layout";
-import Table from "../../components/Table";
+import { raceDataFetch, trackDataFetch, raceDataFetchAll } from '../../services/DataFetch';
+import { weekDataBuild } from '../../services/WeekDataStats';
+
+import Layout from '../../components/Layout';
+import Table from '../../components/Table';
 import WeekTable from '../../components/WeekTable';
 import IRatingChart from '../../components/IRatingChart';
 import SeasonPoints from '../../components/SeasonPoints';

@@ -1,4 +1,6 @@
-import TrackName from "./TrackName";
+import React from 'react';
+
+import TrackName from './TrackName';
 import { calculateSeasonPoints } from '../services/Scoring';
 
 class SeasonPoints extends React.Component {

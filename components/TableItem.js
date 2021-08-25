@@ -1,4 +1,6 @@
-import { decode } from "../services/Common";
+import React from 'react';
+
+import { decode } from '../services/Common';
 
 class TableItem extends React.Component {
     render() {

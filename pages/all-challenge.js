@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { raceDataFetchAll, trackDataFetch } from "../services/DataFetch";
 import { allPositionsChallenge } from "../services/AllPositionsStats";
 import { basicAuthentication } from "../services/Authentication";

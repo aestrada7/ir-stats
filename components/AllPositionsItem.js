@@ -1,5 +1,7 @@
-import Link from "next/link";
-import TrackName from "./TrackName";
+import React from 'react';
+import Link from 'next/link';
+
+import TrackName from './TrackName';
 
 class AllPositionsItem extends React.Component {
     constructor(props) {

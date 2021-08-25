@@ -51,6 +51,7 @@
     /* Layout */
     --app-width: 75%;
     --autocomplete-max-width: 300px;
+    --chart-width: 500px;
 }
 
 body {
@@ -560,6 +561,13 @@ a:hover {
 
 /* -- all positions challenge -- */
 
+.all-positions-chart {
+    position: sticky;
+    top: 0;
+    width: var(--chart-width);
+    margin: 0 auto;
+}
+
 .position-item {
     display: flex;
     border: 1px solid var(--black);
@@ -599,7 +607,13 @@ a:hover {
 
 .chart-container {
     margin: 0 auto;
-    width: 500px;
+    margin-top: 20px;
+    padding: 0 20px;
+    width: var(--chart-width);
+    background-color: var(--white);
+    border: 1px solid var(--accent-color);
+    border-radius: var(--global-border-radius);
+    box-shadow: var(--global-box-shadow);
 }
 
 /* track */

@@ -8,11 +8,10 @@
 export const allPositionsChallenge = (data, maxPosition) => {
     let newData = [];
     for(let i = 0; i < maxPosition; i++) {
-        let obj = { position: (i + 1), total: 0, track_season: [] };
+        let obj = { position: (i + 1), track_season: [] };
 
         data.map((x) => {
             if(obj.position == x.finishing_position) {
-                obj.total++;
                 obj.track_season.push({ trackid: x.trackid, year: x.season_year, season: x.season_quarter, week: x.race_week_num });
             }
         });

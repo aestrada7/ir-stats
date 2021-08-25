@@ -17,22 +17,23 @@ class AllPositionsItem extends React.Component {
     }
 
     render() {
-        const { trackData, positionItem } = this.props;
+        const { trackData, positionItem, collapseAll } = this.props;
         const { detail } = this.state;
+        let total = positionItem.track_season.length;
 
         return (
             <div className="position-item">
                 <div className="position">
                     {positionItem.position}
                 </div>
-                <div className={`frequency ${positionItem.total > 0 ? "achieved" : "" }`}>
-                    {positionItem.total}
+                <div className={`frequency ${total > 0 ? "achieved" : "" }`}>
+                    {total}
                 </div>
                 <div className="detail">
-                    <button className={`toggleDetail ${positionItem.total <= 1 ? "hide" : "" }`} onClick={() => this.toggleDetail()}>
-                        {`${detail ? 'Expand' : 'Collapse'}`}
+                    <button className={`toggleDetail ${total < 1 ? "hide" : "" }`} onClick={() => this.toggleDetail()}>
+                        {`${(!collapseAll ^ detail) ? 'Collapse' : 'Expand'}`}
                     </button>
-                    {!detail && positionItem.track_season.map(track => (
+                    {!!(!collapseAll ^ detail) && positionItem.track_season.map(track => (
                         <React.Fragment>
                             <Link href={`/week/${track.year}/${track.season}/${track.week}`}>
                                 <div className="detail-link">

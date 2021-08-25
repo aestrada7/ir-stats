@@ -6,23 +6,32 @@ import { basicAuthentication } from "../services/Authentication";
 
 import Layout from '../components/Layout';
 import AllPositionsItem from '../components/AllPositionsItem';
+import AllPositionsChart from '../components/AllPositionsChart';
 
 class AllChallenge extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            collapsed: false
+            collapseAll: false
         }
+    }
+
+    toggleCollapse() {
+        this.setState({ collapseAll: !this.state.collapseAll });
     }
 
     render() {
         const { trackData, allPositionsData } = this.props;
-        const { collapsed } = this.state;
+        const { collapseAll } = this.state;
+
         return (
             <Layout title="All Positions Challenge" backButton={true}>
+                <AllPositionsChart positionsData={allPositionsData}></AllPositionsChart>
+                <button onClick={() => this.toggleCollapse()}>{collapseAll ? `Collapse All` : `Expand All`}</button>
                 <div className="all-positions-table">{ allPositionsData.map(positionItem => (
-                    <AllPositionsItem positionItem={positionItem} trackData={trackData}></AllPositionsItem>
+                    <AllPositionsItem positionItem={positionItem} trackData={trackData}
+                                      collapseAll={collapseAll}></AllPositionsItem>
                 ))}</div>
             </Layout>
         );

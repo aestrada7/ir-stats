@@ -17,6 +17,9 @@ class IRatingChart extends React.Component {
         const style = {
             data: {
                 stroke: "var(--accent-color)"
+            },
+            labels: {
+                fontFamily: "var(--main-font)"
             }
         };
 
@@ -31,7 +34,8 @@ class IRatingChart extends React.Component {
                               containerComponent={<VictoryVoronoiContainer />}>
                     <VictoryLine style={style} animate={animate} data={data}
                                  groupComponent={<VictoryClipContainer clipId="irating-chart"></VictoryClipContainer>} />
-                    <VictoryScatter labelComponent={<VictoryTooltip/>} labels={({ datum }) => datum.y} data={data} size={dotSize} />
+                    <VictoryScatter style={style} labelComponent={<VictoryTooltip/>} 
+                                    labels={({ datum }) => datum.y} data={data} size={dotSize} />
                 </VictoryChart>
             </div>
         );

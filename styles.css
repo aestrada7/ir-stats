@@ -857,3 +857,30 @@ a:hover {
     top: -40px;
     right: 0;
 }
+
+/* --- table-filters --- */
+
+.table-filter {
+
+}
+
+.table-filter .collapsed {
+    display: none;
+}
+
+.table-filter button {
+    color: var(--accent-color);
+    background-color: var(--white);
+    border: 1px solid var(--accent-color);
+    font-family: var(--main-font);
+    font-size: var(--font-small);
+    padding: 5px;
+    cursor: pointer;
+    margin: -5px 0 5px 5px;
+}
+
+.table-filter button:hover,
+.table-filter button:active {
+    color: var(--white);
+    background-color: var(--accent-color);
+}

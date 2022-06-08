@@ -160,8 +160,8 @@
     {
         "id": 235,
         "legacyIds": [104],
-        "name": "Phoenix Raceway",
-        "shortName": "Phoenix",
+        "name": "Phoenix Raceway (2016)",
+        "shortName": "Phoenix (2016)",
         "location": "Glendale, AZ",
         "length": 1.00
     },
@@ -211,7 +211,7 @@
     {
         "id": 108,
         "name": "Watkins Glen International - Boot",
-        "shortName": "Watkins Glen (Boot)",
+        "shortName": "Watkins Glen (Boot) (2008)",
         "location": "Watkins Glen, NY",
         "length": 3.4
     },
@@ -242,5 +242,42 @@
         "shortName": "Homestead (Indy)",
         "location": "Homestead, FL",
         "length": 1.5
+    },
+    {
+        "id": 400,
+        "name": "Nashville Superspeedway",
+        "shortName": "Nashville",
+        "location": "Lebanon, TN",
+        "length": 1.333
+    },
+    {
+        "id": 162,
+        "name": "Dover International Speedway",
+        "shortName": "Dover",
+        "location": "Dover, DE",
+        "length": 1.0
+    },
+    {
+        "id": 350,
+        "name": "Charlotte Motor Speedway - Roval",
+        "shortName": "Charlotte Roval",
+        "location": "Concord, NC",
+        "length": 2.28
+    },
+    {
+        "id": 434,
+        "legacyIds": [108],
+        "name": "Watkins Glen International - Boot",
+        "shortName": "Watkins Glen (Boot)",
+        "location": "Watkins Glen, NY",
+        "length": 3.4
+    },
+    {
+        "id": 418,
+        "legacyIds": [104, 235],
+        "name": "Phoenix Raceway",
+        "shortName": "Phoenix",
+        "location": "Glendale, AZ",
+        "length": 1.00
     }
 ]

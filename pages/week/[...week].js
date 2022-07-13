@@ -21,7 +21,7 @@ class Week extends React.Component {
         const trackData = await trackDataFetch();
         const weekData = weekDataBuild(raceData);
         const car = raceData[0].carid;
-        const notes = Config.DATA_PROVIDER === Config.DATABASE_NEDB ? await messageGet(year, season, week, car) : '';
+        const notes = await messageGet(year, season, week, car);
         return { pageTitle, raceData, trackData, weekData, season, year, week, car, notes };
     }
 

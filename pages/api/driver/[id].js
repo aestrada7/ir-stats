@@ -1,11 +1,12 @@
-const Datastore = require('nedb');
-var drivers = new Datastore({ filename: 'data/drivers.db', autoload: true });
+import { getDataStore } from "../../../services/DataStore";
 import { encode } from "../../../services/Common";
 
 /**
  * Returns a list of drivers that match the query, either by a substring of the drivers' name or by a driver id.
  */
 export default async function driverHandler(req, res) {
+    const drivers = await getDataStore('drivers');
+
     return new Promise(resolve => {
         const { method } = req;
         const query = encode(req.query.id);

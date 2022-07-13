@@ -2,7 +2,6 @@ import React from 'react';
 
 import { replaceLineBreaks } from '../services/Common';
 import { messageSet, messageGetLocal, messageSetLocal } from '../services/DataFetch';
-import * as Config from '../services/Config';
 
 class Notes extends React.Component {
     constructor(props) {
@@ -15,19 +14,8 @@ class Notes extends React.Component {
         }
     }
 
-    componentDidMount() {
-        if(Config.DATA_PROVIDER === Config.DATABASE_LOCAL_STORAGE) {
-            const { year, season, week, car } = this.props;
-            this.setState({ notes: messageGetLocal(year, season, week, car) });
-        }
-    }
-
     saveText(year, season, week, car, value) {
-        if(Config.DATA_PROVIDER === Config.DATABASE_NEDB) {
-            messageSet(year, season, week, car, value);
-        } else if(Config.DATA_PROVIDER === Config.DATABASE_LOCAL_STORAGE) {
-            messageSetLocal(year, season, week, car, value);
-        }
+        messageSet(year, season, week, car, value);
         this.setState({ editMode: false });
     }
 

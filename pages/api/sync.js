@@ -1,6 +1,5 @@
 import { processSubsession, getResults, getHostedResults } from "../../services/FetchIracing";
 import { transformData } from "../../services/DataFetch";
-import { collection, doc, setDoc } from "firebase/firestore";
 
 const axios = require('axios');
 const Datastore = require('nedb');

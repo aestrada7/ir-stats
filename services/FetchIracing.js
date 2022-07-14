@@ -1,3 +1,5 @@
+import { insertDriver } from '../middleware/fauna';
+
 const axios = require('axios');
 const Datastore = require('nedb-async').default;
 
@@ -168,5 +170,6 @@ export const processDriver = async(drivers, driverData) => {
                 console.error(`Error writing driver ${driverData.custid}`);
             }
         });
+        insertDriver(driverData);
     }
 };

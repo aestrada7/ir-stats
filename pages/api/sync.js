@@ -1,21 +1,19 @@
 import { processSubsession, getResults, getHostedResults } from "../../services/FetchIracing";
 import { transformData } from "../../services/DataFetch";
-import { collection, doc, setDoc } from "firebase/firestore";
 
 const axios = require('axios');
+const crypto = require('crypto');
 const Datastore = require('nedb');
 var results = new Datastore({ filename: 'data/results.db', autoload: true });
 
 export default async function messageHandler(req, res) {
     const { method } = req;
     const hosted = req.query.hosted == 1;
-    const cust_id = req.query.custid;
     const car = req.query.car;
     let year = req.query.year;
     let season = req.query.season;
     const username = req.query.username;
     const password = req.query.password;
-    const irsso_v2 = req.query.irsso_v2;
     const date_from = req.query.date_from;
     const date_to = req.query.date_to;
 
@@ -28,20 +26,21 @@ export default async function messageHandler(req, res) {
         case 'GET':
             console.log('=========== NEW ATTEMPT =========');
             let loginAttempt = await iracingAuthentication(username, password);
+            let cust_id = loginAttempt.data?.custId;
+            console.log(cust_id);
             let cookies = loginAttempt.headers['set-cookie'];
-            //To-do: this is kind of a stopgap, unable to get this through normal requests, we retrieve it manually. It works but it sucks
-            cookies.push(`irsso_membersv2=${irsso_v2};`);
+            console.log(loginAttempt.data);
+
+            if(loginAttempt.data.authcode === 0) {
+                res.status(200).json({'status': 401, 'message': 'Authentication Error. Make sure iRacing is online and that your username/password combination is correct.'});
+                break;
+            }
 
             let rawData;
             if(!hosted) {
                 rawData = await getResults(cookies, cust_id, car, year, season);
             } else {
                 rawData = await getHostedResults(cookies, cust_id, car, date_from, date_to);
-            }
-
-            if(rawData.request.res.responseUrl.indexOf('notauthed.jsp') !== -1) {
-                res.status(200).json({'status': 401, 'message': 'Authentication Error. Make sure the IRSSO cookie is valid.'});
-                break;
             }
 
             let resultsData;
@@ -70,20 +69,20 @@ export default async function messageHandler(req, res) {
 }
 
 const iracingAuthentication = async (username, password) => {
-    const IRACING_LOGIN_URL = `https://members.iracing.com/membersite/Login`; //or .../download/Login
-    let formData = new URLSearchParams();
-    formData.append('username', username);
-    formData.append('password', password);
-    formData.append('utcoffset', '360');
-    formData.append('todaysdate', '');
-
-    const login = await axios.post(IRACING_LOGIN_URL, formData, {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        withCredentials: true
-    })
+    const IRACING_LOGIN_URL = `https://members-ng.iracing.com/auth`;
+    const login = await axios.post(IRACING_LOGIN_URL, {
+            "email": username,
+            "password": base64Pwd(username, password)
+        }
+    );
     return login;
+}
+
+const base64Pwd = (email, password) => {
+    let str = (password + email.toLowerCase());
+    let b64pwd = crypto.createHash('sha256').update(str).digest('base64');
+    console.log(b64pwd);
+    return b64pwd;
 }
 
 const getResultsData = async(data, cookies) => {

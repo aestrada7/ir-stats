@@ -1,8 +1,9 @@
 {
   "name": "ir-stats",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "dependencies": {
     "axios": "^0.21.0",
+    "crypto": "^1.0.1",
     "firebase": "^9.9.0",
     "form-data": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",

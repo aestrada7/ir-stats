@@ -232,8 +232,8 @@ export const raceResultsFetch = async (custid, car, year, season, week, subsessi
  *                          iracing's login. Use this instead of username/password combination, provided it's copied from a valid request
  * @returns {object} The JSON response provided by the Synchronization API.
  */
-export const seasonSync = async (username, password, custid, car, year, season, irsso_v2) => {
-    const SYNC_SERVICE_URL = `./api/sync?username=${username}&password=${password}&custid=${custid}&car=${car}&year=${year}&season=${season}&irsso_v2=${irsso_v2}`;
+export const seasonSync = async (username, password, car, year, season) => {
+    const SYNC_SERVICE_URL = `./api/sync?username=${username}&password=${password}&car=${car}&year=${year}&season=${season}`;
     const response = await axios.get(SYNC_SERVICE_URL);
     return response.data;
 }
@@ -252,8 +252,8 @@ export const seasonSync = async (username, password, custid, car, year, season, 
  *                     iracing's login. Use this instead of username/password combination, provided it's copied from a valid request
  * @returns {object} The JSON response provided by the Synchronization API.
  */
-export const hostedSync = async (username, password, custid, car, date_from, date_to, irsso_v2) => {
-    const SYNC_SERVICE_URL = `./api/sync?hosted=1&username=${username}&password=${password}&custid=${custid}&car=${car}&date_from=${date_from}&date_to=${date_to}&irsso_v2=${irsso_v2}`;
+export const hostedSync = async (username, password, car, date_from, date_to) => {
+    const SYNC_SERVICE_URL = `./api/sync?hosted=1&username=${username}&password=${password}&car=${car}&date_from=${date_from}&date_to=${date_to}`;
     const response = await axios.get(SYNC_SERVICE_URL);
     return response.data;
 }

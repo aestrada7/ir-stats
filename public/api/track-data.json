@@ -140,7 +140,7 @@
         "id": 198,
         "name": "Twin Ring Motegi",
         "shortName": "Motegi",
-        "location": "Hiyama, Motegi",
+        "location": "Hiyama, Motegi, Japan",
         "length": 1.549
     },
     {
@@ -279,5 +279,19 @@
         "shortName": "Phoenix",
         "location": "Glendale, AZ",
         "length": 1.00
+    },
+    {
+        "id": 179,
+        "name": "Long Beach Street Circuit",
+        "shortName": "Long Beach",
+        "location": "Long Beach, CA",
+        "length": 1.968
+    },
+    {
+        "id": 239,
+        "name": "Autodromo Nazionale Monza",
+        "shortName": "Monza",
+        "location": "Monza, Italy",
+        "length": 1
     }
 ]

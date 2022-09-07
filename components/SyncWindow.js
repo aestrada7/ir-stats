@@ -10,11 +10,9 @@ class SyncWindow extends React.Component {
             fields: {
                 username: '',
                 password: '',
-                custid: '',
                 car: '',
                 year: '',
                 season: '',
-                irsso_v2: '',
                 date_from: '',
                 date_to: ''
             },
@@ -31,8 +29,8 @@ class SyncWindow extends React.Component {
 
     async performSync() {
         this.setState({ syncWindowMessage: 'Synchronizing Data...', syncWindowStatus: 'warn' });
-        let { username, password, custid, car, year, season, irsso_v2 } = this.state.fields;
-        let res = await seasonSync(username, password, custid, car, year, season, irsso_v2);
+        let { username, password, car, year, season } = this.state.fields;
+        let res = await seasonSync(username, password, car, year, season);
 
         if(res.status === 200) {
             this.setState({ syncWindowMessage: res.message, syncWindowStatus: 'info' });
@@ -43,8 +41,8 @@ class SyncWindow extends React.Component {
 
     async performHostedSync() {
         this.setState({ syncWindowMessage: 'Synchronizing Data...', syncWindowStatus: 'warn' });
-        let { username, password, custid, car, date_from, date_to, irsso_v2 } = this.state.fields;
-        let res = await hostedSync(username, password, custid, car, date_from, date_to, irsso_v2);
+        let { username, password, car, date_from, date_to } = this.state.fields;
+        let res = await hostedSync(username, password, car, date_from, date_to);
 
         if(res.status === 200) {
             this.setState({ syncWindowMessage: res.message, syncWindowStatus: 'info' });
@@ -68,16 +66,12 @@ class SyncWindow extends React.Component {
                             <input type="text" onChange={e => this.updateField(e, 'username')}></input>
                             <span>Password:</span>
                             <input type="password" onChange={e => this.updateField(e, 'password')}></input>
-                            <span>Customer Id:</span>
-                            <input type="text" onChange={e => this.updateField(e, 'custid')}></input>
                             <span>Car Id:</span>
                             <input type="text" onChange={e => this.updateField(e, 'car')}></input>
                             <span>Year:</span>
                             <input type="text" onChange={e => this.updateField(e, 'year')}></input>
                             <span>Season:</span>
                             <input type="text" onChange={e => this.updateField(e, 'season')}></input>
-                            <span>irsso_v2 cookie:</span>
-                            <input type="text" onChange={e => this.updateField(e, 'irsso_v2')}></input>
                             <button className="sync" onClick={() => this.performSync()} disabled={syncWindowStatus === 'warn'}>Sync Data</button>
                             <div className={`sync-status ${syncWindowStatus}`}>{syncWindowMessage}</div>
                         </div>
@@ -91,16 +85,12 @@ class SyncWindow extends React.Component {
                             <input type="text" onChange={e => this.updateField(e, 'username')}></input>
                             <span>Password:</span>
                             <input type="password" onChange={e => this.updateField(e, 'password')}></input>
-                            <span>Customer Id:</span>
-                            <input type="text" onChange={e => this.updateField(e, 'custid')}></input>
                             <span>Car Id:</span>
                             <input type="text" onChange={e => this.updateField(e, 'car')}></input>
                             <span>Date From:</span>
                             <input type="text" onChange={e => this.updateField(e, 'date_from')}></input>
                             <span>Date To:</span>
                             <input type="text" onChange={e => this.updateField(e, 'date_to')}></input>
-                            <span>irsso_v2 cookie:</span>
-                            <input type="text" onChange={e => this.updateField(e, 'irsso_v2')}></input>
                             <button className="sync" onClick={() => this.performHostedSync()} disabled={syncWindowStatus === 'warn'}>Sync Hosted Data</button>
                             <div className={`sync-status ${syncWindowStatus}`}>{syncWindowMessage}</div>
                         </div>

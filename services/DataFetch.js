@@ -224,16 +224,13 @@ export const raceResultsFetch = async (custid, car, year, season, week, subsessi
  * 
  * @param {string} username Username (email) of an iracing account.
  * @param {string} password Password of said account.
- * @param {number} custid The customer ID which we'll be using to filter results.
  * @param {number} car The car id that will be used.
  * @param {number} year The year of the season that will be retrieved.
  * @param {number} season The season quarter that will be retrieved.
- * @param {string} irsso_v2 A stop-gap that likely will be removed in the future, this is the value of the irsso cookie set by
- *                          iracing's login. Use this instead of username/password combination, provided it's copied from a valid request
  * @returns {object} The JSON response provided by the Synchronization API.
  */
-export const seasonSync = async (username, password, custid, car, year, season, irsso_v2) => {
-    const SYNC_SERVICE_URL = `./api/sync?username=${username}&password=${password}&custid=${custid}&car=${car}&year=${year}&season=${season}&irsso_v2=${irsso_v2}`;
+export const seasonSync = async (username, password, car, year, season) => {
+    const SYNC_SERVICE_URL = `./api/sync?username=${username}&password=${password}&car=${car}&year=${year}&season=${season}`;
     const response = await axios.get(SYNC_SERVICE_URL);
     return response.data;
 }
@@ -245,15 +242,12 @@ export const seasonSync = async (username, password, custid, car, year, season, 
  * @param {string} username Username (email) of an iracing account.
  * @param {string} password Password of said account.
  * @param {number} custid The customer ID which will be used to filter results.
- * @param {number} car The car id that will be used.
  * @param {number} date_from The lower bound date in unix time that will be used.
  * @param {number} date_to The upper bound date in unix time that will be used.
- * @param {string} irsso_v2 A stop-gap that likely will be removed in the future, this is the value of the irsso cookie set by
- *                     iracing's login. Use this instead of username/password combination, provided it's copied from a valid request
  * @returns {object} The JSON response provided by the Synchronization API.
  */
-export const hostedSync = async (username, password, custid, car, date_from, date_to, irsso_v2) => {
-    const SYNC_SERVICE_URL = `./api/sync?hosted=1&username=${username}&password=${password}&custid=${custid}&car=${car}&date_from=${date_from}&date_to=${date_to}&irsso_v2=${irsso_v2}`;
+export const hostedSync = async (username, password, car, date_from, date_to) => {
+    const SYNC_SERVICE_URL = `./api/sync?hosted=1&username=${username}&password=${password}&car=${car}&date_from=${date_from}&date_to=${date_to}`;
     const response = await axios.get(SYNC_SERVICE_URL);
     return response.data;
 }

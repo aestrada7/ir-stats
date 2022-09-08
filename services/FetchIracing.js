@@ -55,6 +55,7 @@ export const getHostedResults = async(cookies, custid, carid, date_from, date_to
  * 
  * @param {number} subsessionid The subsessionid to try to retrieve data from.
  * @param {Array} cookies The stored cookies for a session.
+ * @param {object} mainRes The response object, used to send partial responses to the client.
  * @returns {number} The status code of the operation.
  */
 export const processSubsession = async(subsessionid, cookies) => {

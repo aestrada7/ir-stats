@@ -6,6 +6,13 @@ const gqlClient = new GraphQLClient('https://graphql.us.fauna.com/graphql', {
     }
 })
 
+/**
+ * Retreives a driver object from the database via a GraphQL query. This function is mostly used
+ * to determine if a driver already exists in the database as it doesn't return all the information.
+ * 
+ * @param {number} custid The identifier of the requested driver
+ * @returns an object with the driver id.
+ */
 export const getDriver = async(custid) => {
     const query = gql`
         query driver($custid: Int!) {
@@ -26,8 +33,10 @@ export const getDriver = async(custid) => {
 }
 
 /**
+ * Inserts a driver to the database via a GraphQL mutation.
  * 
- * @param {*} driverData 
+ * @param {object} driverData A JavaScript object that includes all the driver data that will be stored.
+ * @returns an object with a subset of the inserted driver data (driver id, display name).
  */
 export const insertDriver = async (driverData) => {
     const mutation = gql`
@@ -60,9 +69,11 @@ export const insertDriver = async (driverData) => {
 }
 
 /**
+ * Retreives a subsession object from the database via a GraphQL query. This function is mostly 
+ * used to determine if a subsession already exists in the database as it doesn't return all the information.
  * 
- * @param {*} subsessionid 
- * @returns 
+ * @param {number} subsessionid The identifier of the requested subsession
+ * @returns an object with the subsession id.
  */
 export const getSubsession = async(subsessionid) => {
     const query = gql`
@@ -81,6 +92,12 @@ export const getSubsession = async(subsessionid) => {
     return data;
 }
 
+/**
+ * Inserts a subsession to the database via a GraphQL mutation.
+ * 
+ * @param {object} subsessionData A JavaScript object that includes all the season data that will be stored.
+ * @returns an object with the inserted subsession id.
+ */
 export const insertSubsession = async (subsessionData) => {
     const mutation = gql`
         mutation createSubsession($subsessionid: Int!, $start_time: String!, $eventlapscomplete: Int!, $seriesName: String!, $season_quarter: Int!, $season_year: Int!,
@@ -124,9 +141,10 @@ export const insertSubsession = async (subsessionData) => {
 }
 
 /**
+ * Inserts a race result row to the database via a GraphQL mutation. A race result hold information about each individual driver within a race.
  * 
- * @param {*} raceResultData 
- * @returns 
+ * @param {object} raceResultData A JavaScript object that includes all the race result data that will be stored.
+ * @returns an object with a subset of the recently inserted data (driver id, subsession id, finishing position).
  */
 export const insertRaceResults = async (raceResultData) => {
     const mutation = gql`
@@ -195,5 +213,97 @@ export const insertRaceResults = async (raceResultData) => {
     }
 
     const data = await gqlClient.request(mutation, variables);
+    return data;
+}
+
+/**
+ * Inserts a season to the database via a GraphQL mutation.
+ * 
+ * @param {object} seasonData A JavaScript object that includes all the season data that will be stored.
+ * @returns an object with the recently inserted data.
+ */
+export const insertSeason = async (custid, car, year, season) => {
+    const mutation = gql`
+        mutation createSeason($custid: Int!, $car: Int!, $year: Int!, $season: Int!) {
+            createSeason(data: {
+                custid: $custid
+                car: $car
+                year: $year
+                season: $season
+            }) {
+                custid
+                car
+                year
+                season
+            }
+        }
+    `
+
+    const variables = {
+        custid,
+        car,
+        year,
+        season,
+    }
+
+    const data = await gqlClient.request(mutation, variables);
+    return data;
+}
+
+/**
+ * Retreives a season object from the database via a GraphQL query. This function is mostly 
+ * used to determine if a season already exists in the database.
+ * 
+ * @param {number} custid the driver identifier
+ * @param {number} car the car identifier
+ * @param {number} year the year
+ * @param {number} season the season quarter expected to retrieve
+ * @returns an object with the retrieved season
+ */
+export const getSeason = async(custid, car, year, season) => {
+    const query = gql`
+        query season($custid: Int!, $car: Int!, $year: Int!, $season: Int!) {
+            season(custid: $custid, car: $car, year: $year, season: $season) {
+                custid
+                car
+                year
+                season
+            }
+        }
+    `
+
+    const variables = {
+        custid,
+        car,
+        year,
+        season
+    }
+
+    const data = await gqlClient.request(query, variables);
+    return data;
+}
+
+/**
+ * Retreives a list of season objects from the database via a GraphQL query. 
+ * 
+ * @param {number} custid the driver identifier
+ * @param {number} car the car identifier
+ * @returns a list with the retrieved seasons
+ */
+ export const getSeasons = async(custid, car) => {
+    const query = gql`
+        query seasons {
+            seasons {
+                data {
+                    custid
+                    car
+                    year
+                    season
+                }
+            }
+        }
+    `
+
+    const data = await gqlClient.request(query);
     return data;
 }

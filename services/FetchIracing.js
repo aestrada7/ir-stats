@@ -1,7 +1,6 @@
-import { insertDriver } from '../middleware/fauna';
+import * as middleware from '../middleware/fauna';
 
 const axios = require('axios');
-const Datastore = require('nedb-async').default;
 
 /**
  * Retrieves results information from iracing's endpoints.
@@ -59,17 +58,14 @@ export const getHostedResults = async(cookies, custid, carid, date_from, date_to
  * @returns {number} The status code of the operation.
  */
 export const processSubsession = async(subsessionid, cookies) => {
-    const subsessions = new Datastore({ filename: 'data/subsessions.db', autoload: true });
+    const currentSubsession = await middleware.getSubsession(subsessionid);
 
-    let currentSubsession = await subsessions.asyncFind({ subsessionid });
-    if(currentSubsession.length !== 0) {
-        console.debug(`Subsession ${subsessionid} already exists.`);
+    if(currentSubsession.subsession !== null) {
+        console.log(`Subsession ${subsessionid} already exists.`);
         return 302;
     }
 
     const IRACING_SUBSESSION_URL = `https://members.iracing.com/membersite/member/GetSubsessionResults?subsessionID=${subsessionid}`;
-
-    //TODO: add error handling for unauthorized access (401)
     const res = await axios.get(IRACING_SUBSESSION_URL, {
         headers: {
             'Cookie': cookies
@@ -78,8 +74,6 @@ export const processSubsession = async(subsessionid, cookies) => {
     });
 
     const rawSessionData = res.data.rows.filter(row => (row.simsesname === 'RACE' || row.simsestypename === 'Race'));
-    const raceResults = new Datastore({ filename: 'data/raceResults.db', autoload: true });
-    const drivers = new Datastore({ filename: 'data/drivers.db', autoload: true });
 
     let subsession = {
         subsessionid: res.data.subsessionid,
@@ -97,16 +91,14 @@ export const processSubsession = async(subsessionid, cookies) => {
     };
 
     for(const row in rawSessionData) {
-        await processSubsessionResult(raceResults, rawSessionData[row], subsession, drivers);
+        let processedResult = await processSubsessionResult(rawSessionData[row], subsession);
+        if(processedResult !== 0) {
+            subsession.winnerid = processedResult;
+        }
     }
     console.log(`Race results processed correctly for subsession ${subsessionid}.`);
 
-    let subsessionWinner = await raceResults.asyncFindOne({ subsessionid, finishing_position: 1 });
-    if(subsessionWinner.length !== 0) {
-        subsession.winnerid = subsessionWinner.custid;
-    }
-
-    let subsessionData = await subsessions.asyncInsert(subsession);
+    let subsessionData = await middleware.insertSubsession(subsession);
     if(subsessionData) {
         console.log(`Subsession ${subsessionid} successfully written.`);
         return 200;
@@ -116,7 +108,7 @@ export const processSubsession = async(subsessionid, cookies) => {
     }
 }
 
-export const processSubsessionResult = async(raceResults, row, subsession, drivers) => {
+export const processSubsessionResult = async(row, subsession) => {
     const raceResult = {
         finishing_position: row.pos + 1,
         starting_position: row.startpos + 1,
@@ -153,23 +145,30 @@ export const processSubsessionResult = async(raceResults, row, subsession, drive
         helm_color3: row.helm_color3
     };
 
-    await processDriver(drivers, driverData);
+    await processDriver(driverData);
 
-    raceResults.insert(raceResult, function(err, doc) {
-        if(err) {
-            console.error(`Error writing race results for subsession ${subsessionid}, ${raceResult.custid}`);
-        }
-    });
+    let raceResultData = await middleware.insertRaceResults(raceResult);
+    if(raceResultData.createRaceResult.subsessionid !== subsession.subsessionid) {
+        console.error(`Error writing race results for subsession ${subsession.subsessionid}, ${raceResult.custid}`);
+    }
+
+    if(raceResultData.createRaceResult.finishing_position === 1) {
+        return raceResultData.createRaceResult.custid;
+    } else {
+        return 0;
+    }
 };
 
-export const processDriver = async(drivers, driverData) => {
-    let currentDriver = await drivers.asyncFind({ custid: driverData.custid });
-    if(currentDriver.length === 0) {
-        drivers.insert(driverData, function(err, doc) {
-            if(err) {
-                console.error(`Error writing driver ${driverData.custid}`);
-            }
-        });
-        insertDriver(driverData);
+export const processDriver = async(driverData) => {
+    const currentDriver = await middleware.getDriver(driverData.custid);
+
+    if(currentDriver.driver !== null) {
+        console.info(`Driver ${driverData.custid} already exists.`);
+        return 302;
+    }
+
+    let driverInfo = await middleware.insertDriver(driverData);
+    if(driverInfo.createDriver == null) {
+        console.error(`Error writing driver ${driverData.custid} to DB.`)
     }
 };

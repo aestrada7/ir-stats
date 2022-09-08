@@ -50,6 +50,7 @@ export default async function messageHandler(req, res) {
                 resultsData = await getHostedResultsData(rawData, cookies);
             }
 
+            // Todo: All this needs to go and be changed by a seasons object, that's the only use for this, then update the seasons API
             if(resultsData) {
                 results.update({cust_id, car, year, season}, {cust_id, car, year, season, data: resultsData}, {upsert: true}, function(err, doc) {
                     if(err) {

@@ -145,7 +145,7 @@ export const getSeason = async(custid, car, year, season) => {
  * @returns a list with the retrieved seasons
  */
 export const getSeasons = async(custid, car) => {
-    const data = await seasons.asyncFind({ custid });
+    const data = await seasons.asyncFind({ custid }, [['sort', { year: -1, season: -1 }]]);
     return data;
 }
 

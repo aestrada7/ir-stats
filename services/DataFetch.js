@@ -12,7 +12,7 @@ import * as Config from "./Config";
  */
 export const raceDataFetch = async (year, season, week) => {
     // to-do: use seriesid instead of carid, as that will only break stuff
-    const winnerData = await subsessionWinnerData();
+    const winnerData = await subsessionWinnerData(year, season, week);
     const raceData = await raceResultsFetch(182407, [99, 57], year, season, week);
     return appendData(raceData, winnerData);
 }
@@ -270,8 +270,12 @@ export const seasonList = async(custid, seriesid) => {
  * 
  * @returns {object} A JSON object with all the data.
  */
-export const subsessionWinnerData = async() => {
+export const subsessionWinnerData = async(year, season, week) => {
     const SUBSESSION_SERVICE_URL = `${Config.SERVER_URL}/api/subsession`;
-    const response = await axios.get(SUBSESSION_SERVICE_URL);
+    let filters = '';
+    if(year) filters += `year=${year}&`;
+    if(season) filters += `season=${season}&`;
+    if(week) filters += `week=${week}&`;
+    const response = await axios.get(`${SUBSESSION_SERVICE_URL}?${filters}`);
     return response.data;
 }

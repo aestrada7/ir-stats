@@ -1,17 +1,16 @@
 import { processSubsession, getResults, getHostedResults } from "../../services/FetchIracing";
 import { transformData } from "../../services/DataFetch";
+import { getSeason, insertSeason } from "../../middleware/nedb";
 
 const axios = require('axios');
 const crypto = require('crypto');
-const Datastore = require('nedb');
-var results = new Datastore({ filename: 'data/results.db', autoload: true });
 
 export default async function messageHandler(req, res) {
     const { method } = req;
     const hosted = req.query.hosted == 1;
-    const car = req.query.car;
-    let year = req.query.year;
-    let season = req.query.season;
+    const car = parseInt(req.query.car);
+    let year = parseInt(req.query.year);
+    let season = parseInt(req.query.season);
     const username = req.query.username;
     const password = req.query.password;
     const date_from = req.query.date_from;
@@ -51,12 +50,16 @@ export default async function messageHandler(req, res) {
             }
 
             if(resultsData) {
-                results.update({cust_id, car, year, season}, {cust_id, car, year, season, data: resultsData}, {upsert: true}, function(err, doc) {
-                    if(err) {
-                        res.status(503).end(err.toString());
+                let seasonData = await getSeason(cust_id, car, year, season);
+
+                if(!seasonData) {
+                    let createdSeason = await insertSeason(cust_id, car, year, season);
+                    if(createdSeason) {
+                        res.status(200).json({'status': 200, 'message': `Successfully synchronized data from ${year} - Season ${season}.`});
                     }
+                } else {
                     res.status(200).json({'status': 200, 'message': `Successfully synchronized data from ${year} - Season ${season}.`});
-                });
+                }
             } else {
                 res.status(200).json({'status': 200, 'message': `No sessions found for ${year} - Season ${season}.`});
             }
@@ -66,6 +69,10 @@ export default async function messageHandler(req, res) {
             res.status(405).end(`Method ${method} not allowed`);
             break;
     }
+
+    return new Promise(resolve => {
+        return resolve();
+    });
 }
 
 const iracingAuthentication = async (username, password) => {

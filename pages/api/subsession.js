@@ -1,13 +1,25 @@
-const Datastore = require('nedb-async').default;
-var subsessions = new Datastore({ filename: 'data/subsessions.db', autoload: true });
-var drivers = new Datastore({ filename: 'data/drivers.db', autoload: true });
+import { getDriver, getSubsessions } from '../../middleware/nedb';
 
 export default async function messageHandler(req, res) {
     const { method } = req;
+    const year = req.query.year;
+    const season = req.query.season;
+    const week = req.query.week;
+
+    let searchObj = {};
+    if(year) {
+        searchObj.season_year = parseInt(year);
+    }
+    if(season) {
+        searchObj.season_quarter = parseInt(season);
+    }
+    if(week) {
+        searchObj.race_week_num = parseInt(week);
+    }
 
     switch(method) {
         case 'GET':
-            let subsessionData = await subsessions.asyncFind({});
+            let subsessionData = await getSubsessions(searchObj);
             let allFields = await buildSubsessionData(subsessionData);
             res.status(200).json(allFields);
             break;
@@ -16,6 +28,10 @@ export default async function messageHandler(req, res) {
             res.status(405).end(`Method ${method} not allowed`);
             break;
     }
+
+    return new Promise(resolve => {
+        return resolve();
+    });
 }
 
 const buildSubsessionData = async(docs) => {
@@ -24,7 +40,7 @@ const buildSubsessionData = async(docs) => {
         let appendFields = {};
         let winnerId = docs[i].winnerid;
         let subsessionId = docs[i].subsessionid;
-        let driverData = await drivers.asyncFindOne({ custid: winnerId });
+        let driverData = await getDriver(winnerId);
         appendFields.winnerid = driverData.custid;
         appendFields.winnerdisplayname = driverData.displayname;
         appendFields.winnerhelmcolor1 = driverData.helm_color1;

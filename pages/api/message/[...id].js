@@ -1,4 +1,4 @@
-import { getMessage, updateMessage } from '../../../middleware/nedb';
+import { getMessage, updateMessage, closeClient } from '../../../middleware/db';
 
 export default async function messageHandler(req, res) {
     const { method } = req;
@@ -12,6 +12,7 @@ export default async function messageHandler(req, res) {
     switch(method) {
         case 'GET':
             let msg = await getMessage(cust_id, car, year, season, week);
+            await closeClient();
             if(msg) {
                 res.status(200).json(msg);
             } else {
@@ -20,6 +21,7 @@ export default async function messageHandler(req, res) {
             break;
         case 'PUT':
             let updatedMsg = await updateMessage({cust_id, car, year, season, week}, {cust_id, car, year, season, week, message});
+            await closeClient();
             if(updatedMsg) {
                 res.status(200).json({'status': 200, 'message': 'Stored successfully!'});
             }

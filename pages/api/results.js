@@ -1,4 +1,4 @@
-import { getRaceResults } from "../../middleware/nedb";
+import { getRaceResults, closeClient } from "../../middleware/db";
 
 export default async function messageHandler(req, res) {
     const { method } = req;
@@ -41,6 +41,7 @@ export default async function messageHandler(req, res) {
         case 'GET':
         case 'POST':
             let doc = await getRaceResults(searchObj);
+            await closeClient();
             if(doc) {
                 res.status(200).json(doc);
             } else {

@@ -1,9 +1,15 @@
-const Datastore = require('nedb-async').default;
+import { MongoClient } from "mongodb";
+
+let glbClient;
 
 /**
- * Does nothing, used only locally.
+ * Closes the MongoDB connection.
  */
-export const closeClient = async() => {}
+export const closeClient = async() => {
+    await glbClient.close();
+    glbClient = null;
+    console.log('Disconnected successfully');
+}
 
 /**
  * Retrieves an NeDB object to perform CRUD operations with.
@@ -11,9 +17,15 @@ export const closeClient = async() => {}
  * @param {string} collectionName The collection name that will be used.
  * @returns A datastore object from NeDB which can be used for CRUD operations.
  */
-const getDataStore = (collectionName) => {
-    const dataStoreFile = `data/${collectionName}.db`;
-    const store = new Datastore({ filename: dataStoreFile, autoload: true });
+ const getDataStore = async(collectionName) => {
+    if(!glbClient) {
+        const uri = "mongodb+srv://ir-stats-user:saafZnz9m.4FZYB@ir-stats.ie6mxab.mongodb.net/?retryWrites=true&w=majority";
+        const client = new MongoClient(uri);
+        await client.connect();
+        glbClient = client;
+        console.log('Connected successfully to MongoDB instance.');
+    }
+    const store = glbClient.db('ir-stats').collection(collectionName);
     return store;
 }
 
@@ -25,8 +37,8 @@ const getDataStore = (collectionName) => {
  * @returns an object with the driver id.
  */
 export const getDriver = async(custid) => {
-    const drivers = getDataStore('drivers');
-    const data = await drivers.asyncFindOne({ custid });
+    const drivers = await getDataStore('drivers');
+    const data = await drivers.findOne({ custid });
     return data;
 }
 
@@ -39,8 +51,8 @@ export const getDriver = async(custid) => {
  * @returns A list of drivers sorted by display name.
  */
 export const getDrivers = async(filter, maxItems = 5) => {
-    const drivers = getDataStore('drivers');
-    const data = await drivers.asyncFind(filter, [['sort', { displayname: 1 }], ['limit', maxItems]]);
+    const drivers = await getDataStore('drivers');
+    const data = await drivers.find(filter).sort({ displayname: 1 }).limit(maxItems).toArray();
     return data;
 }
 
@@ -51,8 +63,11 @@ export const getDrivers = async(filter, maxItems = 5) => {
  * @returns an object with the inserted driver data.
  */
 export const insertDriver = async (driverData) => {
-    const drivers = getDataStore('drivers');
-    const data = await drivers.asyncInsert(driverData);
+    const drivers = await getDataStore('drivers');
+    let data = await drivers.insertOne(driverData);
+    if(data.acknowledged) {
+        data = driverData;
+    }
     return data;
 }
 
@@ -64,8 +79,8 @@ export const insertDriver = async (driverData) => {
  * @returns an object with the requested subsession.
  */
 export const getSubsession = async(subsessionid) => {
-    const subsessions = getDataStore('subsessions');
-    const data = await subsessions.asyncFindOne({ subsessionid });
+    const subsessions = await getDataStore('subsessions');
+    const data = await subsessions.findOne({ subsessionid });
     return data;
 }
 
@@ -76,8 +91,8 @@ export const getSubsession = async(subsessionid) => {
  * @returns an object with the filtered data.
  */
 export const getSubsessions = async(filter) => {
-    const subsessions = getDataStore('subsessions');
-    const data = await subsessions.asyncFind(filter)
+    const subsessions = await getDataStore('subsessions');
+    const data = await subsessions.find(filter).toArray();
     return data;
 }
 
@@ -88,8 +103,11 @@ export const getSubsessions = async(filter) => {
  * @returns an object with the inserted subsession.
  */
 export const insertSubsession = async (subsessionData) => {
-    const subsessions = getDataStore('subsessions');
-    const data = await subsessions.asyncInsert(subsessionData);
+    const subsessions = await getDataStore('subsessions');
+    let data = await subsessions.insertOne(subsessionData);
+    if(data.acknowledged) {
+        data = subsessionData;
+    }
     return data;
 }
 
@@ -101,8 +119,13 @@ export const insertSubsession = async (subsessionData) => {
  * @returns an object with the recently inserted data.
  */
 export const insertRaceResults = async (raceResultData) => {
-    const raceResults = getDataStore('raceResults');
-    const data = await raceResults.asyncInsert(raceResultData);
+    const raceResults = await getDataStore('raceResults');
+    let data = await raceResults.insertOne(raceResultData);
+    if(data.acknowledged) {
+        data = raceResultData;
+    } else {
+        console.log(`Error writing race results data for ${raceResultData.subsessionid}`);
+    }
     return data;
 }
 
@@ -113,8 +136,8 @@ export const insertRaceResults = async (raceResultData) => {
  * @returns an object with the filtered data.
  */
 export const getRaceResults = async (filter) => {
-    const raceResults = getDataStore('raceResults');
-    const data = await raceResults.asyncFind(filter, [['sort', { start_time: -1, finishing_position: 1 }]]);
+    const raceResults = await getDataStore('raceResults');
+    const data = await raceResults.find(filter).sort({ start_time: -1, finishing_position: 1 }).toArray();
     return data;
 }
 
@@ -125,8 +148,8 @@ export const getRaceResults = async (filter) => {
  * @returns an object with the recently inserted data.
  */
 export const insertSeason = async (custid, car, year, season) => {
-    const seasons = getDataStore('seasons');
-    const data = await seasons.asyncInsert({ custid, car, year, season });
+    const seasons = await getDataStore('seasons');
+    const data = await seasons.insertOne({ custid, car, year, season });
     return data;
 }
 
@@ -141,8 +164,8 @@ export const insertSeason = async (custid, car, year, season) => {
  * @returns an object with the retrieved season
  */
 export const getSeason = async(custid, car, year, season) => {
-    const seasons = getDataStore('seasons');
-    const data = await seasons.asyncFindOne({ custid, car, year, season });
+    const seasons = await getDataStore('seasons');
+    const data = await seasons.findOne({ custid, car, year, season });
     return data;
 }
 
@@ -154,8 +177,8 @@ export const getSeason = async(custid, car, year, season) => {
  * @returns a list with the retrieved seasons
  */
 export const getSeasons = async(custid, car) => {
-    const seasons = getDataStore('seasons');
-    const data = await seasons.asyncFind({ custid }, [['sort', { year: -1, season: -1 }]]);
+    const seasons = await getDataStore('seasons');
+    const data = await seasons.find({ custid }).sort({ year: -1, season: -1 }).toArray();
     return data;
 }
 
@@ -170,8 +193,8 @@ export const getSeasons = async(custid, car) => {
  * @returns The message stored in the DB or null if nothing's found.
  */
 export const getMessage = async(cust_id, car, year, season, week) => {
-    const messages = getDataStore('messages');
-    const data = await messages.asyncFindOne({cust_id, car, year, season, week});
+    const messages = await getDataStore('messages');
+    const data = await messages.findOne({cust_id, car, year, season, week});
     return data;
 }
 
@@ -184,7 +207,7 @@ export const getMessage = async(cust_id, car, year, season, week) => {
  * @returns The updated message.
  */
 export const updateMessage = async(originalObj, newObj) => {
-    const messages = getDataStore('messages');
-    const data = await messages.asyncUpdate(originalObj, newObj, { upsert: true });
+    const messages = await getDataStore('messages');
+    const data = await messages.updateOne(originalObj, { $set: newObj }, { upsert: true });
     return data;
 }

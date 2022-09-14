@@ -1,4 +1,4 @@
-import { getDriver, getSubsessions } from '../../middleware/nedb';
+import { getDriver, getSubsessions, closeClient } from '../../middleware/db';
 
 export default async function messageHandler(req, res) {
     const { method } = req;
@@ -21,6 +21,7 @@ export default async function messageHandler(req, res) {
         case 'GET':
             let subsessionData = await getSubsessions(searchObj);
             let allFields = await buildSubsessionData(subsessionData);
+            await closeClient();
             res.status(200).json(allFields);
             break;
         default:

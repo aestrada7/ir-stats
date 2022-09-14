@@ -1,4 +1,4 @@
-import { getDrivers } from "../../../middleware/nedb";
+import { getDrivers, closeClient } from "../../../middleware/db";
 import { encode } from "../../../services/Common";
 
 /**
@@ -13,6 +13,7 @@ export default async function driverHandler(req, res) {
         case 'GET':
             let filters = { $or: [{ displayname: { $regex: new RegExp(query, 'i') } }, { custid: parseInt(query) }] };
             let docs = await getDrivers(filters, maxItems);
+            await closeClient();
             if(docs) {
                 res.status(200).json(docs);
             }

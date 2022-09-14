@@ -1,4 +1,4 @@
-import * as middleware from '../middleware/nedb';
+import * as middleware from '../middleware/db';
 
 const axios = require('axios');
 
@@ -101,6 +101,7 @@ export const processSubsession = async(subsessionid, cookies) => {
     console.log(`Race results processed correctly for subsession ${subsessionid}.`);
 
     let subsessionData = await middleware.insertSubsession(subsession);
+    await middleware.closeClient();
     if(subsessionData) {
         console.log(`Subsession ${subsessionid} successfully written.`);
         return 200;

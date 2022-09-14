@@ -1,4 +1,4 @@
-import { getSeasons } from '../../middleware/nedb';
+import { getSeasons, closeClient } from '../../middleware/db';
 
 export default async function messageHandler(req, res) {
     const { method } = req;
@@ -12,6 +12,7 @@ export default async function messageHandler(req, res) {
     switch(method) {
         case 'GET':
             let seasonsRes = await getSeasons(custid);
+            await closeClient();
             res.status(200).json(seasonsRes);
             /*
             const doc = await results.find(searchObj).sort({ year: -1, season: -1 });

@@ -19,7 +19,7 @@ export const closeClient = async() => {
  */
  const getDataStore = async(collectionName) => {
     if(!glbClient) {
-        const uri = `mongodb+srv://${process.env.MONGODB_ATLAS_USER}:${provess.env.MONGODB_ATLAS_PASS}@ir-stats.ie6mxab.mongodb.net/?retryWrites=true&w=majority`;
+        const uri = `mongodb+srv://${process.env.MONGODB_ATLAS_USER}:${process.env.MONGODB_ATLAS_PASS}@ir-stats.ie6mxab.mongodb.net/?retryWrites=true&w=majority`;
         const client = new MongoClient(uri);
         await client.connect();
         glbClient = client;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { replaceLineBreaks } from '../services/Common';
-import { messageSet, messageGetLocal, messageSetLocal } from '../services/DataFetch';
+import { messageSet } from '../services/DataFetch';
 
 class Notes extends React.Component {
     constructor(props) {

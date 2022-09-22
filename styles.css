@@ -10,6 +10,12 @@
     --background-head: #cc5500;
     --achieved-position-all-challenge: #52f7b2;
 
+    /* Season Colors */
+    --season-1: #77cc00;
+    --season-2: #cc0077;
+    --season-3: #cc7700;
+    --season-4: #0077cc;
+
     /* Position Colors */
     --background-p1: #ffdd00;
     --foreground-p1: #000;
@@ -227,6 +233,22 @@ a:hover {
     position: absolute;
     left: -40px;
     top: 5px;
+}
+
+.table-item.composite-field .season-indicator.season-1 {
+    color: var(--season-1);
+}
+
+.table-item.composite-field .season-indicator.season-2 {
+    color: var(--season-2);
+}
+
+.table-item.composite-field .season-indicator.season-3 {
+    color: var(--season-3);
+}
+
+.table-item.composite-field .season-indicator.season-4 {
+    color: var(--season-4);
 }
 
 .sort-button {

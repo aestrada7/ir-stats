@@ -1,49 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class WeekItem extends React.Component {
-    constructor(props) {
-        super(props);
+const WeekItem = ({ caption, value, hover }) => {
+    const [ isHovering, setIsHovering ] = useState(false);
 
-        this.state = {
-            isHovering: false
-        };
-    }
-
-    showItem(item) {
+    const showItem = (item) => {
         if(item) {
-            this.setState({ isHovering: true });
+            setIsHovering(true);
         }
     }
 
-    hideItem() {
-        if(this.state.isHovering) {
-            this.setState({ isHovering: false });
+    const hideItem = () => {
+        if(isHovering) {
+            setIsHovering(false);
         }
     }
 
-    render() {
-        const { caption, value, hover } = this.props;
-        const { isHovering } = this.state;
-
-        return (
-            <React.Fragment>
-                <div className="week-item" onMouseEnter={() => this.showItem(hover)}
-                     onMouseLeave={() => this.hideItem()}>
-                    <div className="week-item-title">
-                        {caption}
-                    </div>
-                    <div className="week-item-value">
-                        {value}
-                    </div>
-                    {hover && isHovering ?
-                        <div className="week-item-hover">
-                            {hover}%
-                        </div>
-                    : ''}
+    return (
+        <React.Fragment>
+            <div className="week-item" onMouseEnter={() => showItem(hover)}
+                 onMouseLeave={() => hideItem()}>
+                <div className="week-item-title">
+                    {caption}
                 </div>
-            </React.Fragment>
-        );
-    }
+                <div className="week-item-value">
+                    {value}
+                </div>
+                {hover && isHovering ?
+                    <div className="week-item-hover">
+                        {hover}%
+                    </div>
+                : ''}
+            </div>
+        </React.Fragment>
+    );
 }
 
 export default WeekItem;

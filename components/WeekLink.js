@@ -11,7 +11,7 @@ class WeekLink extends React.Component {
             <Link href={'/week/' + year + '/' + season + '/' + week}>
                 <a>
                     {showSeason ?
-                        <span className="season-indicator">{year} S{season}</span>
+                        <span className={`season-indicator season-${season}`}>{year} S{season}</span>
                     : '' }
                     <span className="date-container">{epochTime ? formatEpoch(date) : date}</span>
                     <span className="week-indicator">Week {week + 1}</span>

@@ -1,0 +1,77 @@
+.sync-window {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    & > .login-form {
+        position: relative;
+        margin: 20px;
+        z-index: 999;
+
+        span {
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            margin-bottom: 10px;
+            font-family: var(--main-font);
+            font-size: var(--font-normal);
+        }
+    }
+
+    button {
+        &.sync {
+            color: var(--accent-color);
+            background-color: var(--white);
+            border: 1px solid var(--accent-color);
+            font-family: var(--main-font);
+            font-size: var(--font-small);
+            padding: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+
+            &:hover,
+            &:active {
+                color: var(--white);
+                background-color: var(--accent-color);
+            }
+        }
+    }
+
+    .sync-status {
+        width: calc(100% - 10px);
+        padding: 10px;
+        border-radius: var(--global-border-radius);
+
+        &.error {
+            color: var(--foreground-error);
+            background-color: var(--background-error);
+            border: 1px solid var(--foreground-error);
+        }
+
+        &.warn {
+            color: var(--foreground-warn);
+            background-color: var(--background-warn);
+            border: 1px solid var(--foreground-warn);
+        }
+
+        &.info {
+            color: var(--foreground-info);
+            background-color: var(--background-info);
+            border: 1px solid var(--foreground-info);
+        }
+    }
+}
+
+.sync-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-light-grey);
+    opacity: 90%;
+    z-index: 998;
+}

@@ -1,0 +1,22 @@
+.hide-legacy {
+    border: 1px solid var(--accent-color);
+    padding: 5px;
+    background-color: transparent;
+    font-size: var(--font-xsmall) !important;
+    cursor: pointer;
+    font: var(--main-font);
+    position: absolute;
+    top: -50px;
+    right: 0;
+
+    &:hover {
+        background-color: var(--accent-color);
+        color: var(--white);
+    }
+}
+
+.track-search {
+    position: absolute;
+    top: -40px;
+    right: 0;
+}

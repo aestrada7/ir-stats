@@ -1,0 +1,27 @@
+.autocomplete-container {
+    .autocomplete-input {
+        font-family: var(--main-font);
+        font-size: var(--font-normal);
+        width: var(--autocomplete-max-width);
+    }
+
+    .autocomplete-list-container {
+        border: 1px solid var(--accent-color);
+        max-width: var(--autocomplete-max-width);
+    }
+
+    .autocomplete-item {
+        padding: 5px;
+
+        &:nth-child(odd) {
+            background-color: var(--background-light-grey);
+        }
+
+        &:hover,
+        &.focused {
+            cursor: pointer;
+            background-color: var(--accent-color);
+            color: var(--white);
+        }
+    }
+}

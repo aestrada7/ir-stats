@@ -1,0 +1,37 @@
+.all-positions-chart {
+    position: sticky;
+    top: 0;
+    width: var(--chart-width);
+    margin: 0 auto;
+}
+
+.position-item {
+    display: flex;
+    border: 1px solid var(--black);
+
+    .frequency,
+    .position {
+        width: 30px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .frequency {
+        &.achieved {
+            background-color: var(--achieved-position-all-challenge);
+        }
+    }
+
+    .detail {
+        padding: 10px;
+    }
+
+    .detail-link:hover {
+        cursor: pointer;
+        color: var(--accent-color);
+    }
+}
+
+.hide {
+    display: none;
+}

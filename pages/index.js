@@ -42,7 +42,7 @@ class Index extends React.Component {
                 <div className="track-search">
                     <TrackSearch placeholder="Enter track name or id"></TrackSearch>
                 </div>
-                <div className="main-menu">
+                <div className="main-menu top">
                     <Link href="/season/career">
                         <button className="main-link">
                             <span>Career Stats</span>

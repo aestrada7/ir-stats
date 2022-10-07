@@ -25,6 +25,10 @@
         border-top-left-radius: var(--global-border-radius);
         border-top-right-radius: var(--global-border-radius);
     }
+
+    &.selected {
+        background-color: var(--accent-color);
+    }
 }
 
 .table-item {

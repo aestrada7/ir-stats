@@ -7,6 +7,7 @@ import { TableFilterContext } from '../services/TableFilterContext';
 const IRatingChart = ({ raceData }) => {
     const context = useContext(TableFilterContext);
     const [ data, setData ] = useState([]);
+    const [ events, setEvents ] = useState([]);
 
     const MAX_ENTRIES = 8;
     const DEFAULT_DOT_SIZE = 4;
@@ -33,6 +34,28 @@ const IRatingChart = ({ raceData }) => {
         applyFilters();
     }, [context.filter]);
 
+    useEffect(() => {
+        let event = [{
+            target: "data",
+                eventHandlers: {
+                    onClick: () => {
+                        return [
+                            {
+                                target: "data",
+                                mutation: (props) => {
+                                    console.log(props);
+                                    const fill = props.style && props.style.fill;
+                                    return fill === "var(--accent-color)" ? null : { style: { fill: 'var(--accent-color)' } };
+                                }
+                            }
+                        ];
+                    }
+                }
+            }
+        ];
+        setEvents(event);
+    }, [data]);
+
     const applyFilters = () => {
         let filters = context.filter;
         let filteredData = raceData;
@@ -53,7 +76,7 @@ const IRatingChart = ({ raceData }) => {
                 <VictoryLine style={style} data={data}
                              groupComponent={<VictoryClipContainer clipId="irating-chart"></VictoryClipContainer>} />
                 <VictoryScatter style={style} labelComponent={<VictoryTooltip/>} 
-                                labels={({ datum }) => datum.y} data={data} size={dotSize} />
+                                labels={({ datum }) => datum.y} events={events} data={data} size={dotSize} />
             </VictoryChart>
         </div>
     );

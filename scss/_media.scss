@@ -1,0 +1,7 @@
+$breakpoint-small: 440px;
+
+@mixin media-small {
+    @media(max-width: $breakpoint-small) {
+        @content
+    }
+}

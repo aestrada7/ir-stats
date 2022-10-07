@@ -13,6 +13,10 @@
     background: var(--white);
     position: relative;
 
+    @include media-small {
+        padding: 6px;
+    }
+
     &:nth-last-child(n+2):after {
         position: absolute;
         content: '';

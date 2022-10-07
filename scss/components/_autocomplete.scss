@@ -3,6 +3,10 @@
         font-family: var(--main-font);
         font-size: var(--font-normal);
         width: var(--autocomplete-max-width);
+
+        @include media-small {
+            width: calc(100vw - var(--autocomplete-mobile-margin));
+        }
     }
 
     .autocomplete-list-container {

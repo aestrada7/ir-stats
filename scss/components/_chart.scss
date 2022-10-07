@@ -1,10 +1,14 @@
 .chart-container {
     margin: 0 auto;
     margin-top: 20px;
-    padding: 0 20px;
+    padding: 0 var(--chart-padding);
     width: var(--chart-width);
     background-color: var(--white);
     border: 1px solid var(--accent-color);
     border-radius: var(--global-border-radius);
     box-shadow: var(--global-box-shadow);
+
+    @include media-small {
+        width: calc(100% - (var(--chart-padding) * 2));
+    }
 }

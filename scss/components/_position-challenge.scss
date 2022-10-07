@@ -3,6 +3,10 @@
     top: 0;
     width: var(--chart-width);
     margin: 0 auto;
+
+    @include media-small {
+        width: 95%;
+    }
 }
 
 .position-item {

@@ -2,36 +2,9 @@
     width: var(--app-width);
     margin: 0 auto;
     position: relative;
-}
 
-.main-menu {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.main-menu .main-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--accent-color);
-    padding: 10px;
-    margin-bottom: 12px;
-    margin-right: 10px;
-    width: 150px;
-    height: 150px;
-    font: var(--main-font);
-    background-color: var(--white);
-    border-radius: var(--global-border-radius);
-    box-shadow: var(--global-box-shadow);
-
-    &:hover {
-        background: var(--accent-color);
-        cursor: pointer;
-
-        span {
-            text-decoration: none;
-            color: var(--white);
-        }
+    @include media-small {
+        width: 95%;
     }
 }
 
@@ -41,11 +14,21 @@
     margin-bottom: 15px;
     position: relative;
 
+    @include media-small {
+        width: 95%;
+    }
+
     & .page-title {
         position: absolute;
         top: 0;
         right: 0;
         color: var(--accent-color);
+    }
+
+    .logo {
+        img {
+            max-width: var(--logo-max-width);
+        }
     }
 }
 

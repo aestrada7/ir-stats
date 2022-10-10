@@ -47,8 +47,7 @@ const Table = ({ trackData, showSeason, raceData }) => {
             <TableFilter></TableFilter>
             <div className="table">
                 <div className="table-row flex head">
-                    <TableItem columns="4" val="Track / Date"></TableItem>
-                    <TableItem columns="2" val="Winner"></TableItem>
+                    <TableItem columns="6" val="Track / Date / Winner"></TableItem>
                     <TableItem columns="1" val="Points" fieldToSortBy="champpoints" sortFunction={sortBy} sortingBy={sortingBy} order={order}></TableItem>
                     <TableItem columns="1" val="Laps"></TableItem>
                     <TableItem columns="1" val="Total"></TableItem>
@@ -59,16 +58,20 @@ const Table = ({ trackData, showSeason, raceData }) => {
                 { raceDataSt.map(raceItem => (
                     <React.Fragment key={raceItem.subsessionid}>
                         <div className="table-row flex">
-                            <TableItem columns="4" className="composite-field">
-                                <TrackName id={raceItem.trackid} week={raceItem.race_week_num} trackData={trackData}
-                                        value="shortName" season={raceItem.season_quarter} year={raceItem.season_year} linkTo="track"></TrackName>
-                                <br />
-                                <WeekLink date={raceItem.sessionstarttime} week={raceItem.race_week_num} epochTime={true}
-                                        season={raceItem.season_quarter} year={raceItem.season_year} showSeason={showSeason}></WeekLink>
-                            </TableItem>
-                            <TableItem columns="2">
-                                <Driver name={raceItem.winnerdisplayname} showHelmet={true} hasLink={true} id={raceItem.winnerid}
-                                        helmetColors={[raceItem.winnerhelmcolor1, raceItem.winnerhelmcolor2]}></Driver>
+                            <TableItem columns="6" className="composite-field">
+                                <div className="flexible-table">
+                                    <div>
+                                        <TrackName id={raceItem.trackid} week={raceItem.race_week_num} trackData={trackData}
+                                                value="shortName" season={raceItem.season_quarter} year={raceItem.season_year} linkTo="track"></TrackName>
+                                        <br />
+                                        <WeekLink date={raceItem.sessionstarttime} week={raceItem.race_week_num} epochTime={true}
+                                                season={raceItem.season_quarter} year={raceItem.season_year} showSeason={showSeason}></WeekLink>
+                                    </div>
+                                    <div>
+                                        <Driver name={raceItem.winnerdisplayname} showHelmet={true} hasLink={true} id={raceItem.winnerid}
+                                                helmetColors={[raceItem.winnerhelmcolor1, raceItem.winnerhelmcolor2]}></Driver>
+                                    </div>
+                                </div>
                             </TableItem>
                             <TableItem columns="1">
                                 <RaceResultLink subsessionid={raceItem.subsessionid} val={raceItem.champpoints}></RaceResultLink>

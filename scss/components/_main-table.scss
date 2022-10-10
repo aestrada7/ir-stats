@@ -36,6 +36,11 @@
     margin: auto 0;
     z-index: 2;
 
+    @include media-small {
+        padding: 10px 1px;
+        font-size: var(--font-small);
+    }
+
     &.composite-field {
         position: relative;
         margin-left: 50px;
@@ -44,6 +49,10 @@
 
         .track-name {
             font-size: var(--font-normal);
+
+            @include media-small {
+                font-size: var(--font-small);
+            }
         }
 
         .week-indicator {
@@ -61,6 +70,11 @@
                 background-color: var(--white);
                 color: var(--accent-color);
             }
+
+            @include media-small {
+                left: -45px;
+                top: 30px;
+            }
         }
 
         .date-container {
@@ -74,6 +88,11 @@
             position: absolute;
             left: -40px;
             top: 5px;
+
+            @include media-small {
+                left: -45px;
+                top: 15px;
+            }
 
             &.season-1 {
                 color: var(--season-1);
@@ -92,6 +111,20 @@
             }
         }
     }
+
+    .flexible-table {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+
+        @include media-small {
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: baseline;
+            width: 100%;
+        }
+    }
 }
 
 .sort-button {
@@ -101,6 +134,11 @@
     width: 18px;
     height: 15px;
     cursor: pointer;
+
+    @include media-small {
+        width: 8px;
+        height: 5px;
+    }
 
     &:after {
         content: ' ';

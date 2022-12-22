@@ -59,8 +59,8 @@
     },
     {
         "id": 178,
-        "name": "Indianapolis Motor Speedway",
-        "shortName": "Indianapolis",
+        "name": "Indianapolis Motor Speedway (2009)",
+        "shortName": "Indianapolis (2009)",
         "location": "Indianapolis, IN",
         "length": 2.5
     },
@@ -293,5 +293,13 @@
         "shortName": "Monza",
         "location": "Monza, Italy",
         "length": 1
+    },
+    {
+        "id": 453,
+        "legacyIds": [178],
+        "name": "Indianapolis Motor Speedway",
+        "shortName": "Indianapolis",
+        "location": "Indianapolis, IN",
+        "length": 2.5
     }
 ]

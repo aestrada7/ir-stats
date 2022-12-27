@@ -19,7 +19,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "npx wdio run ./wdio.conf.js"
   },
   "author": "aestrada7",
   "license": "ISC",
@@ -28,7 +29,7 @@
     "@wdio/local-runner": "^7.25.2",
     "@wdio/mocha-framework": "^7.25.2",
     "@wdio/spec-reporter": "^7.25.1",
-    "chromedriver": "^106.0.1",
+    "chromedriver": "^108.0.0",
     "wdio-chromedriver-service": "^8.0.0"
   }
 }

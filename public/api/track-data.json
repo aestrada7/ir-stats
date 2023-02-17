@@ -1,6 +1,14 @@
 [
     {
         "id": 53,
+        "name": "Atlanta Motor Speedway (2009)",
+        "shortName": "Atlanta (2009)",
+        "location": "Hampton, GA",
+        "length": 1.5
+    },
+    {
+        "id": 447,
+        "legacyIds": [53],
         "name": "Atlanta Motor Speedway",
         "shortName": "Atlanta",
         "location": "Hampton, GA",
@@ -301,5 +309,12 @@
         "shortName": "Indianapolis",
         "location": "Indianapolis, IN",
         "length": 2.5
+    },
+    {
+        "id": 432,
+        "name": "Watkins Glen International - Classic",
+        "shortName": "Watkins Glen (Classic)",
+        "location": "Watkins Glen, NY",
+        "length": 2.4
     }
 ]

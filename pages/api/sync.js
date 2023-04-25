@@ -53,7 +53,9 @@ export default async function messageHandler(req, res) {
             if(resultsData) {
                 let seasonData = await getSeason(cust_id, car, year, season);
                 let successMsg = `Successfully synchronized data from ${year} - Season ${season}.`;
-                if(processTruncated) successMsg = `Partially synchronized subsession data from ${year} - Season ${season}. Process limit exceeded, please synchronize again.`
+                if(processTruncated) {
+                    successMsg = `Partially synchronized subsession data from ${year} - Season ${season}. Process limit exceeded, please synchronize again.`;
+                }
 
                 if(!seasonData) {
                     let createdSeason = await insertSeason(cust_id, car, year, season);
@@ -113,6 +115,8 @@ const getResultsData = async(data, cookies) => {
 
         if(status === 200) {
             sessionsProcessed++;
+            console.log("processed: " + sessionsProcessed);
+            console.log("limit:" + processLimit);
             if((processLimit > 0) && (sessionsProcessed >= processLimit)) {
                 processTruncated = true;
                 break;

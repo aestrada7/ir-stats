@@ -3,7 +3,7 @@ let PROCESS_LIMIT;
 
 if(process.env.ENV === "PROD") {
     db = await import('./mongo.js');
-    PROCESS_LIMIT = 20;
+    PROCESS_LIMIT = 12;
 } else {
     db = await import('./nedb.js');
     PROCESS_LIMIT = -1;

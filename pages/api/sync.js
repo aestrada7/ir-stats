@@ -1,6 +1,6 @@
 import { processSubsession, getResults, getHostedResults } from "../../services/FetchIracing";
 import { transformData } from "../../services/DataFetch";
-import { getSeason, insertSeason, closeClient } from "../../middleware/db";
+import { getSeason, insertSeason, closeClient, getProcessLimit } from "../../middleware/db";
 
 const axios = require('axios');
 const crypto = require('crypto');
@@ -15,6 +15,7 @@ export default async function messageHandler(req, res) {
     const password = req.query.password;
     const date_from = req.query.date_from;
     const date_to = req.query.date_to;
+    let processTruncated = false;
 
     if(hosted) {
         season = "X";
@@ -51,16 +52,18 @@ export default async function messageHandler(req, res) {
 
             if(resultsData) {
                 let seasonData = await getSeason(cust_id, car, year, season);
+                let successMsg = `Successfully synchronized data from ${year} - Season ${season}.`;
+                if(processTruncated) successMsg += `<br />Subsession process limit exceeded, please synchronize again.`
 
                 if(!seasonData) {
                     let createdSeason = await insertSeason(cust_id, car, year, season);
                     if(createdSeason) {
                         await closeClient();
-                        res.status(200).json({'status': 200, 'message': `Successfully synchronized data from ${year} - Season ${season}.`});
+                        res.status(200).json({'status': 200, 'message': successMsg});
                     }
                 } else {
                     await closeClient();
-                    res.status(200).json({'status': 200, 'message': `Successfully synchronized data from ${year} - Season ${season}.`});
+                    res.status(200).json({'status': 200, 'message': successMsg});
                 }
             } else {
                 await closeClient();
@@ -96,6 +99,9 @@ const base64Pwd = (email, password) => {
 }
 
 const getResultsData = async(data, cookies) => {
+    let sessionsProcessed = 0;
+    let processLimit = getProcessLimit();
+
     if(data.data.d.length === 0) {
         return null;
     }
@@ -103,7 +109,15 @@ const getResultsData = async(data, cookies) => {
     let transformedData = transformData(data.data);
     for(let row in transformedData) {
         let subsessionToParse = parseInt(transformedData[row].subsessionid);
-        await processSubsession(subsessionToParse, cookies);
+        let status = await processSubsession(subsessionToParse, cookies);
+
+        if(status === 200) {
+            sessionsProcessed++;
+            if((processLimit > 0) && (sessionsProcessed >= processLimit)) {
+                processTruncated = true;
+                break;
+            }
+        }
     }
 
     return transformedData;

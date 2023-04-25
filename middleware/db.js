@@ -1,9 +1,12 @@
 let db;
+let PROCESS_LIMIT;
 
 if(process.env.ENV === "PROD") {
     db = await import('./mongo.js');
+    PROCESS_LIMIT = 20;
 } else {
     db = await import('./nedb.js');
+    PROCESS_LIMIT = -1;
 }
 
 /**
@@ -170,4 +173,13 @@ export const getMessage = async(cust_id, car, year, season, week) => {
 export const updateMessage = async(originalObj, newObj) => {
     const data = await db.updateMessage(originalObj, newObj);
     return data;
+}
+
+/**
+ * Returns the subsession process limit per sync call.
+ * 
+ * @returns Integer with the process limit.
+ */
+export const getProcessLimit = () => {
+    return PROCESS_LIMIT;
 }

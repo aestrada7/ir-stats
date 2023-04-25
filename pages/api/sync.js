@@ -4,6 +4,7 @@ import { getSeason, insertSeason, closeClient, getProcessLimit } from "../../mid
 
 const axios = require('axios');
 const crypto = require('crypto');
+let processTruncated = false;
 
 export default async function messageHandler(req, res) {
     const { method } = req;
@@ -15,7 +16,6 @@ export default async function messageHandler(req, res) {
     const password = req.query.password;
     const date_from = req.query.date_from;
     const date_to = req.query.date_to;
-    let processTruncated = false;
 
     if(hosted) {
         season = "X";
@@ -53,7 +53,7 @@ export default async function messageHandler(req, res) {
             if(resultsData) {
                 let seasonData = await getSeason(cust_id, car, year, season);
                 let successMsg = `Successfully synchronized data from ${year} - Season ${season}.`;
-                if(processTruncated) successMsg += `<br />Subsession process limit exceeded, please synchronize again.`
+                if(processTruncated) successMsg = `Partially synchronized subsession data from ${year} - Season ${season}. Process limit exceeded, please synchronize again.`
 
                 if(!seasonData) {
                     let createdSeason = await insertSeason(cust_id, car, year, season);

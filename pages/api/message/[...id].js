@@ -7,7 +7,8 @@ export default async function messageHandler(req, res) {
     const year = req.query.id[2];
     const season = req.query.id[3];
     const week = req.query.id[4];
-    const message = req.query.id[5];
+    const trackId = req.query.id[5];
+    const message = req.query.id[6];
 
     switch(method) {
         case 'GET':
@@ -20,7 +21,7 @@ export default async function messageHandler(req, res) {
             }
             break;
         case 'PUT':
-            let updatedMsg = await updateMessage({cust_id, car, year, season, week}, {cust_id, car, year, season, week, message});
+            let updatedMsg = await updateMessage({cust_id, car, year, season, week, trackId}, {cust_id, car, year, season, week, trackId, message});
             await closeClient();
             if(updatedMsg) {
                 res.status(200).json({'status': 200, 'message': 'Stored successfully!'});

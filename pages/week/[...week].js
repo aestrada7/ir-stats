@@ -21,7 +21,7 @@ const Week = ({ pageTitle, raceData, trackData, weekData, season, year, week, ca
             <TableFilterContext.Provider value={value}>
                 <WeekTable weekData={weekData}></WeekTable>
                 <Table raceData={raceData} trackData={trackData}></Table>
-                <Notes season={season} year={year} week={week} car={car} notes={notes}></Notes>
+                <Notes season={season} year={year} week={week} car={car} notes={notes} trackId={raceData[0].trackid}></Notes>
                 <ImageCarousel season={season} year={year} week={week}></ImageCarousel>
                 <IRatingChart raceData={raceData}></IRatingChart>
             </TableFilterContext.Provider>

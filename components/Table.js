@@ -13,6 +13,7 @@ const Table = ({ trackData, showSeason, raceData }) => {
     const [ raceDataSt, setRaceData ] = useState(raceData);
     const [ sortingBy, setSortingBy ] = useState();
     const [ order, setOrder ] = useState('');
+    const [ tableHidden, setTableHidden ] = useState(false);
     const context = useContext(TableFilterContext);
 
     const sortBy = (field, order) => {
@@ -45,7 +46,10 @@ const Table = ({ trackData, showSeason, raceData }) => {
     return (
         <React.Fragment>
             <TableFilter></TableFilter>
-            <div className="table">
+            <div className="table-control">
+                <button onClick={() => setTableHidden(!tableHidden)}>{tableHidden ? 'Show' : 'Hide'}</button>
+            </div>
+            <div className={`table ${tableHidden ? 'hide' : ''}`}>
                 <div className="table-row flex head">
                     <TableItem columns="6" val="Track / Date / Winner"></TableItem>
                     <TableItem columns="1" val="Points" fieldToSortBy="champpoints" sortFunction={sortBy} sortingBy={sortingBy} order={order}></TableItem>

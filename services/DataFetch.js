@@ -103,8 +103,8 @@ function appendData(data, newData) {
  * @param {string} value The value that will be stored.
  * @returns null
  */
-export const messageSet = async (year, season, week, car, value) => {
-    const MESSAGE_API_URL = `${Config.SERVER_URL}/api/message/182407/${car}/${year}/${season}/${week}/${escape(value)}`;
+export const messageSet = async (year, season, week, car, trackId, value) => {
+    const MESSAGE_API_URL = `${Config.SERVER_URL}/api/message/182407/${car}/${year}/${season}/${week}/${trackId}/${escape(value)}`;
     const messageResponse = await fetch(MESSAGE_API_URL, {method: `PUT`});
     console.log(await messageResponse.json());
 }
@@ -123,6 +123,19 @@ export const messageGet = async (year, season, week, car) => {
     const messageResponse = await fetch(MESSAGE_API_URL);
     const messageObj = await messageResponse.json();
     return messageObj.message;
+}
+
+/**
+ * Retrieves information given a provided key.
+ * 
+ * @param {number} trackId The trackId that will be used as part of the key.
+ * @returns {object} The stored messages.
+ */
+export const messagesGet = async (trackId) => {
+    const MESSAGES_API_URL = `${Config.SERVER_URL}/api/messages/182407/${trackId}`;
+    const messagesResponse = await fetch(MESSAGES_API_URL);
+    const messagesObj = await messagesResponse.json();
+    return messagesObj;
 }
 
 /**

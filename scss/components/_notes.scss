@@ -28,3 +28,22 @@
         margin: 5px;
     }
 }
+
+.message-container {
+    margin: 25px;
+
+    .title {
+        padding: 5px;
+        border-radius: var(--global-border-radius);
+        background-color: var(--accent-color);
+        color: var(--white);
+    }
+
+    .table-item {
+        margin-bottom: 15px;
+
+        .message {
+            margin-left: 20px;
+        }
+    }
+}

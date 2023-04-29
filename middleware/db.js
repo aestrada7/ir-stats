@@ -176,6 +176,18 @@ export const updateMessage = async(originalObj, newObj) => {
 }
 
 /**
+ * Retrieves a list of messages from the DB.
+ * 
+ * @param {number} cust_id
+ * @param {number} trackId
+ * @returns The messages stored in the DB or null if nothing's found.
+ */
+export const getMessages = async(cust_id, trackId) => {
+    const data = await db.getMessages(cust_id, trackId);
+    return data;
+}
+
+/**
  * Returns the subsession process limit per sync call.
  * 
  * @returns Integer with the process limit.

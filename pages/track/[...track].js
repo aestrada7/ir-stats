@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
-import { raceDataFetchAll, trackDataFetch } from '../../services/DataFetch';
+import { raceDataFetchAll, trackDataFetch, messagesGet } from '../../services/DataFetch';
 import { weekDataBuild } from '../../services/WeekDataStats';
 import { itemExists } from '../../services/Common';
 
@@ -9,10 +9,11 @@ import Layout from '../../components/Layout';
 import Table from '../../components/Table';
 import WeekTable from '../../components/WeekTable';
 import IRatingChart from '../../components/IRatingChart';
+import TrackNotes from '../../components/TrackNotes';
 
 import { TableFilterContext } from '../../services/TableFilterContext';
 
-const Track = ({ pageTitle, raceData, trackData, weekData, trackId, legacyTrackIds }) => {
+const Track = ({ pageTitle, raceData, trackData, weekData, trackId, legacyTrackIds, messages }) => {
     const [ filter, setFilter ] = useState({});
     const value = { filter, setFilter };
 
@@ -22,6 +23,7 @@ const Track = ({ pageTitle, raceData, trackData, weekData, trackId, legacyTrackI
                 { legacyTrackIds ? <Link href={`/track/${trackId}/1`}><button className="hide-legacy">Hide Legacy Data</button></Link> : '' }
                 <WeekTable weekData={weekData}></WeekTable>
                 <Table raceData={raceData} trackData={trackData} showSeason={true}></Table>
+                <TrackNotes messages={messages}></TrackNotes>
                 <IRatingChart raceData={raceData}></IRatingChart>
             </TableFilterContext.Provider>
         </Layout>
@@ -48,7 +50,8 @@ Track.getInitialProps = async({ query }) => {
     const raceData = raceDataAll.filter(x => x.trackid == trackId || itemExists(x.trackid, legacyTrackIds) || itemExists(x.trackid, newTrackIds));
 
     const weekData = weekDataBuild(raceData);
-    return { pageTitle, raceData, trackData, weekData, trackId, legacyTrackIds };
+    const messages = await messagesGet(trackId);
+    return { pageTitle, raceData, trackData, weekData, trackId, legacyTrackIds, messages };
 }
 
 export default Track;

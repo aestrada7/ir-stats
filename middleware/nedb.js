@@ -188,3 +188,16 @@ export const updateMessage = async(originalObj, newObj) => {
     const data = await messages.asyncUpdate(originalObj, newObj, { upsert: true });
     return data;
 }
+
+/**
+ * Retrieves a list of messages from the DB.
+ * 
+ * @param {number} cust_id
+ * @param {number} trackId
+ * @returns The messages stored in the DB or null if nothing's found.
+ */
+export const getMessages = async(cust_id, trackId) => {
+    const messages = getDataStore('messages');
+    const data = await messages.asyncFind({cust_id, trackId});
+    return data;
+}

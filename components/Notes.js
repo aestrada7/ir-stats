@@ -14,8 +14,8 @@ class Notes extends React.Component {
         }
     }
 
-    saveText(year, season, week, car, value) {
-        messageSet(year, season, week, car, value);
+    saveText(year, season, week, car, trackId, value) {
+        messageSet(year, season, week, car, trackId, value);
         this.setState({ editMode: false });
     }
 
@@ -35,7 +35,7 @@ class Notes extends React.Component {
     }
 
     render() {
-        const { year, season, week, car } = this.props;
+        const { year, season, week, car, trackId } = this.props;
         const { notes, editMode } = this.state;
 
         return (
@@ -48,7 +48,7 @@ class Notes extends React.Component {
                 :
                     <React.Fragment>
                         <textarea className="note-edit" value={notes} onChange={e => this.updateText(e)}></textarea>
-                        <button onClick={() => this.saveText(year, season, week, car, notes)}>Save</button>
+                        <button onClick={() => this.saveText(year, season, week, car, trackId, notes)}>Save</button>
                         <button onClick={() => this.editMode(false)}>Cancel</button>
                     </React.Fragment>
                 }

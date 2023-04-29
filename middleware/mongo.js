@@ -221,6 +221,6 @@ export const updateMessage = async(originalObj, newObj) => {
  */
 export const getMessages = async(cust_id, trackId) => {
     const messages = await getDataStore('messages');
-    const data = await messages.find({cust_id, trackId});
+    const data = await messages.find({cust_id, trackId}).toArray();
     return data;
 }

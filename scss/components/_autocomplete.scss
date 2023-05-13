@@ -16,6 +16,7 @@
 
     .autocomplete-item {
         padding: 5px;
+        background-color: var(--white);
 
         &:nth-child(odd) {
             background-color: var(--background-light-grey);

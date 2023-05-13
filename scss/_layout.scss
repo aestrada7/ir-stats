@@ -23,6 +23,10 @@
         top: 0;
         right: 0;
         color: var(--accent-color);
+
+        @include media-small {
+            max-width: 150px;
+        }
     }
 
     .logo {

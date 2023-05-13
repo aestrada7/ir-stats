@@ -1,0 +1,26 @@
+.loading {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    &:after {
+        content: " ";
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid var(--accent-color);
+        border-color: var(--accent-color) transparent var(--accent-color) transparent;
+        animation: load-anim 1.2s linear infinite;
+    }
+}
+
+@keyframes load-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

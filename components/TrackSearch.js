@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
 import { DebounceInput } from 'react-debounce-input';
 
@@ -6,100 +6,120 @@ import { decode } from '../services/Common';
 import { trackSearch } from '../services/DataFetch';
 import * as KeyCodes from '../services/KeyCodes';
 
-class TrackSearch extends React.Component {
-    constructor(props) {
-        super(props);
+import Loading from './Loading';
 
-        this.state = {
-            trackSearch: '',
-            autocompleteOptions: [],
-            focusedItem: -1,
-            selectedItem: {},
-            trackId: 0
-        }
-    }
+const TrackSearch = ({ placeholder }) => {
+    const [ trackSearchStr, setTrackSearchStr ] = useState('');
+    const [ autocompleteOptions, setAutocompleteOptions ] = useState([]);
+    const [ focusedItem, setFocusedItem ] = useState(-1);
+    const [ selectedItem, setSelectedItem ] = useState({});
+    const [ trackId, setTrackId ] = useState(0);
+    const [ loading, setLoading ] = useState(false);
 
-    handleKeyDown = event => {
+    const handleKeyDown = (event) => {
         const { keyCode } = event;
 
         if(keyCode === KeyCodes.DOWN_ARROW) {
-            this.focusItem(1);
+            focusItem(1);
         }
 
         if(keyCode === KeyCodes.UP_ARROW) {
-            this.focusItem(-1);
+            focusItem(-1);
         }
 
         if(keyCode === KeyCodes.ENTER) {
-            this.selectFocusedItem();
+            selectFocusedItem();
         }
     }
 
-    async componentDidMount() {
-        window.addEventListener('keydown', this.handleKeyDown);
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+
+        return() => {
+            window.removeEventListener('keydown', handleKeyDown);
+        }
+    }, [autocompleteOptions, focusedItem]); //this should be an empty array to only be called once, but React is being stubborn, probably need useRef instead
+
+    const clearAutocomplete = () => {
+        setAutocompleteOptions([]);
+        setFocusedItem(-1);
     }
 
-    componentWillUnmount() {
-        window.removeEventListener('keydown', this.handleKeyDown);
-    }
-
-    clearAutocomplete() {
-        this.setState({ autocompleteOptions: [], focusedItem: -1 });
-    }
-
-    focusItem(direction) {
-        let currentItem = this.state.focusedItem;
+    const focusItem = (direction) => {
+        let currentItem = focusedItem;
         let newValue = 0;
         if(currentItem + direction < 0) {
-            newValue = this.state.autocompleteOptions.length - 1;
-        } else if(currentItem + direction > this.state.autocompleteOptions.length - 1) {
+            newValue = autocompleteOptions.length - 1;
+        } else if(currentItem + direction > autocompleteOptions.length - 1) {
             newValue = 0;
         } else {
             newValue = currentItem + direction;
         }
-        this.setState({ focusedItem: newValue });
+        setFocusedItem(newValue);
     }
 
-    selectFocusedItem() {
-        if(this.state.focusedItem !== -1) {
-            this.setState({ selectedItem: this.state.autocompleteOptions[this.state.focusedItem] });
-            this.setState({ trackSearch: decode(this.state.selectedItem.name) });
-            this.setState({ trackId: this.state.selectedItem.id });
-            this.clearAutocomplete();
-            Router.push(`track/${this.state.trackId}`);
+    const selectFocusedItem = () => {
+        if(focusedItem !== -1) {
+            setSelectedItem(autocompleteOptions[focusedItem]);
+            setTrackSearchStr(decode(selectedItem.name));
+            setTrackId(selectedItem.id);
+            clearAutocomplete();
+            showTrackFromState();
         }
     }
 
-    async updateText(e) {
-        this.setState({ trackSearch: e.target.value });
-        this.setState({ autocompleteOptions: await trackSearch(e.target.value) });
+    const startSearch = (e) => {
+        setLoading(true);
+        setTrackSearchStr(e.target.value);
     }
 
-    render() {
-        const { trackSearch, autocompleteOptions, focusedItem } = this.state;
-        const { placeholder } = this.props;
+    useEffect(() => {
+        async function getOptions() {
+            try {
+                const options = await trackSearch(trackSearchStr);
+                setAutocompleteOptions([...options]);
+                setLoading(false);
+            } catch (err) {
+                console.log('Error occured when fetching data');
+            }
+        }
+        getOptions();
+    }, [trackSearchStr]);
 
-        return (
+    const showTrackFromState = (id) => {
+        let tid = id ? id : trackId;
+        setLoading(true);
+        Router.push(`track/${tid}`);
+    }
+
+    const mouseSelectTrack = (e, item) => {
+        showTrackFromState(item.id);
+    }
+
+    return (
+        <React.Fragment>
             <div className="autocomplete-container">
                 <React.Fragment>
+                    { loading ? <Loading /> : '' }
                     <DebounceInput
                         type="text" className="autocomplete-input"
-                        minLength={2} value={trackSearch} debounceTimeout={500}
-                        onBlur={e => this.clearAutocomplete()}
-                        onChange={e => this.updateText(e)}
+                        minLength={2} value={trackSearchStr} debounceTimeout={500}
+                        onBlur={e => clearAutocomplete()}
+                        onChange={e => startSearch(e)}
                         placeholder={placeholder}>
                     </DebounceInput>
                     { autocompleteOptions.length > 0 ? 
                         <div className="autocomplete-list-container">
                             { autocompleteOptions.map((item, idx) => (
-                                <div className={`autocomplete-item ${idx === focusedItem ? 'focused' : ''}`}>{decode(item.name)}</div>
+                                <div key={idx} className={`autocomplete-item ${idx === focusedItem ? 'focused' : ''}`} 
+                                     onMouseDown={e => mouseSelectTrack(e, item)}>{decode(item.name)}</div>
                             ))}
                         </div>
                     : '' }
                 </React.Fragment>
             </div>
-        );
-    }
+        </React.Fragment>
+    );
 }
 
 export default TrackSearch;

@@ -67,7 +67,7 @@ class Index extends React.Component {
                 </div>
                 <div className="main-menu">
                     {seasonList.map(season =>
-                        <Link href={`/season/${season.year}/${season.season}`}>
+                        <Link key={`${season.year}-${season.season}`} href={`/season/${season.year}/${season.season}`}>
                             <button className="main-link">
                                 <span>{season.year} Season {season.season}</span>
                             </button>

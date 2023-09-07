@@ -12,7 +12,7 @@ export const allPositionsChallenge = (data, maxPosition) => {
 
         data.map((x) => {
             if(obj.position == x.finishing_position) {
-                obj.track_season.push({ trackid: x.trackid, year: x.season_year, season: x.season_quarter, week: x.race_week_num });
+                obj.track_season.push({ trackid: x.trackid, year: x.season_year, season: x.season_quarter, week: x.race_week_num, time: x.sessionstarttime });
             }
         });
 

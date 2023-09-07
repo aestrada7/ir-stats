@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AllPositionsContext } from '../services/AllPositionsContext';
 
 const DateSlider = () => {
-  const [month, setMonth] = useState(1);
-  const [year, setYear] = useState(2018);
+  const MIN_YEAR = 2018;
+  const { month, setMonth, year, setYear } = useContext(AllPositionsContext);
 
   useEffect(() => {
     const currentDate = new Date();
@@ -14,8 +14,8 @@ const DateSlider = () => {
   const handleChange = (event) => {
     const value = event.target.value;
     let month = value % 12;
-    let year = 2018 + Math.floor(value / 12);
-    if(month === 0){
+    let year = MIN_YEAR + Math.floor(value / 12);
+    if(month === 0) {
         year -= 1;
         month = 12;
     }
@@ -24,9 +24,12 @@ const DateSlider = () => {
   }
 
   return (
-    <div>
+    <div className="all-challenge-slider">
       <p>Selected Month: {month}/{year}</p>
-      <input type="range" min={0} max={(new Date().getFullYear() - 2018) * 12 + new Date().getMonth()} value={(year - 2018) * 12 + month} onChange={handleChange} />
+      <input className="slider" type="range" min={0} 
+             max={(new Date().getFullYear() - MIN_YEAR) * 12 + new Date().getMonth() + 1} 
+             value={(year - MIN_YEAR) * 12 + month}
+             onChange={handleChange} />
     </div>
   );
 };

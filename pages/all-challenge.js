@@ -1,53 +1,71 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { raceDataFetchAll, trackDataFetch } from "../services/DataFetch";
 import { allPositionsChallenge } from "../services/AllPositionsStats";
-import { basicAuthentication } from "../services/Authentication";
 
 import Layout from '../components/Layout';
 import AllPositionsItem from '../components/AllPositionsItem';
 import AllPositionsChart from '../components/AllPositionsChart';
 import DateSlider from '../components/DateSlider';
 
-class AllChallenge extends React.Component {
-    constructor(props) {
-        super(props);
+import { AllPositionsContext } from '../services/AllPositionsContext';
 
-        this.state = {
-            collapseAll: false
+const AllChallenge = ({ trackData, allPositionsData }) => {
+    const [ allPositionsDataSt, setAllPositionsDataSt ] = useState(allPositionsData);
+    const [ collapseAll, setCollapseAll ] = useState(false);
+    const [ month, setMonth ] = useState(0);
+    const [ year, setYear ] = useState(0);
+    const value = { month, setMonth, year, setYear };
+
+    const toggleCollapse = () => {
+        setCollapseAll(!collapseAll);
+    }
+
+    useEffect(() => {
+        applyFilters();
+    }, [month, year]);
+
+    const applyFilters = () => {
+        let filteredData = JSON.parse(JSON.stringify(allPositionsData));
+        let computedMonth = month + 1;
+        let computedYear = year;
+
+        if(computedMonth === 13) {
+            computedMonth = 1;
+            computedYear += 1;
         }
+
+        let mockDate = new Date(`${computedMonth}/1/${computedYear}`);
+        let epochTime = mockDate.getTime();
+        filteredData.map(item => item.track_season = item.track_season.filter(race => race.time <= epochTime));
+        setAllPositionsDataSt(filteredData);
     }
 
-    toggleCollapse() {
-        this.setState({ collapseAll: !this.state.collapseAll });
-    }
-
-    render() {
-        const { trackData, allPositionsData } = this.props;
-        const { collapseAll } = this.state;
-
-        return (
-            <Layout title="All Positions Challenge" backButton={true}>
+    return(
+        <Layout title="All Positions Challenge" backButton={true}>
+            <AllPositionsContext.Provider value={value}>
                 <DateSlider></DateSlider>
-                <AllPositionsChart positionsData={allPositionsData}></AllPositionsChart>
-                <button onClick={() => this.toggleCollapse()}>{collapseAll ? `Collapse All` : `Expand All`}</button>
-                <div className="all-positions-table">{ allPositionsData.map(positionItem => (
-                    <AllPositionsItem positionItem={positionItem} trackData={trackData}
-                                      collapseAll={collapseAll}></AllPositionsItem>
-                ))}</div>
-            </Layout>
-        );
-    }
+                <AllPositionsChart positionsData={allPositionsDataSt}></AllPositionsChart>
+                <button onClick={() => toggleCollapse()}>{collapseAll ? `Collapse All` : `Expand All`}</button>
+                <div className="all-positions-table">
+                {
+                    allPositionsDataSt.map(positionItem => (
+                        <AllPositionsItem positionItem={positionItem} trackData={trackData}
+                                          collapseAll={collapseAll}></AllPositionsItem>
+                    ))
+                }
+                </div>
+            </AllPositionsContext.Provider>
+        </Layout>
+    )
 }
 
-export async function getServerSideProps({ req, res }) {
-    basicAuthentication(req, res);
-
+AllChallenge.getInitialProps = async() => {
     const raceData = await raceDataFetchAll();
     const trackData = await trackDataFetch();
     const allPositionsData = allPositionsChallenge(raceData, 26);
 
-    return { props: { trackData, allPositionsData }};
+    return { trackData, allPositionsData };
 }
 
 export default AllChallenge;

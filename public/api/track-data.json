@@ -316,5 +316,12 @@
         "shortName": "Watkins Glen (Classic)",
         "location": "Watkins Glen, NY",
         "length": 2.4
+    },
+    {
+        "id": 481,
+        "name": "Willow Springs International Raceway",
+        "shortName": "Willow Springs",
+        "location": "Rosamond, CA",
+        "lenght": 2.5
     }
 ]

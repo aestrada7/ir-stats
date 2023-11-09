@@ -1,12 +1,15 @@
 .sync-window {
     position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
 
     & > .login-form {
         position: relative;
-        margin: 20px;
+        margin: 0 auto;
+        margin-top: 80px;
+        width: 80%;
         z-index: 999;
 
         span {

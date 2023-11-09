@@ -323,5 +323,12 @@
         "shortName": "Willow Springs",
         "location": "Rosamond, CA",
         "lenght": 2.5
+    },
+    {
+        "id": 483,
+        "name": "Chicago Street Course",
+        "shortName": "Chicago Street",
+        "location": "Chicago, IL",
+        "lenght": 2.2
     }
 ]

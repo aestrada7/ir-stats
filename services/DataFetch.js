@@ -174,7 +174,7 @@ export const messageSetLocal = async (year, season, week, car, value) => {
 export const driverSearch = async (text) => {
     if(text) {
         const MAX_ITEMS = 5;
-        const DRIVER_SERVICE_URL = `./api/driver/${text}?limit=${MAX_ITEMS}`;
+        const DRIVER_SERVICE_URL = `/api/driver/${text}?limit=${MAX_ITEMS}`;
 
         const response = await fetch(DRIVER_SERVICE_URL);
         const data = await response.json();
@@ -273,7 +273,7 @@ export const hostedSync = async (username, password, car, date_from, date_to) =>
  * @returns {object} The JSON object with all recorded seasons for the filtered combination.
  */
 export const seasonList = async(custid, seriesid) => {
-    const SEASON_SERVICE_URL = `./api/seasons?custid=${custid}&seriesid=${seriesid}&crc=${Math.random()}`;
+    const SEASON_SERVICE_URL = `/api/seasons?custid=${custid}&seriesid=${seriesid}&crc=${Math.random()}`;
     const response = await axios.get(SEASON_SERVICE_URL);
     return response.data;
 }

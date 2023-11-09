@@ -1,20 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 
 import Driver from '../components/Driver';
 import { seasonList } from '../services/DataFetch';
-import { BREAKPOINT_SMALL } from '../services/Common';
 
-const Layout = ({ children, title, backButton }) => {
+const LayoutSide = ({ children, title, backButton }) => {
     let [ seasonsMenu, setSeasonsMenu ] = useState([]);
     let [ seasonsVisible, setSeasonsVisible ] = useState(false);
     let [ menuCollapsed, setMenuCollapsed ] = useState(false);
-
-    useEffect(() => {
-        setMenuCollapsed(window.innerWidth < BREAKPOINT_SMALL);
-    }, []);
 
     const triggerPopulateSeasons = () => {
         const fetchSeasonsMenu = async () => {
@@ -44,7 +39,7 @@ const Layout = ({ children, title, backButton }) => {
                 <div className="hamburger" onClick={() => toggleSideMenu()}></div>
                 <div className="logo">
                     <Link href="/">
-                        <a><div class="logo-img"></div></a>
+                        <a><img src="/images/logo.png"></img></a>
                     </Link>
                 </div>
                 <div className="page-title">
@@ -98,4 +93,4 @@ const Layout = ({ children, title, backButton }) => {
     )
 }
 
-export default Layout;
+export default LayoutSide;

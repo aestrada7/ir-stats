@@ -17,11 +17,9 @@
 
 .track-search {
     position: absolute;
-    top: -40px;
     right: 0;
 
     @include media-small {
-        top: -35px;
-        right: 13px;
+        right: 30px;
     }
 }

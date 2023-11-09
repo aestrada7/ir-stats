@@ -83,3 +83,8 @@ export const formatEpoch = (date) => {
     if(minutes < 10) minutes = `0${minutes}`;
     return `${currentDate.getFullYear()}.${currentDate.getMonth() + 1}.${currentDate.getDate()} ${currentDate.getHours()}:${minutes}`;
 }
+
+/**
+ * Constants
+ */
+export const BREAKPOINT_SMALL = 440;

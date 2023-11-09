@@ -1,0 +1,171 @@
+$menu-top-height: 55px;
+$default-padding: 20px;
+$collapsed-menu-width: 10px;
+
+.menu-top {
+    height: $menu-top-height;
+    padding: 10px;
+    background-color: var(--background-light-grey);
+    box-shadow: var(--global-box-shadow);
+    display: flex;
+    align-items: center;
+    position: sticky;
+
+    .logo {
+        .logo-img {
+            @include media-small {
+                margin-top: 7px;
+                width: 30px;
+                height: 42px;
+                background-size: cover;
+            }
+
+            margin-top: 10px;
+            width: 150px;
+            height: 55px;
+            background-image: url('/images/logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        img {
+            margin-top: 15px;
+            max-width: 150px;
+        }
+    }
+
+    .user {
+        margin-left: auto;
+    }
+
+    .back {
+        margin-left: $default-padding;
+        margin-right: $default-padding;
+    }
+
+    .page-title {
+        padding-left: $default-padding;
+    }
+
+    .hamburger {
+        position: relative;
+        width: 25px;
+        margin-top: -20px;
+        margin-left: 5px;
+        margin-right: 5px;
+
+        @include hamburger(var(--background-dark-grey), var(--accent-color));
+    }
+}
+
+.main-container {
+    display: flex;
+    height: calc(100vh - $menu-top-height - 40px);
+
+    .side-menu {
+        @include media-small {
+            position: absolute;
+            width: 100%;
+            z-index: 90;
+        }
+
+        padding-top: $default-padding;
+        width: 15%;
+        min-width: 300px;
+        height: 100%;
+        background-color: var(--background-dark-grey);
+
+        .menu-item {
+            width: 100%;
+            height: 35px;
+            text-align: center;
+            display: grid;
+            align-items: center;
+            text-transform: uppercase;
+            //border-bottom: 1px solid var(--background-light-grey);
+            cursor: pointer;
+
+            a {
+                color: var(--white);
+            }
+
+            &:nth-child(1) {
+                //border-top: 1px solid var(--accent-color);
+            }
+
+            &:hover,
+            &:active {
+                background-color: var(--accent-color);
+                color: var(--white);
+
+                a {
+                    color: var(--white);
+                }
+            }
+
+            &.collapsed {
+                position: relative;
+
+                @include arrow(var(--white), var(--black));
+                @include arrow-down();
+
+                &::after {
+                    top: 11px;
+                    right: 15px;
+                }
+            }
+
+            &.expanded {
+                position: relative;
+
+                @include arrow(var(--white), var(--black));
+                @include arrow-up();
+
+                &::after {
+                    top: 16px;
+                    right: 15px;
+                }
+            }
+
+            &.sub-menu {
+                &.hidden {
+                    display: none;
+                }
+
+                &.shown {
+                    display: grid;
+                }
+            }
+        }
+
+        &.collapsed {
+            .menu-item {
+                display: none !important;
+            }
+
+            @include media-small {
+                display: none;
+            }
+
+            min-width: $collapsed-menu-width;
+            width: $collapsed-menu-width;
+        }
+    }
+
+    .content {
+        padding: $default-padding;
+        width: 85%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        z-index: 0;
+
+        &.full {
+            width: calc(100% - $collapsed-menu-width);
+            padding: 20px 200px;
+
+            @include media-small {
+                width: 100%;
+                padding: 20px 20px;
+            }
+        }
+    }
+}

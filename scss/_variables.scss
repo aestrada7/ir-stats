@@ -5,6 +5,7 @@
     --translucent-black-30: rgba(0, 0, 0, 0.3);
     --accent-color: #ee6600;
     --background-light-grey: #efefef;
+    --background-dark-grey: #222;
     --background-table: #fff;
     --background-table-alternate: #f9fafb;
     --background-head: #cc5500;
@@ -44,6 +45,7 @@
     --global-border-radius: 4px;
     --global-tight-radius: 30px;
     --global-box-shadow: 0 2px 5px 0 var(--translucent-black-30);
+    --global-box-shadow-horizontal: 2px 0 5px 0 var(--translucent-black-30);
 
     /* Fonts */
     --main-font: "Roboto Condensed", "Calibri";

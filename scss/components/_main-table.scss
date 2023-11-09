@@ -44,7 +44,6 @@
     &.composite-field {
         position: relative;
         margin-left: 50px;
-        margin-right: -50px;
         z-index: 1;
 
         .track-name {
@@ -140,33 +139,19 @@
         height: 5px;
     }
 
-    &:after {
-        content: ' ';
-        border: solid var(--white);
-        border-width: 0 3px 3px 0;
-        display: inline-block;
-        padding: 3px;
-        position: absolute;
-        top: -5px;
-    }
-
-    &:hover:after {
-        border: solid var(--black);
-        border-width: 0 3px 3px 0;
-    }
+    @include arrow(var(--white), var(--black));
 
     &.toggled:after {
         border: solid var(--black);
         border-width: 0 3px 3px 0;
     }
 
-    &.ascending:after {
-        transform: rotate(-135deg);
-        top: 0;
+    &.ascending {
+        @include arrow-up();
     }
 
-    &.descending:after {
-        transform: rotate(45deg);
+    &.descending {
+        @include arrow-down();
     }
 }
 

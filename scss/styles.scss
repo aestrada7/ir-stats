@@ -1,10 +1,13 @@
 @import "./variables";
 @import "./media";
+@import "./mixins";
 @import "./layout";
+@import "./layout-side";
 @import "./components";
 
 body {
     font-family: var(--main-font);
+    margin: 0;
 }
 
 a {

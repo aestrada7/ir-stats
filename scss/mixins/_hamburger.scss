@@ -1,0 +1,29 @@
+@mixin hamburger($color, $hover-color) {
+    cursor: pointer;
+
+    &::after {
+        content: ' ';
+        position: absolute;
+        border-top: 3px solid $color;
+        border-bottom: 3px solid $color;
+        width: 17px;
+        height: 11px;
+    }
+
+    &::before {
+        content: ' ';
+        position: absolute;
+        border-bottom: 3px solid $color;
+        width: 17px;
+        height: 7px;
+    }
+
+    &:hover::after {
+        border-top: 3px solid $hover-color;
+        border-bottom: 3px solid $hover-color;
+    }
+
+    &:hover::before {
+        border-bottom: 3px solid $hover-color;
+    }
+}

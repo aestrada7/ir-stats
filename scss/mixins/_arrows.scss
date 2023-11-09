@@ -1,0 +1,35 @@
+@mixin media-small {
+    @media(max-width: $breakpoint-small) {
+        @content
+    }
+}
+
+@mixin arrow($color, $hover-color) {
+    &::after {
+        content: ' ';
+        border: solid $color;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+        position: absolute;
+        top: -5px;
+    }
+    
+    &:hover::after {
+        border: solid $hover-color;
+        border-width: 0 3px 3px 0;
+    }
+}
+
+@mixin arrow-down() {
+    &::after {
+        transform: rotate(45deg);
+    }
+}
+
+@mixin arrow-up() {
+    &::after {
+        transform: rotate(-135deg);
+        top: 0;
+    }
+}

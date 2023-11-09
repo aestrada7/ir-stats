@@ -10,6 +10,7 @@ $collapsed-menu-width: 10px;
     display: flex;
     align-items: center;
     position: sticky;
+    z-index: 99;
 
     .logo {
         .logo-img {

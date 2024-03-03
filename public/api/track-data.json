@@ -330,5 +330,26 @@
         "shortName": "Chicago Street",
         "location": "Chicago, IL",
         "lenght": 2.2
+    },
+    {
+        "id": 433,
+        "name": "Watkins Glen International - Cup",
+        "shortName": "Watkins Glen (Cup)",
+        "location": "Watkins Glen, NY",
+        "lenght": 2.4
+    },
+    {
+        "id": 262,
+        "name": "Nürburgring (Combined - Gesamtstrecke VLN)",
+        "shortName": "Nürburgring Combined",
+        "location": "Nürburg, Germany",
+        "lenght": 15.7
+    },
+    {
+        "id": 166,
+        "name": "Okayama International Circuit",
+        "shortName": "Okayama",
+        "location": "Okayama, Japan",
+        "lenght": 2.3
     }
 ]

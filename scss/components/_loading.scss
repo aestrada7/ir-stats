@@ -15,6 +15,20 @@
         border-color: var(--accent-color) transparent var(--accent-color) transparent;
         animation: load-anim 1.2s linear infinite;
     }
+
+    &.small {
+        position: absolute;
+        top: 0;
+        right: 5px;
+
+        &::after {
+            width: 12px;
+            height: 12px;
+            margin: 4px;
+            border: 2px solid var(--accent-color);
+            border-color: var(--accent-color) transparent var(--accent-color) transparent;
+        }
+    }
 }
 
 @keyframes load-anim {

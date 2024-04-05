@@ -100,7 +100,7 @@ const TrackSearch = ({ placeholder }) => {
         <React.Fragment>
             <div className="autocomplete-container">
                 <React.Fragment>
-                    { loading ? <Loading /> : '' }
+                    {loading ? <Loading kind="small" /> : ''}
                     <DebounceInput
                         type="text" className="autocomplete-input"
                         minLength={2} value={trackSearchStr} debounceTimeout={500}

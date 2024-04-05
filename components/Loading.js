@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Loading = () => {
+const Loading = ({ kind }) => {
     return (
-        <div className="loading"></div>
+        <div className={`loading ${kind}`}></div>
     );
 }
 

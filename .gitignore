@@ -4,5 +4,5 @@ node_modules/
 public/images/dallara-ir18
 data/
 .env.local
-package-lock.json
 *.code-workspace
+.DS_Store

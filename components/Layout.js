@@ -44,7 +44,7 @@ const Layout = ({ children, title, backButton }) => {
                 <div className="hamburger" onClick={() => toggleSideMenu()}></div>
                 <div className="logo">
                     <Link href="/">
-                        <a><div class="logo-img"></div></a>
+                        <a><div className="logo-img"></div></a>
                     </Link>
                 </div>
                 <div className="page-title">
